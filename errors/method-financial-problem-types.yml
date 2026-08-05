@@ -1,0 +1,55 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/method-financial-openapi-original.yml
+docs: https://docs.methodfi.com/reference/errors/request-errors
+format: custom-envelope
+note: Method does not use RFC 9457 application/problem+json. Errors return application/json in the standard
+  Method response envelope with an error object carrying type, code, sub_type and message.
+envelope: '{ success: false, data: { error: { type, code, sub_type, message } }, message }'
+error_object:
+  type_docs:
+  - INVALID_AUTHORIZATION
+  - INVALID_REQUEST
+  - API_ERROR
+  type_openapi_enum:
+  - invalid_request
+  - api_error
+  - resource_error
+  code: integer - mirrors the HTTP status for request errors, or a five-digit resource error code
+  sub_type: string - specific machine-readable classification
+  message: human-readable description
+problems:
+- status: 400
+  title: Bad request - invalid parameters or request body.
+  operations_declaring: 126
+  remediation: Correct the request parameters or body and retry.
+- status: 401
+  title: Unauthorized - missing or invalid authentication token.
+  operations_declaring: 126
+  remediation: Supply a valid team secret key (sk_ prefix) as the Authorization Bearer token.
+- status: 403
+  title: Forbidden - insufficient permissions for this operation.
+  operations_declaring: 47
+  remediation: The key lacks permission, or the operation is environment-restricted (simulate endpoints
+    are development-only).
+- status: 404
+  title: Not found - the requested resource does not exist.
+  operations_declaring: 104
+  remediation: Verify the resource id and that it belongs to the calling team and environment.
+- status: 422
+  title: Unprocessable entity - the request was valid JSON but failed business or validation rules.
+  operations_declaring: 43
+  remediation: The payload parsed but failed a business rule; read error.sub_type for the specific rule.
+- status: 429
+  title: Too many requests - rate limit exceeded.
+  operations_declaring: 112
+  remediation: Wait at least 60 seconds, then retry with exponential backoff and jitter; combine with
+    an Idempotency-Key on POST.
+- status: 500
+  title: Internal server error.
+  operations_declaring: 128
+  remediation: Retry with the same Idempotency-Key; Method reconciles interrupted requests.
+- status: 504
+  title: Upstream timeout - the request could not be completed before the upstream deadline.
+  operations_declaring: 1
+  remediation: Upstream deadline exceeded; retry with the same Idempotency-Key.

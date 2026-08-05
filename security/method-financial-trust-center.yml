@@ -1,0 +1,27 @@
+generated: '2026-08-04'
+method: searched
+probe: true
+source: https://security.methodfi.com/
+url: https://security.methodfi.com/
+platform: SafeBase
+certifications:
+- SOC 2 Type 2
+- PCI DSS v4.0.1
+regulatory_frameworks:
+- GLBA
+- CCPA
+responsible_disclosure:
+  published: true
+  contact: security@methodfi.com
+  artifact: security/method-financial-vulnerability-disclosure.yml
+support_contact: support@methodfi.com
+evidence:
+- source: https://security.methodfi.com/
+  http_status: 200
+  keywords:
+  - soc 2 type 2
+  - pci dss
+  - glba
+  - ccpa
+  - responsible disclosure
+  - trust center

@@ -1,0 +1,227 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/method-financial-openapi-original.yml
+docs: https://docs.methodfi.com/reference/errors/request-errors
+description: Five-digit numeric resource error registry. Method surfaces asynchronous failures on the
+  resource itself (payment, connect, update, verification session, webhook) rather than as an HTTP status.
+  Every family below is declared verbatim in the published OpenAPI as a *ResourceError schema.
+families:
+- schema: AccountResourceError
+  resource: Account
+  types:
+  - ACCOUNT_DISABLED
+  code_range: Numeric error code (11XXX range).
+  codes:
+  - 11001
+  - 11002
+  - 11003
+  - 11004
+  - 11005
+  - 11006
+  sub_types:
+  - ACCOUNT_INVALID_DETAILS
+  - ACCOUNT_UNAUTHORIZED_PAYMENT
+  - ACCOUNT_CLOSED
+  - ACCOUNT_CONSENT_WITHDRAWN
+  - ACCOUNT_DISABLED_INVALID_STATE
+  - ACCOUNT_DISABLED_HOLDER_ENTITY_DISABLED
+  description: Error details when an account is disabled.
+- schema: AccountSensitiveResourceError
+  resource: AccountSensitive
+  types:
+  - ACCOUNT_SENSITIVE_FAILED
+  code_range: Numeric error code (17XXX range).
+  codes:
+  - 17001
+  sub_types:
+  - ACCOUNT_SENSITIVE_FAILED_VERIFICATION_REQUIRED
+  description: Error details when retrieving account sensitive data fails.
+- schema: AccountVerificationSessionResourceError
+  resource: AccountVerificationSession
+  types:
+  - ACCOUNT_VERIFICATION_SESSION_FAILED
+  code_range: Numeric error code (16XXX range).
+  codes:
+  - 16001
+  - 16002
+  - 16003
+  - 16004
+  sub_types:
+  - VERIFICATION_TYPE_NOT_SUPPORTED
+  - INVALID_DETAILS
+  - VERIFICATION_SESSION_ATTEMPT_LIMIT_REACHED
+  - MICRO_DEPOSITS_FAILED
+  description: Error details when an account verification session fails.
+- schema: BalanceResourceError
+  resource: Balance
+  types:
+  - BALANCE_FAILED
+  code_range: Numeric error code (20XXX range).
+  codes:
+  - 20001
+  sub_types:
+  - BALANCE_TEMPORARILY_UNAVAILABLE
+  description: Error details when a balance sync fails.
+- schema: ConnectResourceError
+  resource: Connect
+  types:
+  - CONNECT_FAILED
+  code_range: Numeric error code (26XXX range).
+  codes:
+  - 26001
+  - 26002
+  sub_types:
+  - CONNECT_FAILED_THIN_CREDIT_FILE
+  - CONNECT_FAILED_CREDIT_FREEZE
+  description: Error details when a connect session fails.
+- schema: CreditScoreResourceError
+  resource: CreditScore
+  types:
+  - CREDIT_SCORE_FAILED
+  code_range: Numeric error code (23XXX range).
+  codes:
+  - 23001
+  sub_types:
+  - CREDIT_SCORE_FAILED_TEMPORARILY_UNAVAILABLE
+  description: Error details when a credit score pull fails.
+- schema: EntityResourceError
+  resource: Entity
+  types:
+  - ENTITY_DISABLED
+  - ENTITY_VERIFICATION_FAILED
+  code_range: Numeric error code (12XXX range).
+  codes:
+  - 12001
+  - 12002
+  - 12003
+  - 12004
+  - 12005
+  - 12006
+  - 12007
+  sub_types:
+  - ENTITY_UNAUTHORIZED_PAYMENT
+  - ENTITY_INVALID_DETAILS
+  - ENTITY_SSN_MISMATCH
+  - ENTITY_CONSENT_WITHDRAWN
+  - ENTITY_PENDING_KYC_REVIEW
+  - ENTITY_CANNOT_PERFORM_ACTION
+  description: Error details when an entity is disabled or verification fails.
+- schema: PaymentResourceError
+  resource: Payment
+  types:
+  - PAYMENT_FAILED
+  - PAYMENT_CANCELED
+  code_range: Numeric error code (10XXX range).
+  codes:
+  - 10001
+  - 10002
+  - 10003
+  - 10004
+  - 10005
+  - 10006
+  - 10007
+  - 10008
+  - 10009
+  - 10010
+  sub_types:
+  - PAYMENT_INSUFFICIENT_FUNDS
+  - PAYMENT_UNAUTHORIZED
+  - PAYMENT_INVALID_ACCOUNT
+  - PAYMENT_UNAUTHORIZED_SOURCE
+  - PAYMENT_UNAUTHORIZED_DESTINATION
+  - PAYMENT_INVALID_SOURCE_ACCOUNT
+  - PAYMENT_INVALID_DESTINATION_ACCOUNT
+  - PAYMENT_REJECTED_BY_DESTINATION_INSTITUTION
+  - PAYMENT_REJECTED_INVALID_AMOUNT
+  description: Error details when a payment fails or is canceled.
+- schema: PaymentReversalResourceError
+  resource: PaymentReversal
+  types:
+  - PAYMENT_REVERSAL_FAILED
+  code_range: Numeric error code (14XXX range).
+  codes:
+  - 14001
+  - 14002
+  - 14003
+  sub_types:
+  - PAYMENT_REVERSAL_INSUFFICIENT_FUNDS
+  - PAYMENT_REVERSAL_UNAUTHORIZED
+  - PAYMENT_REVERSAL_INVALID_ACCOUNT
+  description: Error details when a payment reversal fails.
+- schema: PayoffResourceError
+  resource: Payoff
+  types:
+  - PAYOFF_FAILED
+  code_range: Numeric error code (18XXX range).
+  codes:
+  - 18001
+  sub_types:
+  - PAYOFF_TEMPORARILY_UNAVAILABLE
+  description: Error details when a payoff sync fails.
+- schema: ProductResourceError
+  resource: Product
+  types:
+  - PRODUCT_EXECUTION_FAILED
+  code_range: Numeric error code (24XXX range).
+  codes:
+  - 24001
+  sub_types:
+  - PRODUCT_EXECUTION_FAILED
+  description: Error details when a product execution fails.
+- schema: UpdateResourceError
+  resource: Update
+  types:
+  - UPDATE_FAILED
+  code_range: Numeric error code (21XXX range).
+  codes:
+  - 21001
+  sub_types:
+  - UPDATE_TEMPORARILY_UNAVAILABLE
+  description: Error details when an account update fails.
+- schema: VerificationSessionResourceError
+  resource: VerificationSession
+  types:
+  - VERIFICATION_SESSION_FAILED
+  code_range: Numeric error code (19XXX range).
+  codes:
+  - 19001
+  - 19002
+  - 19003
+  - 19004
+  sub_types:
+  - VERIFICATION_SESSION_EXPIRED
+  - VERIFICATION_SESSION_INCORRECT_SMS_CODE
+  - VERIFICATION_SESSION_FAILED_SNA
+  - VERIFICATION_SESSION_FAILED_INVALID_ANSWER
+  description: Error details when an entity verification session fails.
+- schema: WebhookResourceError
+  resource: Webhook
+  types:
+  - WEBHOOK_DISABLED
+  - WEBHOOK_REQUIRES_ATTENTION
+  code_range: Numeric error code (25XXX range).
+  codes:
+  - 25001
+  - 25002
+  - 25003
+  - 25004
+  - 25005
+  - 25006
+  - 25007
+  - 25008
+  - 25009
+  sub_types:
+  - WEBHOOK_DISABLED_FAILED_OTHER
+  - WEBHOOK_DISABLED_RECEIVED_4XX_ERROR
+  - WEBHOOK_DISABLED_RECEIVED_5XX_ERROR
+  - WEBHOOK_DISABLED_TIMEOUT_ON_RESPONSE
+  - WEBHOOK_DISABLED_BY_USER
+  - WEBHOOK_REQUIRES_ATTENTION_FAILED_OTHER
+  - WEBHOOK_REQUIRES_ATTENTION_RECEIVED_4XX_ERROR
+  - WEBHOOK_REQUIRES_ATTENTION_RECEIVED_5XX_ERROR
+  - WEBHOOK_REQUIRES_ATTENTION_TIMEOUT_ON_RESPONSE
+  description: Error details when a webhook is disabled or requires attention.
+summary:
+  families: 14
+  codes: 51
+  sub_types: 49

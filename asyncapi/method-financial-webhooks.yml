@@ -1,0 +1,170 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.methodfi.com/reference/webhooks/overview
+docs: https://docs.methodfi.com/reference/webhooks/overview
+spec_type: Webhooks
+asyncapi_published: false
+asyncapi_probe: https://docs.methodfi.com/asyncapi.yaml returned 404; https://docs.methodfi.com/asyncapi.json
+  returned 404. No AsyncAPI document is published; the webhook catalog below is the provider event surface.
+transport:
+  protocol: https
+  method: POST
+  direction: provider-to-subscriber
+  registration: POST /webhooks (createWebhook); managed via listWebhooks, retrieveWebhook, updateWebhook,
+    deleteWebhook
+  event_replay: Delivered events are also queryable via GET /events (listEvents, retrieveEvent)
+security:
+  auth_token:
+    supported: true
+    header: Authorization
+    description: The auth_token supplied at webhook registration is sent base64-encoded in the Authorization
+      header; verify by base64-encoding your stored token and comparing.
+  hmac:
+    supported: true
+    header: method-webhook-signature
+    algorithm: HMAC-SHA256
+    signed_payload: timestamp:payload, where timestamp comes from the method-webhook-timestamp header
+      (UNIX seconds) and payload is the raw request body
+    timestamp_header: method-webhook-timestamp
+    timestamp_always_present: true
+    secret_field: hmac_secret supplied at webhook registration
+delivery:
+  ack_expectation: Return a 2xx before processing; slow endpoints trigger retries and duplicate processing
+  auto_disable: A webhook is disabled after 5 consecutive failed deliveries (after all retries)
+  failure_error_codes: WebhookResourceError family, 25001-25009 (see errors/method-financial-error-codes.yml)
+  expand_event: Optional expand_event flag on the webhook returns the full resource in the event payload
+event_types:
+- name: account.create
+  description: A new Account was successfully created.
+- name: account.update
+  description: An Account has been updated.
+- name: account.opened
+  description: An Account has been opened.
+- name: account.closed
+  description: An Account has been closed.
+- name: sensitive.create
+  description: A new Sensitive was successfully created.
+- name: account.number.update
+  description: An Account's number has been updated.
+- name: sensitive.update
+  description: A Sensitive has been updated.
+- name: account_verification_session.create
+  description: A new AccountVerificationSession was successfully created.
+- name: account_verification_session.update
+  description: An AccountVerificationSession has been updated.
+- name: balance.create
+  description: A new Balance was successfully created.
+- name: balance.update
+  description: A Balance has been updated.
+- name: card_brand.create
+  description: A new CardBrand was successfully created.
+- name: card_brand.update
+  description: A CardBrand has been updated.
+- name: card_brand.available
+  description: A CardBrand has been made available.
+- name: connect.create
+  description: A new Connect was successfully created.
+- name: connect.update
+  description: A Connect has been updated.
+- name: connect.available
+  description: An Async Connect has completed.
+- name: credit_score.create
+  description: A new CreditScore was successfully created.
+- name: credit_score.update
+  description: A CreditScore has been updated.
+- name: credit_score.available
+  description: A CreditScore has been made available.
+- name: entity.create
+  description: A new Entity was successfully created.
+- name: entity.update
+  description: An Entity has been updated.
+- name: entity.new_accounts_pending_consent
+  description: An Entity needs to consent new surfaced accounts.
+- name: entity_verification_session.create
+  description: A new EntityVerificationSession was successfully created.
+- name: entity_verification_session.update
+  description: An EntityVerificationSession has been updated.
+- name: identity.create
+  description: A new Identity was successfully created.
+- name: identity.update
+  description: An Identity has been updated.
+- name: payment.create
+  description: A new Payment was successfully created.
+- name: payment.update
+  description: A Payment has been updated.
+- name: payment_instrument.create
+  description: A new PaymentInstrument was successfully created.
+- name: payment_instrument.update
+  description: A PaymentInstrument has been updated.
+- name: payment_reversal.create
+  description: A new PaymentReversal was successfully created.
+- name: payment_reversal.update
+  description: A PaymentReversal has been updated.
+- name: payoff.create
+  description: A new Payoff was successfully created.
+- name: payoff.update
+  description: A Payoff has been updated.
+- name: product.create
+  description: A new Product was successfully created.
+- name: product.update
+  description: A Product has been updated.
+- name: report.create
+  description: A new Report was successfully created.
+- name: report.update
+  description: A Report has been updated.
+- name: subscription.create
+  description: A new Subscription was successfully created.
+- name: subscription.update
+  description: A Subscription has been updated.
+- name: transaction.create
+  description: A new Transaction was successfully created.
+- name: transaction.update
+  description: A Transaction has been updated.
+- name: update.create
+  description: A new Update was successfully created.
+- name: update.update
+  description: An Update has been updated.
+- name: credit_score.increased
+  description: A user's credit score has increased.
+- name: credit_score.decreased
+  description: A user's credit score has decreased.
+- name: entity_attribute.create
+  description: A new Entity Attribute was successfully created.
+- name: entity_attribute.update
+  description: An Entity Attribute has been updated.
+- name: account_attribute.create
+  description: A new Account Attribute was successfully created.
+- name: account_attribute.update
+  description: An Account Attribute has been updated.
+- name: entity_attribute.credit_health_credit_card_usage_value.increased
+  description: Credit card usage has increased.
+- name: entity_attribute.credit_health_credit_card_usage_value.decreased
+  description: Credit card usage has decreased.
+- name: entity_attribute.credit_health_derogatory_marks_value.increased
+  description: Number of derogatory marks increased.
+- name: entity_attribute.credit_health_derogatory_marks_value.decreased
+  description: Number of derogatory marks decreased.
+- name: entity_attribute.credit_health_hard_inquiries_value.increased
+  description: Number of hard inquiries increased.
+- name: entity_attribute.credit_health_hard_inquiries_value.decreased
+  description: Number of hard inquiries decreased.
+- name: entity_attribute.credit_health_total_accounts_value.increased
+  description: Total number of accounts increased.
+- name: entity_attribute.credit_health_total_accounts_value.decreased
+  description: Total number of accounts decreased.
+- name: entity_attribute.credit_health_credit_age_value.increased
+  description: Credit age has increased.
+- name: entity_attribute.credit_health_credit_age_value.decreased
+  description: Credit age has decreased.
+- name: entity_attribute.credit_health_payment_history_value.increased
+  description: Payment history score has improved.
+- name: entity_attribute.credit_health_payment_history_value.decreased
+  description: Payment history score has decreased.
+- name: entity_attribute.credit_health_soft_inquiries_value.increased
+  description: Number of soft inquiries increased.
+- name: method_jwk.create
+  description: A new Method JWK (public key) was successfully created.
+- name: method_jwk.update
+  description: A Method JWK has been updated (deprecated or disabled).
+summary:
+  event_types: 66

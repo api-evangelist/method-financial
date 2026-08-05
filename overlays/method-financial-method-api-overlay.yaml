@@ -1,0 +1,78 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Method API
+  version: 1.0.0
+extends: openapi/method-financial-openapi-original.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: method-financial
+    x-apievangelist-source: https://github.com/MethodFi/openapi
+    x-apievangelist-harvested: '2026-08-04'
+    x-apievangelist-artifacts:
+    - authentication/method-financial-authentication.yml
+    - conventions/method-financial-conventions.yml
+    - errors/method-financial-problem-types.yml
+    - errors/method-financial-error-codes.yml
+    - errors/method-financial-decline-codes.yml
+    - rate-limits/method-financial-rate-limits.yml
+    - asyncapi/method-financial-webhooks.yml
+    - data-model/method-financial-data-model.yml
+    - sandbox/method-financial-sandbox.yml
+    - lifecycle/method-financial-lifecycle.yml
+- target: $.info
+  description: Record the cross-cutting runtime semantics Method documents outside the spec.
+  update:
+    x-idempotency:
+      header: Idempotency-Key
+      applies_to: all POST operations
+      semantics: at-most-once, with automatic reconciliation of interrupted requests
+      docs: https://docs.methodfi.com/reference/idempotency
+    x-pagination:
+      params:
+      - page
+      - page_cursor
+      - page_limit
+      - from_date
+      - to_date
+      default_limit: 100
+      max_limit: 100
+      response_headers:
+      - Pagination-Page
+      - Pagination-Page-Count
+      - Pagination-Page-Limit
+      - Pagination-Total-Count
+      - Pagination-Page-Cursor-Prev
+      - Pagination-Page-Cursor-Next
+    x-versioning:
+      header: Method-Version
+      current: '2026-03-30'
+      scheme: dated
+    x-rate-limits:
+      window_seconds: 60
+      scope: per API key, per tier
+      artifact: rate-limits/method-financial-rate-limits.yml
+- target: $.paths./payments.post
+  description: Payment creation is the strictest rate-limit tier and the primary idempotency target.
+  update:
+    x-rate-limit-tier: payment-creation
+    x-rate-limit-rpm: 120
+    x-idempotent: true
+    x-decline-codes: errors/method-financial-decline-codes.yml
+- target: $.paths[?(@property.match('^/simulate/'))]
+  description: Simulate endpoints are callable only in the development environment; sandbox and production
+    return 403.
+  update:
+    x-environment-restricted:
+    - development
+    x-sandbox-artifact: sandbox/method-financial-sandbox.yml
+- target: $.components.securitySchemes.SecretKey
+  update:
+    x-token-prefix: sk_
+    x-per-environment: true
+    x-ip-allowlisting: true
+- target: $.components.securitySchemes.OpalToken
+  update:
+    x-token-prefix: otkn_
+    x-minted-by: createOpalToken
+    x-client-side: true

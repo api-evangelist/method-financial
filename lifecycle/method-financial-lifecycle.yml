@@ -1,0 +1,49 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.methodfi.com/reference/versioning
+versioning:
+  scheme: dated-header
+  header: Method-Version
+  current: '2026-03-30'
+  published_versions:
+  - '2020-12-06'
+  - '2024-04-04'
+  - '2025-07-04'
+  - '2025-12-01'
+  - '2026-03-30'
+  selection: Per-request via the Method-Version header, or a team default set in the Dashboard
+  irreversible_upgrade: Once a team is manually upgraded in the Dashboard it cannot revert to an older
+    version
+  docs: https://docs.methodfi.com/reference/versioning
+backwards_compatible_changes:
+- Adding new API resources
+- Adding new properties to existing API responses
+- Adding new values to enum fields in API responses
+- Adding new properties to webhook payloads
+- Changes to the length, format or content of human-readable strings
+- Adding new event types
+deprecation:
+  policy_url: https://docs.methodfi.com/reference/versioning
+  model: Backwards-incompatible changes ship as a new dated version; older dated versions remain callable.
+    Consumers pin with the Method-Version header and migrate on their own timeline.
+  sunset_header: false
+  deprecation_header: false
+  note: No RFC 8594 Sunset/Deprecation response headers are documented, and no dated version has been
+    announced as retired.
+sla:
+  url: null
+  uptime_target: null
+  note: No public SLA or uptime commitment was found on methodfi.com, docs.methodfi.com or the trust center.
+status_page:
+  url: null
+  probed:
+  - https://status.methodfi.com (DNS NXDOMAIN)
+  - https://methodfi.com/status (404)
+  note: No public status page found; this is a real gap for a payments-adjacent platform.
+sdk_version_locking:
+- method-node / method-python 0.x -> API 2020-12-06
+- method-node / method-python 1.x -> API 2024-04-04
+- method-node / method-python 2.0.x -> API 2025-07-04
+- method-node / method-python 2.1.0+ -> API 2025-12-01
+deprecated_operations: []
+changelog: https://docs.methodfi.com/changelog

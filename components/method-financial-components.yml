@@ -1,0 +1,64 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.methodfi.com/opal/overview, https://docs.methodfi.com/opal/libraries, https://docs.methodfi.com/libraries/overview
+docs: https://docs.methodfi.com/opal/overview
+description: 'Method ships two generations of embeddable client-side UI: Opal (current) and Elements (predecessor,
+  migration guide published). These are hosted, prebuilt flows that run in the consumer browser or mobile
+  app and hand results back to your server through the API.'
+families:
+- family: Opal
+  status: current
+  description: Next-generation embeddable financial components. Opened with an Opal token (otkn_) minted
+    server-side via POST /opal/token, driven by modes, and reporting progress through a typed event system.
+  modes:
+  - mode: Identity Verification
+    docs: https://docs.methodfi.com/opal/identity/overview
+  - mode: Connect
+    docs: https://docs.methodfi.com/opal/connect/overview
+  - mode: Card Connect
+    docs: https://docs.methodfi.com/opal/card_connect/overview
+  - mode: Account Verification
+    docs: https://docs.methodfi.com/opal/account_verification/overview
+  - mode: Transactions
+    docs: https://docs.methodfi.com/opal/transactions/overview
+  loaders:
+  - platform: web
+    kind: script
+    url: https://static.methodfi.com/opal/v1/stable/init.js
+  - platform: react
+    kind: npm
+    name: '@methodfi/opal-react'
+  - platform: react-native
+    kind: npm
+    name: '@methodfi/opal-react-native'
+  events:
+  - SESSION_STARTED
+  - SESSION_COMPLETED
+  - SESSION_ERRORED
+  - SESSION_EXITED
+  session_api:
+  - createOpalToken
+  - retrieveOpalToken
+  - deactivateOpalToken
+  sessions_docs: https://docs.methodfi.com/opal/sessions
+- family: Elements
+  status: predecessor
+  description: The earlier embeddable component library. Still documented and API-backed; Method publishes
+    an Opal migration guide.
+  loaders:
+  - platform: react
+    kind: npm
+    name: react-method-elements
+  - platform: react-native
+    kind: npm
+    name: react-native-method-elements
+  - platform: web
+    kind: repo
+    name: MethodFi/method-js
+  api:
+  - elementsCreateToken
+  - elementsRetrieveSession
+  - elementsUpdateSession
+  - elementsRetrieveSessionResults
+  - elementsExchangeAccount
+  migration_docs: https://docs.methodfi.com/opal/migration_guide

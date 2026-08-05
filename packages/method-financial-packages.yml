@@ -1,0 +1,79 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.methodfi.com/libraries/overview + npm + PyPI + github.com/MethodFi
+docs: https://docs.methodfi.com/libraries/overview
+packages:
+- language: javascript
+  registry: npm
+  name: method-node
+  version: 2.1.1
+  url: https://www.npmjs.com/package/method-node
+  repository: https://github.com/MethodFi/method-node
+  install: npm install method-node
+  description: Node.js library for the Method API
+  official: true
+- language: python
+  registry: pypi
+  name: method-python
+  version: 2.1.1
+  url: https://pypi.org/project/method-python/
+  repository: https://github.com/MethodFi/method-python
+  install: pip install method-python
+  description: Python library for the Method API
+  official: true
+- language: javascript
+  registry: npm
+  name: react-method-elements
+  version: 1.0.2
+  url: https://www.npmjs.com/package/react-method-elements
+  repository: https://github.com/MethodFi/react-method-elements
+  install: npm install react-method-elements
+  description: React components for Method Elements
+  official: true
+- language: javascript
+  registry: npm
+  name: react-native-method-elements
+  version: 1.0.1
+  url: https://www.npmjs.com/package/react-native-method-elements
+  repository: https://github.com/MethodFi/react-native-method-elements
+  install: npm install react-native-method-elements
+  description: React Native package for Method Elements
+  official: true
+- language: javascript
+  registry: npm
+  name: '@methodfi/opal-react'
+  version: 1.5.0
+  url: https://www.npmjs.com/package/@methodfi/opal-react
+  install: npm install @methodfi/opal-react
+  description: React SDK for Opal, Method's embeddable financial component suite
+  official: true
+- language: javascript
+  registry: npm
+  name: '@methodfi/opal-react-native'
+  version: 1.4.4
+  url: https://www.npmjs.com/package/@methodfi/opal-react-native
+  install: npm install @methodfi/opal-react-native
+  description: React Native SDK for Opal
+  official: true
+- language: javascript
+  registry: github
+  name: method-js
+  url: https://github.com/MethodFi/method-js
+  repository: https://github.com/MethodFi/method-js
+  description: JavaScript SDK for Method Elements. Loaded from Method CDN rather than published to npm.
+  official: true
+other_artifacts:
+- kind: openapi
+  name: MethodFi/openapi
+  url: https://github.com/MethodFi/openapi
+  description: First-party OpenAPI 3.1.0 specification repository; bundled spec at latest/openapi.bundled.yaml
+  official: true
+- kind: postman
+  name: MethodFi/method-postman
+  url: https://github.com/MethodFi/method-postman
+  description: Postman collection for the Method API plus a sandbox environment file
+  official: true
+notes: MethodFi/homebrew-tools exists in the GitHub org but is an empty repository (no formulae, no tap
+  contents) as of this probe, so no CLI artifact was recorded.
+version_locking: 'Library majors are pinned to dated API versions: method-node/method-python 2.1.0+ are
+  locked to 2025-12-01. See https://docs.methodfi.com/reference/versioning.'

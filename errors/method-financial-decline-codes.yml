@@ -1,0 +1,64 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/method-financial-openapi-original.yml
+docs: https://docs.methodfi.com/reference/errors/payment-errors
+description: Payment failure / decline classifications published by Method. Method moves money from a
+  corporate funding account to a consumer liability, so a decline surfaces on the Payment resource error
+  object rather than as an HTTP status.
+envelope_field: payment.error (type, code, sub_type, message)
+types:
+- PAYMENT_FAILED
+- PAYMENT_CANCELED
+- PAYMENT_REVERSAL_FAILED
+decline_codes:
+- code: PAYMENT_INSUFFICIENT_FUNDS
+  family: payment
+  meaning: The source account did not have sufficient funds.
+  numeric_code_range: 10001-10010
+- code: PAYMENT_UNAUTHORIZED
+  family: payment
+  meaning: The payment was not authorized.
+  numeric_code_range: 10001-10010
+- code: PAYMENT_INVALID_ACCOUNT
+  family: payment
+  meaning: One of the accounts on the payment is invalid.
+  numeric_code_range: 10001-10010
+- code: PAYMENT_UNAUTHORIZED_SOURCE
+  family: payment
+  meaning: The source account is not authorized for payment.
+  numeric_code_range: 10001-10010
+- code: PAYMENT_UNAUTHORIZED_DESTINATION
+  family: payment
+  meaning: The destination account is not authorized for payment.
+  numeric_code_range: 10001-10010
+- code: PAYMENT_INVALID_SOURCE_ACCOUNT
+  family: payment
+  meaning: The source account is invalid.
+  numeric_code_range: 10001-10010
+- code: PAYMENT_INVALID_DESTINATION_ACCOUNT
+  family: payment
+  meaning: The destination account is invalid.
+  numeric_code_range: 10001-10010
+- code: PAYMENT_REJECTED_BY_DESTINATION_INSTITUTION
+  family: payment
+  meaning: The receiving financial institution rejected the payment.
+  numeric_code_range: 10001-10010
+- code: PAYMENT_REJECTED_INVALID_AMOUNT
+  family: payment
+  meaning: The payment amount was rejected as invalid.
+  numeric_code_range: 10001-10010
+- code: PAYMENT_REVERSAL_INSUFFICIENT_FUNDS
+  family: payment_reversal
+  meaning: The reversal failed due to insufficient funds in the account.
+  numeric_code_range: 14001-14003
+- code: PAYMENT_REVERSAL_UNAUTHORIZED
+  family: payment_reversal
+  meaning: The reversal was not authorized.
+  numeric_code_range: 14001-14003
+- code: PAYMENT_REVERSAL_INVALID_ACCOUNT
+  family: payment_reversal
+  meaning: The account on the reversal is invalid.
+  numeric_code_range: 14001-14003
+masked_to_buyer: null
+note: Method is not a card acquirer; these are ACH / bill-pay style rejections. No separate buyer-facing
+  masked code set is published.

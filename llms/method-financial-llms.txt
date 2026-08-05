@@ -1,0 +1,331 @@
+# Method API Docs
+
+## Docs
+
+- [Attributes](https://docs.methodfi.com/2026-03-30/guides/additional-products/attributes.md): Structured financial metrics for insights and recommendations.
+- [Application, Qualification & Repricing](https://docs.methodfi.com/2026-03-30/guides/use-cases/lending/application-prefill.md): Prefill loan applications with verified liability data, pre-qualify borrowers before the long form, and run CLI / repricing on real-time liability data.
+- [Direct Pay](https://docs.methodfi.com/2026-03-30/guides/use-cases/lending/debt-consolidation.md): Disburse loan proceeds straight to creditors at funding, and turn direct payoff into a top-of-funnel pricing lever.
+- [Getting Started](https://docs.methodfi.com/2026-03-30/guides/use-cases/lending/getting-started.md): Create an entity, verify identity, and discover all liabilities for a loan applicant.
+- [Lending](https://docs.methodfi.com/2026-03-30/guides/use-cases/lending/overview.md): Full lifecycle from lead generation to portfolio monitoring.
+- [Portfolio Intelligence](https://docs.methodfi.com/2026-03-30/guides/use-cases/lending/portfolio-monitoring.md): Continuously monitor a borrower's liability profile after origination — balance trends, utilization shifts, and delinquency signals delivered via attributes and webhooks.
+- [Create Attributes](https://docs.methodfi.com/2026-03-30/reference/accounts/attributes/create.md)
+- [List all Attributes](https://docs.methodfi.com/2026-03-30/reference/accounts/attributes/list.md)
+- [The account attributes endpoint](https://docs.methodfi.com/2026-03-30/reference/accounts/attributes/overview.md)
+- [Retrieve Attributes](https://docs.methodfi.com/2026-03-30/reference/accounts/attributes/retrieve.md)
+- [Create a Balance](https://docs.methodfi.com/2026-03-30/reference/accounts/balances/create.md)
+- [List all Balances](https://docs.methodfi.com/2026-03-30/reference/accounts/balances/list.md)
+- [The balances endpoint](https://docs.methodfi.com/2026-03-30/reference/accounts/balances/overview.md)
+- [Retrieve a Balance](https://docs.methodfi.com/2026-03-30/reference/accounts/balances/retrieve.md)
+- [Create a Card Brand](https://docs.methodfi.com/2026-03-30/reference/accounts/card-brands/create.md)
+- [List all Card Brands](https://docs.methodfi.com/2026-03-30/reference/accounts/card-brands/list.md)
+- [The card brand endpoint](https://docs.methodfi.com/2026-03-30/reference/accounts/card-brands/overview.md)
+- [Retrieve a Card Brand](https://docs.methodfi.com/2026-03-30/reference/accounts/card-brands/retrieve.md)
+- [Withdraw an Account's Consent](https://docs.methodfi.com/2026-03-30/reference/accounts/consent/withdraw.md)
+- [Create an Account](https://docs.methodfi.com/2026-03-30/reference/accounts/create.md)
+- [List all Accounts](https://docs.methodfi.com/2026-03-30/reference/accounts/list.md)
+- [The account endpoint](https://docs.methodfi.com/2026-03-30/reference/accounts/overview.md)
+- [Create Payment Instruments](https://docs.methodfi.com/2026-03-30/reference/accounts/payment-instruments/create.md)
+- [Delete Payment Instrument](https://docs.methodfi.com/2026-03-30/reference/accounts/payment-instruments/delete.md)
+- [List Payment Instruments](https://docs.methodfi.com/2026-03-30/reference/accounts/payment-instruments/list.md)
+- [The payment instrument endpoint](https://docs.methodfi.com/2026-03-30/reference/accounts/payment-instruments/overview.md)
+- [Retrieve Payment Instrument](https://docs.methodfi.com/2026-03-30/reference/accounts/payment-instruments/retrieve.md)
+- [Create a Payoff](https://docs.methodfi.com/2026-03-30/reference/accounts/payoffs/create.md)
+- [List all Payoffs](https://docs.methodfi.com/2026-03-30/reference/accounts/payoffs/list.md)
+- [The payoffs endpoint](https://docs.methodfi.com/2026-03-30/reference/accounts/payoffs/overview.md)
+- [Retrieve a Payoff](https://docs.methodfi.com/2026-03-30/reference/accounts/payoffs/retrieve.md)
+- [List all Products](https://docs.methodfi.com/2026-03-30/reference/accounts/products/list.md)
+- [The products endpoint](https://docs.methodfi.com/2026-03-30/reference/accounts/products/overview.md)
+- [Retrieve an Account](https://docs.methodfi.com/2026-03-30/reference/accounts/retrieve.md)
+- [Create a Sensitive](https://docs.methodfi.com/2026-03-30/reference/accounts/sensitive/create.md)
+- [List all Sensitives](https://docs.methodfi.com/2026-03-30/reference/accounts/sensitive/list.md)
+- [The sensitive endpoint](https://docs.methodfi.com/2026-03-30/reference/accounts/sensitive/overview.md)
+- [Retrieve a Sensitive](https://docs.methodfi.com/2026-03-30/reference/accounts/sensitive/retrieve.md)
+- [Create a Subscription](https://docs.methodfi.com/2026-03-30/reference/accounts/subscriptions/create.md)
+- [Delete a Subscription](https://docs.methodfi.com/2026-03-30/reference/accounts/subscriptions/delete.md)
+- [List all Subscriptions](https://docs.methodfi.com/2026-03-30/reference/accounts/subscriptions/list.md)
+- [The subscriptions endpoint](https://docs.methodfi.com/2026-03-30/reference/accounts/subscriptions/overview.md)
+- [Retrieve a Subscription](https://docs.methodfi.com/2026-03-30/reference/accounts/subscriptions/retrieve.md)
+- [List all Transactions](https://docs.methodfi.com/2026-03-30/reference/accounts/transactions/list.md)
+- [The transactions endpoint](https://docs.methodfi.com/2026-03-30/reference/accounts/transactions/overview.md)
+- [Retrieve a Transaction](https://docs.methodfi.com/2026-03-30/reference/accounts/transactions/retrieve.md)
+- [Create an Update](https://docs.methodfi.com/2026-03-30/reference/accounts/updates/create.md)
+- [List all Updates](https://docs.methodfi.com/2026-03-30/reference/accounts/updates/list.md)
+- [The updates endpoint](https://docs.methodfi.com/2026-03-30/reference/accounts/updates/overview.md)
+- [Retrieve an Update](https://docs.methodfi.com/2026-03-30/reference/accounts/updates/retrieve.md)
+- [Create a Verification](https://docs.methodfi.com/2026-03-30/reference/accounts/verification-sessions/create.md)
+- [List all Verifications](https://docs.methodfi.com/2026-03-30/reference/accounts/verification-sessions/list.md)
+- [The account verification sessions endpoint](https://docs.methodfi.com/2026-03-30/reference/accounts/verification-sessions/overview.md)
+- [Retrieve a Verification](https://docs.methodfi.com/2026-03-30/reference/accounts/verification-sessions/retrieve.md)
+- [Update a Micro-deposits Verification](https://docs.methodfi.com/2026-03-30/reference/accounts/verification-sessions/update-microdeposits.md)
+- [Update an MX Verification](https://docs.methodfi.com/2026-03-30/reference/accounts/verification-sessions/update-mx.md)
+- [Update a Network Verification](https://docs.methodfi.com/2026-03-30/reference/accounts/verification-sessions/update-network.md)
+- [Update a Plaid Verification](https://docs.methodfi.com/2026-03-30/reference/accounts/verification-sessions/update-plaid.md)
+- [Update a Pre-auth Verification](https://docs.methodfi.com/2026-03-30/reference/accounts/verification-sessions/update-preauth.md)
+- [Update a Standard Verification](https://docs.methodfi.com/2026-03-30/reference/accounts/verification-sessions/update-standard.md)
+- [Update a Teller Verification](https://docs.methodfi.com/2026-03-30/reference/accounts/verification-sessions/update-teller.md)
+- [Authentication](https://docs.methodfi.com/2026-03-30/reference/authentication.md)
+- [The card product endpoint](https://docs.methodfi.com/2026-03-30/reference/card-products/overview.md)
+- [Retrieve a CardProduct](https://docs.methodfi.com/2026-03-30/reference/card-products/retrieve.md)
+- [The element endpoint](https://docs.methodfi.com/2026-03-30/reference/elements/overview.md)
+- [Retrieve Element Results](https://docs.methodfi.com/2026-03-30/reference/elements/results.md)
+- [Create or Update Session](https://docs.methodfi.com/2026-03-30/reference/elements/sessions/create-or-update-session.md)
+- [Get Session](https://docs.methodfi.com/2026-03-30/reference/elements/sessions/get-session.md)
+- [The sessions endpoint](https://docs.methodfi.com/2026-03-30/reference/elements/sessions/overview.md)
+- [Release Funds](https://docs.methodfi.com/2026-03-30/reference/elements/sessions/release-funds.md)
+- [Create an Element Token](https://docs.methodfi.com/2026-03-30/reference/elements/tokens.md)
+- [Create Attributes](https://docs.methodfi.com/2026-03-30/reference/entities/attributes/create.md)
+- [List all Attributes](https://docs.methodfi.com/2026-03-30/reference/entities/attributes/list.md)
+- [The entity attributes endpoint](https://docs.methodfi.com/2026-03-30/reference/entities/attributes/overview.md)
+- [Retrieve Attributes](https://docs.methodfi.com/2026-03-30/reference/entities/attributes/retrieve.md)
+- [Create a Connect](https://docs.methodfi.com/2026-03-30/reference/entities/connect/create.md)
+- [List all Connects](https://docs.methodfi.com/2026-03-30/reference/entities/connect/list.md)
+- [The connect endpoint](https://docs.methodfi.com/2026-03-30/reference/entities/connect/overview.md)
+- [Retrieve a Connect](https://docs.methodfi.com/2026-03-30/reference/entities/connect/retrieve.md)
+- [Withdraw an Entity's Consent](https://docs.methodfi.com/2026-03-30/reference/entities/consent/withdraw.md)
+- [Create a Corporation](https://docs.methodfi.com/2026-03-30/reference/entities/create-corporation.md)
+- [Create an Individual](https://docs.methodfi.com/2026-03-30/reference/entities/create-individual.md)
+- [Create Individual Credit Scores](https://docs.methodfi.com/2026-03-30/reference/entities/credit-scores/create.md)
+- [List all Credit Scores](https://docs.methodfi.com/2026-03-30/reference/entities/credit-scores/list.md)
+- [The credit score endpoint](https://docs.methodfi.com/2026-03-30/reference/entities/credit-scores/overview.md)
+- [Retrieve Individual Credit Scores](https://docs.methodfi.com/2026-03-30/reference/entities/credit-scores/retrieve.md)
+- [Create Identities](https://docs.methodfi.com/2026-03-30/reference/entities/identities/create.md)
+- [List all Identities](https://docs.methodfi.com/2026-03-30/reference/entities/identities/list.md)
+- [The identities endpoint](https://docs.methodfi.com/2026-03-30/reference/entities/identities/overview.md)
+- [Retrieve Identities](https://docs.methodfi.com/2026-03-30/reference/entities/identities/retrieve.md)
+- [List all Entities](https://docs.methodfi.com/2026-03-30/reference/entities/list-entities.md)
+- [The entity endpoint](https://docs.methodfi.com/2026-03-30/reference/entities/overview.md)
+- [List all Products](https://docs.methodfi.com/2026-03-30/reference/entities/products/list.md)
+- [The products endpoint](https://docs.methodfi.com/2026-03-30/reference/entities/products/overview.md)
+- [Retrieve an Entity](https://docs.methodfi.com/2026-03-30/reference/entities/retrieve-entity.md)
+- [Create a Subscription](https://docs.methodfi.com/2026-03-30/reference/entities/subscriptions/create.md)
+- [Delete a Subscription](https://docs.methodfi.com/2026-03-30/reference/entities/subscriptions/delete.md)
+- [List all Subscriptions](https://docs.methodfi.com/2026-03-30/reference/entities/subscriptions/list.md)
+- [The subscriptions endpoint](https://docs.methodfi.com/2026-03-30/reference/entities/subscriptions/overview.md)
+- [Retrieve a Subscription](https://docs.methodfi.com/2026-03-30/reference/entities/subscriptions/retrieve.md)
+- [Update an Entity](https://docs.methodfi.com/2026-03-30/reference/entities/update-entity.md)
+- [Create Vehicles](https://docs.methodfi.com/2026-03-30/reference/entities/vehicles/create.md)
+- [List all Vehicles](https://docs.methodfi.com/2026-03-30/reference/entities/vehicles/list.md)
+- [The vehicles endpoint](https://docs.methodfi.com/2026-03-30/reference/entities/vehicles/overview.md)
+- [Retrieve Vehicles](https://docs.methodfi.com/2026-03-30/reference/entities/vehicles/retrieve.md)
+- [Create a BYO KYC Verification](https://docs.methodfi.com/2026-03-30/reference/entities/verification-sessions/create-byo-kyc.md)
+- [Create a BYO SMS Verification](https://docs.methodfi.com/2026-03-30/reference/entities/verification-sessions/create-byo-sms.md)
+- [Create a KBA Verification](https://docs.methodfi.com/2026-03-30/reference/entities/verification-sessions/create-kba.md)
+- [Create an SMS Verification](https://docs.methodfi.com/2026-03-30/reference/entities/verification-sessions/create-sms.md)
+- [Create an SNA Verification](https://docs.methodfi.com/2026-03-30/reference/entities/verification-sessions/create-sna.md)
+- [List all Verification Sessions](https://docs.methodfi.com/2026-03-30/reference/entities/verification-sessions/list.md)
+- [The entity verification sessions endpoint](https://docs.methodfi.com/2026-03-30/reference/entities/verification-sessions/overview.md)
+- [Retrieve a Verification Session](https://docs.methodfi.com/2026-03-30/reference/entities/verification-sessions/retrieve.md)
+- [Update a KBA Verification](https://docs.methodfi.com/2026-03-30/reference/entities/verification-sessions/update-kba.md)
+- [Update an SMS Verification](https://docs.methodfi.com/2026-03-30/reference/entities/verification-sessions/update-sms.md)
+- [Update an SNA Verification](https://docs.methodfi.com/2026-03-30/reference/entities/verification-sessions/update-sna.md)
+- [Environments](https://docs.methodfi.com/2026-03-30/reference/environments.md)
+- [Account Attribute Errors](https://docs.methodfi.com/2026-03-30/reference/errors/account-attribute-errors.md)
+- [Account Errors](https://docs.methodfi.com/2026-03-30/reference/errors/account-errors.md)
+- [Account Verification Session Errors](https://docs.methodfi.com/2026-03-30/reference/errors/account-verification-session-errors.md)
+- [Balance Errors](https://docs.methodfi.com/2026-03-30/reference/errors/balance-errors.md)
+- [Card Brand Errors](https://docs.methodfi.com/2026-03-30/reference/errors/card-brand-errors.md)
+- [Connect Errors](https://docs.methodfi.com/2026-03-30/reference/errors/connect-errors.md)
+- [Credit Score Errors](https://docs.methodfi.com/2026-03-30/reference/errors/credit-score-errors.md)
+- [Entity Attribute Errors](https://docs.methodfi.com/2026-03-30/reference/errors/entity-attribute-errors.md)
+- [Entity Errors](https://docs.methodfi.com/2026-03-30/reference/errors/entity-errors.md)
+- [Entity Verification Session Errors](https://docs.methodfi.com/2026-03-30/reference/errors/entity-verification-session-errors.md)
+- [File Errors](https://docs.methodfi.com/2026-03-30/reference/errors/file-errors.md)
+- [Forwarding Request Errors](https://docs.methodfi.com/2026-03-30/reference/errors/forwarding-request-errors.md)
+- [Identity Errors](https://docs.methodfi.com/2026-03-30/reference/errors/identity-errors.md)
+- [mTLS Errors](https://docs.methodfi.com/2026-03-30/reference/errors/mtls-errors.md)
+- [Payment Errors](https://docs.methodfi.com/2026-03-30/reference/errors/payment-errors.md)
+- [Payment Reversal Errors](https://docs.methodfi.com/2026-03-30/reference/errors/payment-reversal-errors.md)
+- [Payoff Errors](https://docs.methodfi.com/2026-03-30/reference/errors/payoff-errors.md)
+- [Product Errors](https://docs.methodfi.com/2026-03-30/reference/errors/product-errors.md)
+- [Request Errors](https://docs.methodfi.com/2026-03-30/reference/errors/request-errors.md)
+- [Resource Errors](https://docs.methodfi.com/2026-03-30/reference/errors/resource-errors.md)
+- [Sensitive Errors](https://docs.methodfi.com/2026-03-30/reference/errors/sensitive-errors.md)
+- [Simulation Errors](https://docs.methodfi.com/2026-03-30/reference/errors/simulate-errors.md)
+- [Subscription Errors](https://docs.methodfi.com/2026-03-30/reference/errors/subscription-errors.md)
+- [Update Errors](https://docs.methodfi.com/2026-03-30/reference/errors/update-errors.md)
+- [Vehicle Errors](https://docs.methodfi.com/2026-03-30/reference/errors/vehicle-errors.md)
+- [Webhook Errors](https://docs.methodfi.com/2026-03-30/reference/errors/webhook-errors.md)
+- [List all Events](https://docs.methodfi.com/2026-03-30/reference/events/list.md)
+- [The event endpoint](https://docs.methodfi.com/2026-03-30/reference/events/overview.md)
+- [Retrieve an Event](https://docs.methodfi.com/2026-03-30/reference/events/retrieve.md)
+- [Expanding Resources](https://docs.methodfi.com/2026-03-30/reference/expanding.md)
+- [Download a File](https://docs.methodfi.com/2026-03-30/reference/files/download.md)
+- [The file endpoint](https://docs.methodfi.com/2026-03-30/reference/files/overview.md)
+- [Retrieve a File](https://docs.methodfi.com/2026-03-30/reference/files/retrieve.md)
+- [Create a Forwarding Request](https://docs.methodfi.com/2026-03-30/reference/forwarding-requests/create.md)
+- [The Forwarding Request endpoint](https://docs.methodfi.com/2026-03-30/reference/forwarding-requests/overview.md)
+- [Retrieve a Forwarding Request](https://docs.methodfi.com/2026-03-30/reference/forwarding-requests/retrieve.md)
+- [Perform a Health Check](https://docs.methodfi.com/2026-03-30/reference/health-check.md)
+- [Idempotency](https://docs.methodfi.com/2026-03-30/reference/idempotency.md)
+- [Introduction](https://docs.methodfi.com/2026-03-30/reference/introduction.md)
+- [IP Whitelisting](https://docs.methodfi.com/2026-03-30/reference/ip-whitelisting.md)
+- [List all Managed Accounts](https://docs.methodfi.com/2026-03-30/reference/managed-accounts/list.md)
+- [List Managed Account Transactions](https://docs.methodfi.com/2026-03-30/reference/managed-accounts/list-transactions.md)
+- [The managed accounts endpoint](https://docs.methodfi.com/2026-03-30/reference/managed-accounts/overview.md)
+- [Retrieve a Managed Account](https://docs.methodfi.com/2026-03-30/reference/managed-accounts/retrieve.md)
+- [List all Merchants](https://docs.methodfi.com/2026-03-30/reference/merchants/list.md)
+- [The merchant endpoint](https://docs.methodfi.com/2026-03-30/reference/merchants/overview.md)
+- [Retrieve a Merchant](https://docs.methodfi.com/2026-03-30/reference/merchants/retrieve.md)
+- [Message-Level-Encryption (MLE)](https://docs.methodfi.com/2026-03-30/reference/message-level-encryption.md): End-to-end encryption for sensitive data transmission
+- [Metadata](https://docs.methodfi.com/2026-03-30/reference/metadata.md)
+- [Mutual TLS (mTLS)](https://docs.methodfi.com/2026-03-30/reference/mtls.md): Optional client-certificate authentication for teams that require it
+- [Create Token](https://docs.methodfi.com/2026-03-30/reference/opal/create_token.md)
+- [List Opal Events](https://docs.methodfi.com/2026-03-30/reference/opal/list_events.md)
+- [The Opal endpoint](https://docs.methodfi.com/2026-03-30/reference/opal/overview.md)
+- [Pagination](https://docs.methodfi.com/2026-03-30/reference/pagination.md)
+- [Create a Payment](https://docs.methodfi.com/2026-03-30/reference/payments/create.md)
+- [Delete a Payment](https://docs.methodfi.com/2026-03-30/reference/payments/delete.md)
+- [List all Payments](https://docs.methodfi.com/2026-03-30/reference/payments/list.md)
+- [The payment endpoint](https://docs.methodfi.com/2026-03-30/reference/payments/overview.md)
+- [Retrieve a Payment](https://docs.methodfi.com/2026-03-30/reference/payments/retrieve.md)
+- [Create Preauth Signals](https://docs.methodfi.com/2026-03-30/reference/preauth/create.md)
+- [List all Preauth Signals records](https://docs.methodfi.com/2026-03-30/reference/preauth/list.md)
+- [The preauth signals endpoint](https://docs.methodfi.com/2026-03-30/reference/preauth/overview.md)
+- [Retrieve Preauth Signals](https://docs.methodfi.com/2026-03-30/reference/preauth/retrieve.md)
+- [Rate Limiting](https://docs.methodfi.com/2026-03-30/reference/rate-limiting.md)
+- [Create a Report Schedule](https://docs.methodfi.com/2026-03-30/reference/report-schedules/create.md)
+- [Delete a Report Schedule](https://docs.methodfi.com/2026-03-30/reference/report-schedules/delete.md)
+- [List all Report Schedules](https://docs.methodfi.com/2026-03-30/reference/report-schedules/list.md)
+- [The report schedules endpoint](https://docs.methodfi.com/2026-03-30/reference/report-schedules/overview.md)
+- [Retrieve a Report Schedule](https://docs.methodfi.com/2026-03-30/reference/report-schedules/retrieve.md)
+- [Update a Report Schedule](https://docs.methodfi.com/2026-03-30/reference/report-schedules/update.md)
+- [Create a Report](https://docs.methodfi.com/2026-03-30/reference/reports/create.md)
+- [Download a Report](https://docs.methodfi.com/2026-03-30/reference/reports/download.md)
+- [The report endpoint](https://docs.methodfi.com/2026-03-30/reference/reports/overview.md)
+- [Retrieve a Report](https://docs.methodfi.com/2026-03-30/reference/reports/retrieve.md)
+- [Request IDs](https://docs.methodfi.com/2026-03-30/reference/request-id.md)
+- [Create a Secret](https://docs.methodfi.com/2026-03-30/reference/secrets/create.md)
+- [Delete a Secret](https://docs.methodfi.com/2026-03-30/reference/secrets/delete.md)
+- [List all Secrets](https://docs.methodfi.com/2026-03-30/reference/secrets/list.md)
+- [The Secrets endpoint](https://docs.methodfi.com/2026-03-30/reference/secrets/overview.md)
+- [Retrieve a Secret](https://docs.methodfi.com/2026-03-30/reference/secrets/retrieve.md)
+- [Queue Attribute Behaviors](https://docs.methodfi.com/2026-03-30/reference/simulations/attributes/create.md)
+- [Create a Card Brand](https://docs.methodfi.com/2026-03-30/reference/simulations/card-brands/create.md)
+- [Queue Connect Behaviors](https://docs.methodfi.com/2026-03-30/reference/simulations/connect/create.md)
+- [Create a Custom Credit Score](https://docs.methodfi.com/2026-03-30/reference/simulations/credit-scores/create.md)
+- [Simulate an Event](https://docs.methodfi.com/2026-03-30/reference/simulations/events/create.md)
+- [The simulate endpoint](https://docs.methodfi.com/2026-03-30/reference/simulations/overview.md)
+- [Create a Payment Instrument](https://docs.methodfi.com/2026-03-30/reference/simulations/payment_instruments/create.md)
+- [Update a Payment's Status](https://docs.methodfi.com/2026-03-30/reference/simulations/payments/update.md)
+- [Create a Transaction](https://docs.methodfi.com/2026-03-30/reference/simulations/transactions/create.md)
+- [Retrieve Micro-deposit Amounts](https://docs.methodfi.com/2026-03-30/reference/simulations/verification-sessions/get-microdeposit-amounts.md)
+- [Create MLE Public Key](https://docs.methodfi.com/2026-03-30/reference/teams/mle/create.md)
+- [Delete MLE Public Key](https://docs.methodfi.com/2026-03-30/reference/teams/mle/delete.md)
+- [List MLE Public Keys](https://docs.methodfi.com/2026-03-30/reference/teams/mle/list.md)
+- [Get Method JWKS](https://docs.methodfi.com/2026-03-30/reference/teams/mle/method-jwks.md)
+- [MLE Public Keys Overview](https://docs.methodfi.com/2026-03-30/reference/teams/mle/overview.md): Manage your public keys for Message Level Encryption
+- [Retrieve MLE Public Key](https://docs.methodfi.com/2026-03-30/reference/teams/mle/retrieve.md)
+- [Retrieve Method Public Key](https://docs.methodfi.com/2026-03-30/reference/teams/mle/retrieve-method-key.md)
+- [Versioning](https://docs.methodfi.com/2026-03-30/reference/versioning.md)
+- [Create a Webhook](https://docs.methodfi.com/2026-03-30/reference/webhooks/create.md)
+- [Delete a Webhook](https://docs.methodfi.com/2026-03-30/reference/webhooks/delete.md)
+- [List all Webhooks](https://docs.methodfi.com/2026-03-30/reference/webhooks/list.md)
+- [The webhook endpoint](https://docs.methodfi.com/2026-03-30/reference/webhooks/overview.md)
+- [Retrieve a Webhook](https://docs.methodfi.com/2026-03-30/reference/webhooks/retrieve.md)
+- [Update a Webhook status](https://docs.methodfi.com/2026-03-30/reference/webhooks/update.md)
+- [December Updates](https://docs.methodfi.com/changelog/2024/december.md)
+- [November Updates](https://docs.methodfi.com/changelog/2024/november.md)
+- [October Updates](https://docs.methodfi.com/changelog/2024/october.md)
+- [September Updates](https://docs.methodfi.com/changelog/2024/september.md)
+- [April Updates](https://docs.methodfi.com/changelog/2025/april.md)
+- [August Updates](https://docs.methodfi.com/changelog/2025/august.md)
+- [December Updates](https://docs.methodfi.com/changelog/2025/december.md)
+- [February Updates](https://docs.methodfi.com/changelog/2025/february.md)
+- [January Updates](https://docs.methodfi.com/changelog/2025/january.md)
+- [July Updates](https://docs.methodfi.com/changelog/2025/july.md)
+- [June Updates](https://docs.methodfi.com/changelog/2025/june.md)
+- [March Updates](https://docs.methodfi.com/changelog/2025/march.md)
+- [May Updates](https://docs.methodfi.com/changelog/2025/may.md)
+- [November Updates](https://docs.methodfi.com/changelog/2025/november.md)
+- [October Updates](https://docs.methodfi.com/changelog/2025/october.md)
+- [September Updates](https://docs.methodfi.com/changelog/2025/september.md)
+- [April Updates](https://docs.methodfi.com/changelog/2026/april.md)
+- [February Updates](https://docs.methodfi.com/changelog/2026/february.md)
+- [January Updates](https://docs.methodfi.com/changelog/2026/january.md)
+- [July Updates](https://docs.methodfi.com/changelog/2026/july.md)
+- [June Updates](https://docs.methodfi.com/changelog/2026/june.md)
+- [March Updates](https://docs.methodfi.com/changelog/2026/march.md)
+- [May Updates](https://docs.methodfi.com/changelog/2026/may.md)
+- [Introducing API v2](https://docs.methodfi.com/changelog/api-versions/2024-04-04.md)
+- [Introducing API Version 2025-07-04](https://docs.methodfi.com/changelog/api-versions/2025-07-04.md)
+- [Introducing API Version 2025-12-01](https://docs.methodfi.com/changelog/api-versions/2025-12-01.md)
+- [Introducing API Version 2026-03-30](https://docs.methodfi.com/changelog/api-versions/2026-03-30.md)
+- [Create a Connect Element Token](https://docs.methodfi.com/elements/connect/create_connect_token.md)
+- [Getting Connect Results](https://docs.methodfi.com/elements/connect/get_results.md)
+- [Launching a Connect Session](https://docs.methodfi.com/elements/connect/launch_connect.md)
+- [Connect Overview](https://docs.methodfi.com/elements/connect/overview.md)
+- [Environments](https://docs.methodfi.com/elements/environments.md)
+- [General Events](https://docs.methodfi.com/elements/events/general_events.md)
+- [Events Overview](https://docs.methodfi.com/elements/events/overview.md)
+- [Element Specific Events](https://docs.methodfi.com/elements/events/specific_events.md)
+- [Element SDKs](https://docs.methodfi.com/elements/libraries.md)
+- [Overview](https://docs.methodfi.com/elements/overview.md)
+- [Handling Account Edge Cases](https://docs.methodfi.com/guides/accounts/edge-cases.md): How to handle verification requirements, product limitations, and status changes.
+- [Funding Accounts](https://docs.methodfi.com/guides/accounts/funding.md): Setting up and verifying your corporate payment source.
+- [Supported Liability Types](https://docs.methodfi.com/guides/accounts/liability-types.md): The full range of consumer debt types Method supports.
+- [Account Lifecycle](https://docs.methodfi.com/guides/accounts/lifecycle.md): Account statuses, available products, and state transitions.
+- [Accounts](https://docs.methodfi.com/guides/accounts/overview.md): Liability and funding accounts — the financial objects at the heart of your product.
+- [Card Brand](https://docs.methodfi.com/guides/additional-products/card-brand.md): Card product names, visual card art, and card details for trust and engagement.
+- [Credit Scores](https://docs.methodfi.com/guides/additional-products/credit-scores.md): Credit score retrieval and monitoring for financial wellness products.
+- [Sensitive](https://docs.methodfi.com/guides/additional-products/sensitive.md): Gated access to full account numbers and sensitive account data.
+- [Vehicles](https://docs.methodfi.com/guides/additional-products/vehicles.md): Auto loan enrichment with VIN, make, model, and vehicle details.
+- [Core Concepts](https://docs.methodfi.com/guides/concepts.md): The mental model for Method's platform — objects, relationships, and data flow.
+- [Errors and Edge Cases](https://docs.methodfi.com/guides/connect/errors.md): Common Connect errors and how to handle them.
+- [How Connect Works](https://docs.methodfi.com/guides/connect/how-it-works.md): Soft-pull credit reports, auto vs manual discovery, and coverage.
+- [Connect — Account Discovery](https://docs.methodfi.com/guides/connect/overview.md): How Method discovers your users' complete liability picture.
+- [Handling Partial Results](https://docs.methodfi.com/guides/connect/partial-results.md): Designing for incomplete discovery results.
+- [Raw Credit Reports](https://docs.methodfi.com/guides/connect/raw-credit-reports.md): Receive the raw bureau credit report behind a Connect as downloadable files.
+- [Connect Subscriptions](https://docs.methodfi.com/guides/connect/subscriptions.md): Monitoring for new liabilities over time.
+- [Testing Connect](https://docs.methodfi.com/guides/connect/testing.md): How to test Connect in development.
+- [Entity Errors — What Can Go Wrong and How to Handle It](https://docs.methodfi.com/guides/entities/errors.md): What can go wrong during Entity creation and how to handle it.
+- [Entity Lifecycle — From Creation to Active Use](https://docs.methodfi.com/guides/entities/lifecycle.md): From creation to active use — understanding Entity states and transitions.
+- [Entities — The Foundation of Every Integration](https://docs.methodfi.com/guides/entities/overview.md): What an Entity represents, why it matters, and how it maps to your users.
+- [IDV Errors & Edge Cases](https://docs.methodfi.com/guides/identity-verification/errors.md): Common verification errors, failure modes, and how to handle edge cases.
+- [Maximizing Verification Success](https://docs.methodfi.com/guides/identity-verification/maximizing-success.md): How to improve match rates and verification success through better data collection.
+- [Verification Methods](https://docs.methodfi.com/guides/identity-verification/methods.md): Choosing the right phone and identity verification approach for your integration.
+- [Verification Outcomes](https://docs.methodfi.com/guides/identity-verification/outcomes.md): Understanding the difference between Matched and Verified states.
+- [Identity Verification (IDV)](https://docs.methodfi.com/guides/identity-verification/overview.md): Why identity verification matters and how the two-step process works.
+- [The Verification Flow](https://docs.methodfi.com/guides/identity-verification/verification-flow.md): Step-by-step verification sequence, state transitions, webhooks, and code walkthroughs.
+- [Opal](https://docs.methodfi.com/guides/opal.md): Method's embedded UI for identity verification, account discovery, and more.
+- [What is Method](https://docs.methodfi.com/guides/overview.md): Method is the infrastructure layer for consumer liability data and payments.
+- [Payment Errors and Constraints](https://docs.methodfi.com/guides/payments/errors.md): Processing windows, posting timing, return codes, and idempotency.
+- [Payment Instruments](https://docs.methodfi.com/guides/payments/instruments.md): Reusable payment configurations for recurring and repeated payments.
+- [Payment Lifecycle](https://docs.methodfi.com/guides/payments/lifecycle.md): What your users should see as payments move through the system.
+- [Payments](https://docs.methodfi.com/guides/payments/overview.md): How Method moves money to pay down debt.
+- [Platform Fundamentals](https://docs.methodfi.com/guides/platform-fundamentals.md): Environments, authentication, data flow patterns, and webhooks.
+- [Quickstart](https://docs.methodfi.com/guides/quickstart.md): Get up and running with Method's four-step integration process.
+- [Billing Lifecycle and Data Availability](https://docs.methodfi.com/guides/updates/billing-lifecycle.md): How a cardholder's billing stage determines which fields come back in an Update.
+- [Handling Update Failures](https://docs.methodfi.com/guides/updates/failures.md): Recommended patterns for handling stale data and failed refreshes.
+- [Update Lifecycle](https://docs.methodfi.com/guides/updates/lifecycle.md): The stages of an Update request and how to track them.
+- [Updates](https://docs.methodfi.com/guides/updates/overview.md): How Method keeps account data fresh, snapshot vs direct sources.
+- [Update Subscriptions](https://docs.methodfi.com/guides/updates/subscriptions.md): Set-and-forget monitoring to keep account data current.
+- [Getting Started](https://docs.methodfi.com/guides/use-cases/commerce/getting-started.md): Create an entity, verify identity, and connect credit cards — the foundational 3-step flow for every commerce integration.
+- [Commerce](https://docs.methodfi.com/guides/use-cases/commerce/overview.md): Connect customers' credit cards, reduce failed payments, and personalize customer experiences with Method's Commerce APIs.
+- [Preauth Signals](https://docs.methodfi.com/guides/use-cases/commerce/preauth-signals.md): Evaluate payment readiness before authorization and retry failed payments at the optimal time.
+- [Wallet Intelligence](https://docs.methodfi.com/guides/use-cases/commerce/wallet-intelligence.md): Retrieve wallet-level behavioral attributes to power recommendations, segmentation, and personalized product experiences.
+- [Wallet Onboarding](https://docs.methodfi.com/guides/use-cases/commerce/wallet-onboarding.md): Connect every credit card a customer owns without manual entry, then enrich and tokenize the cards to render a complete wallet.
+- [Mortgage & HELOC](https://docs.methodfi.com/guides/use-cases/lending/mortgage-heloc.md): Top-of-funnel qualification through portfolio targeting for secured-lending teams.
+- [Portfolio Intelligence: Grow](https://docs.methodfi.com/guides/use-cases/lending/portfolio-monitoring-grow.md): Post-origination monitoring for refi, 2nd loan, CLI, and cross-sell.
+- [Portfolio Intelligence: Protect](https://docs.methodfi.com/guides/use-cases/lending/portfolio-monitoring-protect.md): Early warning, line decreases, and real-time delinquency and autopay signals.
+- [Getting Started](https://docs.methodfi.com/guides/use-cases/pfm/getting-started.md): The universal 3-step flow for PFM integrations: create an entity, verify identity, and connect liabilities.
+- [Debt Dashboard & Credit Insights](https://docs.methodfi.com/guides/use-cases/pfm/monitoring-insights.md): Build real-time debt dashboards with account updates, card brand art, credit scores, and financial health attributes.
+- [Onboarding & Liability Discovery](https://docs.methodfi.com/guides/use-cases/pfm/onboarding-discovery.md): Identity verification options, liability discovery via Connect, ongoing connect subscriptions, and vehicle enrichment for auto loans.
+- [Digital Engagement & PFM](https://docs.methodfi.com/guides/use-cases/pfm/overview.md): Build comprehensive personal financial management experiences with Method's liability data, credit insights, and payment infrastructure.
+- [Transactions & Bill Pay](https://docs.methodfi.com/guides/use-cases/pfm/transactions-payments.md): Stream credit card transactions for spend management and initiate bill payments to your users' creditors.
+- [Overview](https://docs.methodfi.com/libraries/overview.md)
+- [Account Verification](https://docs.methodfi.com/opal/account_verification/overview.md)
+- [Card Connect](https://docs.methodfi.com/opal/card_connect/overview.md)
+- [Connect](https://docs.methodfi.com/opal/connect/overview.md)
+- [Opal Events](https://docs.methodfi.com/opal/events.md)
+- [Identity Verification](https://docs.methodfi.com/opal/identity/overview.md)
+- [Libraries](https://docs.methodfi.com/opal/libraries.md)
+- [Migration from Elements](https://docs.methodfi.com/opal/migration_guide.md)
+- [Overview](https://docs.methodfi.com/opal/overview.md): Method Opal - Next-generation embeddable financial components
+- [Quickstart](https://docs.methodfi.com/opal/quickstart.md): Get started with Method Opal in minutes
+- [Sessions](https://docs.methodfi.com/opal/sessions.md): Maintain state and user data across Opal interactions.
+- [Transactions](https://docs.methodfi.com/opal/transactions/overview.md)
+
+## OpenAPI Specs
+
+- [package-lock](https://docs.methodfi.com/package-lock.json)
+- [openapi](https://docs.methodfi.com/openapi.yaml)

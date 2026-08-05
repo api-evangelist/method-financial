@@ -1,0 +1,63 @@
+generated: '2026-08-04'
+method: searched
+source: openapi/method-financial-openapi-original.yml + https://security.methodfi.com/ + docs.methodfi.com
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: First-party OpenAPI 3.1.0 published at github.com/MethodFi/openapi (latest/openapi.bundled.yaml),
+    128 operations, 207 component schemas, unique operationIds, Redocly-linted in CI.
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 securityScheme; authentication is an opaque bearer API key.
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration not published on any host.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors are returned as application/json in a proprietary { success, data.error, message }
+    envelope, not application/problem+json.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: No /.well-known/security.txt on methodfi.com or docs.methodfi.com.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation response headers documented; deprecation is handled by dated API
+    versions.
+- id: idempotency-key
+  conforms: true
+  evidence: Idempotency-Key header accepted on all POST requests with at-most-once semantics and automatic
+    reconciliation of interrupted requests. https://docs.methodfi.com/reference/idempotency
+- id: rfc7515-jose-jwks
+  conforms: true
+  evidence: Anonymous JWK Set published at https://production.methodfi.com/.well-known/jwks.json for message-level
+    encryption key discovery.
+- id: a2a-agent-card
+  conforms: true
+  evidence: Agent card served at https://docs.methodfi.com/.well-known/agent-card.json; graded flavored
+    against A2A 1.0.0 (see a2a/method-financial-a2a.yml).
+- id: mcp
+  conforms: true
+  evidence: MCP server at https://docs.methodfi.com/mcp answering tools/list anonymously; documentation
+    scope only.
+- id: llms-txt
+  conforms: true
+  evidence: https://docs.methodfi.com/llms.txt returns a 331-line index of every docs page, each addressable
+    as .md.
+- id: fdx
+  conforms: false
+  evidence: No FDX (Financial Data Exchange) conformance claim in the docs or trust center. Method sources
+    liability data from credit-bureau soft pulls and direct institution connections rather than an FDX
+    data-access API.
+- id: fapi
+  conforms: false
+  evidence: No FAPI security profile; bearer API keys only.
+compliance_program:
+  trust_center: https://security.methodfi.com/
+  platform: SafeBase
+  certifications:
+  - SOC 2 Type 2
+  - PCI DSS v4.0.1
+  regulatory:
+  - GLBA
+  - CCPA
+  artifact: security/method-financial-trust-center.yml

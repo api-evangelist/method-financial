@@ -1,0 +1,62 @@
+generated: '2026-08-04'
+method: searched
+source: openapi/method-financial-openapi-original.yml
+docs: https://docs.methodfi.com/reference/authentication
+summary:
+  types:
+  - http
+  http_schemes:
+  - bearer
+  api_key_in:
+  - header
+  oauth2_flows: []
+  note: Method uses opaque bearer API keys, not OAuth. There is no authorization server, no scope surface
+    and no token endpoint, so no scopes/ artifact is emitted.
+schemes:
+- name: SecretKey
+  type: http
+  scheme: bearer
+  token_prefix: sk_
+  header: 'Authorization: Bearer <secret key>'
+  description: Secret key authentication. The team's secret key is used as the Bearer token. This is the
+    default security requirement on every authenticated Method API operation.
+  default: true
+  sources:
+  - openapi/method-financial-openapi-original.yml
+- name: OpalToken
+  type: http
+  scheme: bearer
+  token_prefix: otkn_
+  header: 'Authorization: Bearer <opal token>'
+  description: Short-lived Opal session token for the embeddable Opal component endpoints. Minted server-side
+    with POST /opal/token using a secret key, then handed to the client.
+  default: false
+  sources:
+  - openapi/method-financial-openapi-original.yml
+- name: PublishableKey
+  type: apiKey-equivalent
+  scheme: bearer
+  token_prefix: pk_
+  description: Publishable key for client-side Element requests. Documented in the OpenAPI info description;
+    not declared as a named securityScheme.
+  declared_in_spec: false
+  sources:
+  - https://docs.methodfi.com/reference/authentication
+key_management:
+  per_environment: true
+  note: Each environment (development, sandbox, production) under each team has its own unique key. Keys
+    are issued in the Method Dashboard.
+  dashboard: https://dashboard.methodfi.com
+  ip_allowlisting: true
+  ip_allowlisting_note: Team IP allowlisting shipped in the 2026-06 changelog.
+additional_controls:
+  message_level_encryption: true
+  mle_description: Teams can register MLE public keys (POST /teams/mle/public_keys) and set a default
+    encryption key. Method publishes its own JWKS anonymously at /.well-known/jwks.json.
+  mtls_errors_documented: true
+  mtls_docs: https://docs.methodfi.com/reference/errors/mtls-errors
+version_header:
+  name: Method-Version
+  current: '2026-03-30'
+  required: false
+  note: Omitting it falls back to the team default version.

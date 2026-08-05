@@ -1,0 +1,44 @@
+generated: '2026-08-04'
+method: searched
+status: published
+source: https://docs.methodfi.com/.well-known/mcp.json
+server:
+  name: method-api-docs
+  transport: http
+  url: https://docs.methodfi.com/mcp
+  advertised_url: https://methodfinancial.main-kill-isr.mintlify.me/mcp
+  authentication: none
+  discovery: https://docs.methodfi.com/.well-known/mcp.json
+  version: 1.0.0
+scope: documentation
+note: 'This is a Mintlify-hosted documentation MCP server: it exposes search and read access over the
+  Method docs corpus, not the Method API itself. There is no MCP server that wraps the Method REST operations
+  (no auth-bearing tool that creates an entity, runs a connect, or makes a payment). tools/list returned
+  200 anonymously and the three tools below are the real published set with their real inputSchemas. The
+  advertised_url in the discovery manifest points at Mintlify preview infrastructure; the working public
+  endpoint is docs.methodfi.com/mcp.'
+tools:
+- name: search_method_api_docs
+  title: Search documentation
+  description: Search the Method API Docs knowledge base for documentation, code examples, API references
+    and guides.
+  input_schema:
+    query: string (required) - search query
+    version: string - filter to a specific docs version
+  read_only: true
+- name: query_docs_filesystem_method_api_docs
+  description: Read-only shell-like query against a virtualized in-memory filesystem containing only the
+    Method documentation pages and OpenAPI specs.
+  input_schema:
+    command: string (required) - read-only shell-style command, e.g. head -200 /reference/authentication.mdx
+  read_only: true
+- name: submit_feedback
+  title: Submit documentation feedback
+  input_schema:
+    path: string - docs page path
+    feedback: string - feedback text
+  read_only: false
+oauth:
+  authorization_server: /.well-known/oauth-authorization-server -> 404
+  protected_resource: /.well-known/oauth-protected-resource -> 404
+  note: Anonymous access; no OAuth challenge on tools/list.

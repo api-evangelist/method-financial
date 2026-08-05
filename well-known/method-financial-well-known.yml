@@ -1,0 +1,77 @@
+generated: '2026-08-04'
+method: probed
+source: live GET of /.well-known/* on every apis.yml + OpenAPI servers[] host
+hosts:
+- host: https://production.methodfi.com
+  note: API host. Every path except the JWKS returns 401 — the API requires a Bearer secret key on all
+    routes, including unknown paths, so a 401 here is an auth wall rather than an absence.
+  documents:
+  - path: /.well-known/jwks.json
+    status: 200
+    file: method-financial-jwks.json
+    note: Anonymous. Method message-level-encryption public keys, also a documented API operation (listPublicJwks).
+  - path: /.well-known/security.txt
+    status: 401
+  - path: /.well-known/openid-configuration
+    status: 401
+  - path: /.well-known/oauth-authorization-server
+    status: 401
+  - path: /.well-known/oauth-protected-resource
+    status: 401
+  - path: /.well-known/api-catalog
+    status: 401
+  - path: /.well-known/ai-plugin.json
+    status: 401
+  - path: /.well-known/agent-card.json
+    status: 401
+  - path: /.well-known/mcp.json
+    status: 401
+- host: https://docs.methodfi.com
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: ../a2a/method-financial-agent-card.json
+    note: A2A agent card; saved verbatim under a2a/.
+  - path: /.well-known/mcp.json
+    status: 200
+    file: method-financial-mcp.json
+    note: MCP server discovery manifest for the documentation MCP server.
+  - path: /.well-known/agent-skills/methodfinancial/skill.md
+    status: 200
+    file: ../skills/method-financial-methodfinancial-skill.md
+    note: Provider-published Agent Skill, saved verbatim under skills/.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://methodfi.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+security_txt:
+  published: false
+  note: No RFC 9116 security.txt on any host. Method does run a responsible-disclosure channel — it is
+    published on the SafeBase trust center at https://security.methodfi.com/ instead. Publishing /.well-known/security.txt
+    on methodfi.com would make that machine-discoverable.

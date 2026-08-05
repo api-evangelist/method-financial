@@ -1,23 +1,158 @@
 aid: method-financial
 name: Method Financial
-description: 'Method Financial is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Method Financial is a US financial connectivity platform that gives developers
+  a single REST API for consumer liability data and debt payments. Instead of asking
+  a consumer to hand over bank credentials, Method verifies the consumer''s identity
+  and runs a permissioned soft credit pull to automatically discover every liability
+  they hold — credit cards, auto loans, mortgages, student loans and personal loans
+  — across 15,000+ financial institutions. It then normalizes balances, due dates,
+  interest rates, payment amounts and limits into one data model, keeps them fresh
+  through on-demand Updates and Subscriptions, and moves money directly to those creditors
+  through its Payments API. The platform also ships embeddable Opal/Elements UI components,
+  credit scores, financial attributes, card-brand enrichment, vehicle enrichment and
+  a webhook event stream, and is used for lending origination, debt consolidation,
+  portfolio intelligence, commerce card-linking and personal financial management.'
 url: https://raw.githubusercontent.com/api-evangelist/method-financial/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-04'
 modified: '2026-08-04'
+image: https://framerusercontent.com/images/8VlzHm7NUhxHyDz7Bej54eBKKAc.png
 tags:
 - Company
-apis: []
+- Financial Services
+- Fintech
+- Lending
+- Payments
+- Liability Data
+- Credit
+- Debt
+- Open Banking
+- Identity Verification
+- Personal Finance
+apis:
+- aid: method-financial:method-api
+  name: Method API
+  description: 'The Method API is a single REST interface for consumer liability data
+    and payments. Create an Entity for a consumer, verify their identity, run Connect
+    to discover every liability they hold, retrieve normalized balances, payoffs, transactions,
+    credit scores and attributes, and initiate payments from a funding account to those
+    creditors. Authentication is a Bearer secret key (sk_) and the API version is pinned
+    with the Method-Version header. Asynchronous results arrive over webhooks.'
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Liability Data
+  - Payments
+  - Credit
+  - Identity Verification
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-openapi-original.yml
+  - type: Overlay
+    url: overlays/method-financial-method-api-overlay.yaml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgenticAccess
+  url: agentic-access/method-financial-agentic-access.yml
+- type: TrustCenter
+  url: security/method-financial-trust-center.yml
 - type: Website
-  url: https://www.hiive.com/securities/method-financial-stock
+  url: https://methodfi.com/
+- type: DeveloperPortal
+  url: https://docs.methodfi.com/
+- type: Documentation
+  url: https://docs.methodfi.com/guides/overview
+- type: APIReference
+  url: https://docs.methodfi.com/reference/authentication
+- type: GettingStarted
+  url: https://docs.methodfi.com/guides/quickstart
+- type: SignUp
+  url: https://dashboard.methodfi.com
+- type: Support
+  url: https://methodfi.com/company/contact
+- type: Blog
+  url: https://methodfi.com/resources/perspectives
+- type: GitHubOrganization
+  url: https://github.com/MethodFi
+- type: Postman
+  url: https://www.postman.com/methodfi/method-api/collection/8d5j00b/method-api-v2
+- type: TermsOfService
+  url: https://methodfi.com/legal/terms-of-service-for-developers
+- type: PrivacyPolicy
+  url: https://methodfi.com/legal/privacy-policy
+- type: Compliance
+  url: https://security.methodfi.com/
+- type: Security
+  url: https://security.methodfi.com/
+- type: ChangeLog
+  url: https://docs.methodfi.com/changelog
+- type: OpenAPI
+  url: openapi/method-financial-openapi-original.yml
+- type: Packages
+  url: packages/method-financial-packages.yml
+- type: SDKs
+  url: packages/method-financial-packages.yml
+- type: WellKnown
+  url: well-known/method-financial-well-known.yml
+- type: MCPServer
+  url: mcp/method-financial-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/method-financial-tool-crosswalk.yml
+- type: AgentCard
+  url: a2a/method-financial-a2a.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/method-financial-llms.txt
+- type: Conformance
+  url: conformance/method-financial-conformance.yml
+- type: ErrorCatalog
+  url: errors/method-financial-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/method-financial-lifecycle.yml
+- type: Deprecation
+  url: https://docs.methodfi.com/reference/versioning
+- type: Authentication
+  url: authentication/method-financial-authentication.yml
+- type: DomainSecurity
+  url: security/method-financial-domain-security.yml
+- type: VulnerabilityDisclosure
+  url: security/method-financial-vulnerability-disclosure.yml
+- type: Sandbox
+  url: sandbox/method-financial-sandbox.yml
+- type: Conventions
+  url: conventions/method-financial-conventions.yml
+- type: Idempotency
+  url: conventions/method-financial-conventions.yml
+- type: ChangeLog
+  url: changelog/method-financial-changelog.yml
+- type: Components
+  url: components/method-financial-components.yml
+- type: DataModel
+  url: data-model/method-financial-data-model.yml
+- type: Webhooks
+  url: asyncapi/method-financial-webhooks.yml
+- type: RateLimits
+  url: rate-limits/method-financial-rate-limits.yml
+- type: ErrorCodes
+  url: errors/method-financial-error-codes.yml
+- type: DeclineCodes
+  url: errors/method-financial-decline-codes.yml
+- type: Overlay
+  url: overlays/method-financial-method-api-overlay.yaml
+x-enrichment:
+  date: '2026-08-04'
+  status: enriched
+  artifacts_added: 33
+  pass: local-v1

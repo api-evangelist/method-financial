@@ -1,0 +1,42 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.methodfi.com/reference/rate-limiting
+docs: https://docs.methodfi.com/reference/rate-limiting
+model: per-API-key, 60-second rolling window, independent counters per tier
+scope: Same limits apply in Development, Sandbox and Production
+rate_limits:
+- tier: Payment creation
+  limit_count: 120
+  interval: minute
+  applies_to: POST /payments
+- tier: Critical operations
+  limit_count: 60
+  interval: minute
+  applies_to: Payment deletion and report generation
+- tier: Standard writes
+  limit_count: 6000
+  interval: minute
+  applies_to: Entity and Account operations (create, update, connect, subscriptions); each resource+operation
+    is its own bucket
+- tier: Other writes
+  limit_count: 1800
+  interval: minute
+  applies_to: All other write operations
+- tier: Reads
+  limit_count: 6000
+  interval: minute
+  applies_to: All GET requests
+- tier: Unauthenticated
+  limit_count: 60
+  interval: minute
+  applies_to: Per IP address, requests without an API key
+exceeded:
+  status: 429
+  error_type: INVALID_REQUEST
+  error_sub_type: TOO_MANY_REQUESTS
+  block_duration_seconds: 60
+  retry_after_header: Retry-After (declared on the RateLimited response in the OpenAPI)
+  guidance: Wait at least 60 seconds, use exponential backoff with jitter, and combine with an Idempotency-Key
+    on POST so retries are not processed twice.
+headers_advertised: false
+enterprise_overrides: true

@@ -1,0 +1,42 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.methodfi.com/changelog
+docs: https://docs.methodfi.com/changelog
+scheme: monthly dated posts at /changelog/<year>/<month>, grouped into New Features / Changes / Improvements
+current_api_version: '2026-03-30'
+earliest_entry: 2024-09
+window: recent months only; the live changelog is the source of truth
+entries:
+- period: 2026-07
+  url: https://docs.methodfi.com/changelog/2026/july
+  new_features:
+  - Raw Credit Report Artifacts and Files API
+  - Estimated Statement Attribute
+  - Estimated Credit Card APR
+  changes:
+  - Payment Processing Windows
+  improvements:
+  - Idempotency and stuck-request recovery
+  - Dashboard navigation and search
+  - Payability check at account creation
+  - Webhook reliability
+  - Development environment
+  breaking: false
+- period: 2026-06
+  url: https://docs.methodfi.com/changelog/2026/june
+  new_features:
+  - Card Brand Details
+  - 'Dashboard: Check Payment Management'
+  - Preauth Signals
+  - 'New Attributes: Delinquency, HELOC and Available Credit'
+  - Account Attribute Subscriptions
+  - Team IP Allowlisting
+  improvements:
+  - Payments
+  - Payment Limits
+  breaking: false
+- period: 2026-05
+  url: https://docs.methodfi.com/changelog/2026/may
+  breaking: false
+note: Changelog months are dated posts, not semver releases. Breaking changes are delivered as a new dated
+  API version rather than in the changelog stream.

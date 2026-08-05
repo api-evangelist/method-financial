@@ -1,0 +1,60 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.methodfi.com/.well-known/agent-skills/methodfinancial/skill.md (provider-published)
+  + openapi/method-financial-openapi-original.yml
+skills:
+- file: method-financial-methodfinancial-skill.md
+  name: Methodfinancial
+  method: searched
+  source: https://docs.methodfi.com/.well-known/agent-skills/methodfinancial/skill.md
+  publisher: Method Financial
+  description: 'Provider-published Agent Skill, saved verbatim. Referenced from the A2A agent card at
+    https://docs.methodfi.com/.well-known/agent-card.json. Covers the whole platform: entities, identity
+    verification, connect, accounts, updates, payments, Opal and webhooks.'
+  api: openapi/method-financial-openapi-original.yml
+- file: method-financial-onboard-and-discover-liabilities.md
+  name: Onboard a consumer and discover their liabilities
+  method: generated
+  api: openapi/method-financial-openapi-original.yml
+  operations:
+  - createEntity
+  - createEntityVerificationSession
+  - updateEntityVerificationSession
+  - retrieveEntityVerificationSession
+  - createEntityConnect
+  - retrieveEntityConnect
+  - listAccounts
+  - retrieveAccount
+- file: method-financial-pay-down-a-liability.md
+  name: Pay down a consumer liability
+  method: generated
+  api: openapi/method-financial-openapi-original.yml
+  operations:
+  - createAccount
+  - createAccountVerificationSession
+  - updateAccountVerificationSession
+  - retrieveAccountVerificationSessionAmounts
+  - createAccountPayoff
+  - createPayment
+  - retrievePayment
+  - listPayments
+  - deletePayment
+  - listPaymentReversals
+- file: method-financial-monitor-a-portfolio.md
+  name: Keep liability data fresh and monitor a portfolio
+  method: generated
+  api: openapi/method-financial-openapi-original.yml
+  operations:
+  - createAccountUpdate
+  - retrieveAccountUpdate
+  - createAccountBalance
+  - listAccountTransactions
+  - createAccountSubscription
+  - createEntitySubscription
+  - createEntityAttributes
+  - createAccountAttribute
+  - createEntityCreditScore
+  - createWebhook
+  - listEvents
+  - retrieveEvent
+note: Every operationId in the generated skills was verified against the published OpenAPI before writing.

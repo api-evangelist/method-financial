@@ -1,0 +1,100 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.methodfi.com/reference/idempotency, https://docs.methodfi.com/reference/pagination,
+  https://docs.methodfi.com/reference/versioning, https://docs.methodfi.com/reference/rate-limiting, https://docs.methodfi.com/reference/expanding,
+  https://docs.methodfi.com/guides/platform-fundamentals
+authentication:
+  style: bearer-token
+  header: 'Authorization: Bearer <sk_...>'
+  key_prefixes:
+    secret: sk_
+    publishable: pk_
+    opal_token: otkn_
+  per_environment_keys: true
+  artifact: authentication/method-financial-authentication.yml
+  docs: https://docs.methodfi.com/reference/authentication
+idempotency:
+  supported: true
+  header: Idempotency-Key
+  key_format: any unique string up to 255 characters; V4 UUID recommended
+  scope: all POST requests
+  semantics: The status code and body of the first request for a key are saved and replayed on subsequent
+    requests with the same key. Transient failures (500, timeout, dropped connection) are automatically
+    reconciled so a retry with the same key is reprocessed rather than replaying the error, guaranteeing
+    at-most-once execution.
+  retention: null
+  unavailable_error:
+    status: 503
+    type: API_ERROR
+    sub_type: IDEMPOTENCY_UNAVAILABLE
+    guidance: Retry later if idempotency is required, or fall back to non-idempotent processing by omitting
+      the header.
+  docs: https://docs.methodfi.com/reference/idempotency
+pagination:
+  style: page-number and cursor (mutually exclusive)
+  request_params:
+  - page
+  - page_cursor
+  - page_limit
+  - from_date
+  - to_date
+  default_limit: 100
+  max_limit: 100
+  ordering: chronological, earliest created resource first
+  response_headers:
+  - Pagination-Page
+  - Pagination-Page-Count
+  - Pagination-Page-Limit
+  - Pagination-Total-Count
+  - Pagination-Page-Cursor-Prev
+  - Pagination-Page-Cursor-Next
+  docs: https://docs.methodfi.com/reference/pagination
+expansion:
+  supported: true
+  parameter: expand
+  max_depth: 4
+  description: Id-reference fields on a resource can be expanded into the full object.
+  docs: https://docs.methodfi.com/reference/expanding
+metadata:
+  supported: true
+  field: metadata
+  description: Free-form object available on core resources such as webhooks and payments.
+versioning:
+  style: dated header
+  header: Method-Version
+  current: '2026-03-30'
+  default: the team default version set in the Dashboard when the header is omitted
+  artifact: lifecycle/method-financial-lifecycle.yml
+  docs: https://docs.methodfi.com/reference/versioning
+response_envelope:
+  shape: '{ success: boolean, data: object, message: string|null }'
+  exceptions:
+  - GET /.well-known/jwks.json returns a bare JWK set
+  error_shape: '{ success: false, data: { error: { type, code, sub_type, message } }, message }'
+  artifact: errors/method-financial-problem-types.yml
+rate_limit_signaling:
+  response_headers_advertised: false
+  exceeded_status: 429
+  retry_after: Retry-After on the 429 response
+  artifact: rate-limits/method-financial-rate-limits.yml
+  docs: https://docs.methodfi.com/reference/rate-limiting
+request_tracing:
+  request_id_header: null
+  note: No request-id / correlation header is documented in the public reference or declared in the OpenAPI.
+async_model:
+  description: The platform is fundamentally asynchronous. Long-running operations (connects, updates,
+    payments, credit scores) return immediately and completion is delivered over webhook events; applications
+    are expected to be event-driven rather than polling.
+  artifact: asyncapi/method-financial-webhooks.yml
+message_level_encryption:
+  supported: true
+  description: Teams can register MLE public keys and a default encryption key; Method publishes its own
+    JWKS at /.well-known/jwks.json.
+  operations:
+  - createTeamPublicKey
+  - listTeamPublicKeys
+  - retrieveTeamPublicKey
+  - deleteTeamPublicKey
+  - createTeamEncryptionKey
+  - listPublicJwks
+  - retrievePublicJwk

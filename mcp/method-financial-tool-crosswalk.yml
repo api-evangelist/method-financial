@@ -1,0 +1,297 @@
+generated: '2026-08-04'
+method: derived
+source: mcp/method-financial-mcp.yml + openapi/method-financial-openapi-original.yml
+description: 'Binds every published Method MCP tool to its backing OpenAPI operation(s). The finding here
+  is a clean surface divergence: Method publishes an MCP server, but it is a documentation-search server,
+  so NONE of its three tools is backed by a Method API operation and ALL 128 REST operations are rest_only.
+  An agent connected to this MCP server can read about the Method API but cannot call it.'
+surfaces:
+  openapi:
+    file: openapi/method-financial-openapi-original.yml
+    version: 3.1.0
+    operations: 128
+    gated: false
+  graphql:
+    endpoint: null
+    note: Method publishes no GraphQL surface.
+  mcp:
+    url: https://docs.methodfi.com/mcp
+    tools: 3
+    gated: false
+    scope: documentation-search only
+crosswalk: []
+mcp_only:
+- tool: search_method_api_docs
+  reason: Documentation search over the Mintlify docs corpus. No Method API operation backs it; the Method
+    API exposes no search endpoint.
+- tool: query_docs_filesystem_method_api_docs
+  reason: Read-only virtual filesystem over the docs pages and OpenAPI files. Docs-plane only, no API
+    operation.
+- tool: submit_feedback
+  reason: Writes documentation feedback to Mintlify. No Method API operation backs it.
+rest_only:
+- capability: Account Attributes
+  operations:
+  - createAccountAttribute
+  - listAccountAttributes
+  - retrieveAccountAttribute
+  count: 3
+- capability: Account Balances
+  operations:
+  - createAccountBalance
+  - listAccountBalances
+  - retrieveAccountBalance
+  count: 3
+- capability: Account Card Brands
+  operations:
+  - createAccountCardBrand
+  - listAccountCardBrands
+  - retrieveAccountCardBrand
+  count: 3
+- capability: Account Consent
+  operations:
+  - updateAccountConsent
+  count: 1
+- capability: Account Payment Instruments
+  operations:
+  - closeAccountPaymentInstrument
+  - createAccountPaymentInstrument
+  - listAccountPaymentInstruments
+  - retrieveAccountPaymentInstrument
+  count: 4
+- capability: Account Payoffs
+  operations:
+  - createAccountPayoff
+  - listAccountPayoffs
+  - retrieveAccountPayoff
+  count: 3
+- capability: Account Products
+  operations:
+  - listAccountProducts
+  - retrieveAccountProduct
+  count: 2
+- capability: Account Sensitive
+  operations:
+  - createAccountSensitive
+  - listAccountSensitives
+  - retrieveAccountSensitive
+  count: 3
+- capability: Account Subscriptions
+  operations:
+  - createAccountSubscription
+  - deleteAccountSubscription
+  - listAccountSubscriptions
+  - retrieveAccountSubscription
+  count: 4
+- capability: Account Transactions
+  operations:
+  - listAccountTransactions
+  - retrieveAccountTransaction
+  count: 2
+- capability: Account Updates
+  operations:
+  - createAccountUpdate
+  - listAccountUpdates
+  - retrieveAccountUpdate
+  count: 3
+- capability: Account Verification Sessions
+  operations:
+  - createAccountVerificationSession
+  - listAccountVerificationSessions
+  - retrieveAccountVerificationSession
+  - retrieveAccountVerificationSessionAmounts
+  - updateAccountVerificationSession
+  count: 5
+- capability: Accounts
+  operations:
+  - createAccount
+  - listAccounts
+  - retrieveAccount
+  - updateAccount
+  count: 4
+- capability: Card Products
+  operations:
+  - retrieveCardProduct
+  count: 1
+- capability: Elements
+  operations:
+  - elementsCreateToken
+  - elementsExchangeAccount
+  - elementsRetrieveSession
+  - elementsRetrieveSessionResults
+  - elementsUpdateSession
+  count: 5
+- capability: Entities
+  operations:
+  - createEntity
+  - listEntities
+  - retrieveEntity
+  - updateEntity
+  count: 4
+- capability: Entity Attributes
+  operations:
+  - createEntityAttributes
+  - listEntityAttributes
+  - retrieveEntityAttribute
+  count: 3
+- capability: Entity Connects
+  operations:
+  - createEntityConnect
+  - createEntityManualConnect
+  - listEntityConnects
+  - retrieveEntityConnect
+  - retrieveEntityManualConnect
+  count: 5
+- capability: Entity Consent
+  operations:
+  - updateEntityConsent
+  count: 1
+- capability: Entity Credit Scores
+  operations:
+  - createEntityCreditScore
+  - listEntityCreditScores
+  - retrieveEntityCreditScore
+  count: 3
+- capability: Entity Identities
+  operations:
+  - createEntityIdentity
+  - listEntityIdentities
+  - retrieveEntityIdentity
+  count: 3
+- capability: Entity Products
+  operations:
+  - listEntityProducts
+  - retrieveEntityProduct
+  count: 2
+- capability: Entity Subscriptions
+  operations:
+  - createEntitySubscription
+  - deleteEntitySubscription
+  - listEntitySubscriptions
+  - retrieveEntitySubscription
+  count: 4
+- capability: Entity Vehicles
+  operations:
+  - listEntityVehicles
+  - retrieveEntityVehicle
+  - searchEntityVehicles
+  count: 3
+- capability: Entity Verification Sessions
+  operations:
+  - createEntityVerificationSession
+  - listEntityVerificationSessions
+  - retrieveEntityVerificationSession
+  - updateEntityVerificationSession
+  count: 4
+- capability: Events
+  operations:
+  - listEvents
+  - retrieveEvent
+  count: 2
+- capability: Forwarding Requests
+  operations:
+  - createForwardingRequest
+  - retrieveForwardingRequest
+  count: 2
+- capability: Managed Accounts
+  operations:
+  - listManagedAccountTransactions
+  - listManagedAccounts
+  - retrieveManagedAccount
+  count: 3
+- capability: Merchants
+  operations:
+  - listMerchants
+  - retrieveMerchant
+  count: 2
+- capability: Opal
+  operations:
+  - createOpalToken
+  - deactivateOpalToken
+  - retrieveOpalToken
+  count: 3
+- capability: Payment Reversals
+  operations:
+  - listPaymentReversals
+  - retrievePaymentReversal
+  - updatePaymentReversal
+  count: 3
+- capability: Payments
+  operations:
+  - createPayment
+  - deletePayment
+  - listPayments
+  - retrievePayment
+  count: 4
+- capability: Ping
+  operations:
+  - ping
+  count: 1
+- capability: Public Keys
+  operations:
+  - listPublicJwks
+  - retrievePublicJwk
+  count: 2
+- capability: Reports
+  operations:
+  - createReport
+  - downloadReport
+  - retrieveReport
+  count: 3
+- capability: Secrets
+  operations:
+  - createSecret
+  - deleteSecret
+  - listSecrets
+  - retrieveSecret
+  count: 4
+- capability: Simulate Accounts
+  operations:
+  - simulateCreateAccountCardBrand
+  - simulateCreateAccountTransaction
+  - simulateRetrieveVerificationAmounts
+  count: 3
+- capability: Simulate Entities
+  operations:
+  - simulateEntityAttributes
+  - simulateEntityConnect
+  - simulateEntityCreditScore
+  count: 3
+- capability: Simulate Events
+  operations:
+  - simulateCreateEvent
+  count: 1
+- capability: Simulate Payments
+  operations:
+  - simulatePostPaymentViaPaymentInstrument
+  - simulateUpdatePaymentStatus
+  count: 2
+- capability: Teams
+  operations:
+  - createTeam
+  - createTeamEncryptionKey
+  - createTeamPublicKey
+  - deleteTeamPublicKey
+  - listTeamPublicKeys
+  - retrieveTeam
+  - retrieveTeamPublicKey
+  count: 7
+- capability: Webhooks
+  operations:
+  - createWebhook
+  - deleteWebhook
+  - listWebhooks
+  - retrieveWebhook
+  - updateWebhook
+  count: 5
+coverage:
+  tools_named: 3
+  tools_bound_to_rest: 0
+  mcp_only: 3
+  rest_operations_total: 128
+  rest_operations_with_a_tool: 0
+  rest_coverage_pct: 0.0
+gap: Method has the two hardest prerequisites for an API MCP server already in place — a complete first-party
+  OpenAPI 3.1.0 with 128 unique operationIds, and a published agent skill describing the flows — but no
+  MCP server that exposes them. The highest-leverage next step for Method is a second MCP server, bearer-authenticated
+  with a team secret key, that projects the Entity -> Connect -> Account -> Payment operations as tools.

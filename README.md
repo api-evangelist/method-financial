@@ -42,5 +42,9 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Method Financial is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.hiive.com/securities/method-financial-stock
+Method Financial is a US financial connectivity platform that gives developers a single REST API for consumer liability data and debt payments. Rather than asking a consumer to hand over bank credentials, Method verifies their identity and runs a permissioned soft credit pull to discover every liability they hold — credit cards, auto loans, mortgages, student loans and personal loans — across 15,000+ financial institutions, normalizes them into one data model, keeps them fresh through Updates and Subscriptions, and moves money directly to those creditors through its Payments API.
+
+- Website: https://methodfi.com/
+- Documentation: https://docs.methodfi.com/
+- OpenAPI (first-party): https://github.com/MethodFi/openapi
+- Trust center: https://security.methodfi.com/

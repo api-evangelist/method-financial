@@ -1,0 +1,64 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.methodfi.com/guides/platform-fundamentals, https://docs.methodfi.com/reference/simulations/overview,
+  MethodFi/method-postman
+docs: https://docs.methodfi.com/guides/platform-fundamentals
+environments:
+- name: Development
+  base_url: https://dev.methodfi.com
+  description: Mocked responses. No real institutions are contacted and no payments are processed. The
+    only environment where the /simulate endpoints are callable.
+  simulations_enabled: true
+- name: Sandbox
+  base_url: https://sandbox.methodfi.com
+  description: Simulated flows over test data. Mimics real account discovery, payment timelines and error
+    states.
+  simulations_enabled: false
+- name: Production
+  base_url: https://production.methodfi.com
+  description: 'Live environment: real institutions, real data, real money.'
+  simulations_enabled: false
+credential_separation:
+  model: Each environment under each team has its own unique API key; data never crosses environments.
+  key_prefix: sk_ (secret) / pk_ (publishable). Method does not publish a test-vs-live key prefix distinction
+    — separation is by environment host and key, not prefix.
+simulation_api:
+  path_prefix: /simulate
+  availability: development environment only; calling /simulate in sandbox or production returns 403 Forbidden
+  docs: https://docs.methodfi.com/reference/simulations/overview
+  operations:
+  - operationId: simulateCreateAccountCardBrand
+    path: /simulate/accounts/{accountId}/card_brands
+    purpose: Simulate a card brand becoming available on an account
+  - operationId: simulateCreateAccountTransaction
+    path: /simulate/accounts/{accountId}/transactions
+    purpose: Simulate a transaction on an account
+  - operationId: simulateRetrieveVerificationAmounts
+    path: /simulate/accounts/{accountId}/verification_sessions/{avfId}/amounts
+    purpose: Retrieve the micro-deposit verification amounts so a verification can be completed in test
+  - operationId: simulateEntityAttributes
+    path: /simulate/entities/{entity_id}/attributes
+    purpose: Simulate entity attributes
+  - operationId: simulateEntityConnect
+    path: /simulate/entities/{entity_id}/connect
+    purpose: Simulate a Connect (liability discovery) completing
+  - operationId: simulateEntityCreditScore
+    path: /simulate/entities/{entity_id}/credit_scores/{crs_id}
+    purpose: Simulate a credit score result
+  - operationId: simulateCreateEvent
+    path: /simulate/events
+    purpose: Fire an arbitrary webhook event to exercise your handler
+  - operationId: simulatePostPaymentViaPaymentInstrument
+    path: /simulate/payments/payment_instruments/{pmt_inst_id}
+    purpose: Simulate posting a payment through a payment instrument
+  - operationId: simulateUpdatePaymentStatus
+    path: /simulate/payments/{paymentId}
+    purpose: Advance a payment through its status lifecycle
+fixtures:
+  postman_environment: MethodFi/method-postman ships "Method Sandbox.postman_environment.json"
+  url: https://github.com/MethodFi/method-postman
+test_clocks: false
+published_test_values: null
+note: Method publishes no magic test card numbers, test SSNs or fixed test identifiers in its public documentation.
+  Test behaviour is driven by the /simulate endpoints in the development environment rather than by magic
+  values, so no test credentials are recorded here.
