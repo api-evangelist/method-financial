@@ -32,27 +32,590 @@ tags:
 - Identity Verification
 - Personal Finance
 apis:
-- aid: method-financial:method-api
-  name: Method API
-  description: 'The Method API is a single REST interface for consumer liability data
-    and payments. Create an Entity for a consumer, verify their identity, run Connect
-    to discover every liability they hold, retrieve normalized balances, payoffs, transactions,
-    credit scores and attributes, and initiate payments from a funding account to those
-    creditors. Authentication is a Bearer secret key (sk_) and the API version is pinned
-    with the Method-Version header. Asynchronous results arrive over webhooks.'
+- aid: method-financial:method-financial-account-attributes-api
+  name: Method Financial Account Attributes API
+  description: Attribute data for accounts
   humanURL: https://docs.methodfi.com/
   baseURL: https://production.methodfi.com
   tags:
-  - Liability Data
+  - Account Attributes
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-account-attributes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-account-balances-api
+  name: Method Financial Account Balances API
+  description: Balance data for accounts
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Account Balances
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-account-balances-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-account-card-brands-api
+  name: Method Financial Account Card Brands API
+  description: Card brand information for accounts
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Account Card Brands
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-account-card-brands-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-account-consent-api
+  name: Method Financial Account Consent API
+  description: Consent management for accounts
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Account Consent
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-account-consent-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-account-payment-instruments-api
+  name: Method Financial Account Payment Instruments API
+  description: Payment instruments for accounts
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Account Payment Instruments
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-account-payment-instruments-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-account-payoffs-api
+  name: Method Financial Account Payoffs API
+  description: Payoff data for accounts
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Account Payoffs
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-account-payoffs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-account-products-api
+  name: Method Financial Account Products API
+  description: Products associated with accounts
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Account Products
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-account-products-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-account-sensitive-api
+  name: Method Financial Account Sensitive API
+  description: Sensitive data for accounts
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Account Sensitive
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-account-sensitive-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-account-subscriptions-api
+  name: Method Financial Account Subscriptions API
+  description: Subscriptions for accounts
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Account Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-account-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-account-transactions-api
+  name: Method Financial Account Transactions API
+  description: Transactions for accounts
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Account Transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-account-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-account-updates-api
+  name: Method Financial Account Updates API
+  description: Update records for accounts
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Account Updates
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-account-updates-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-account-verification-sessions-api
+  name: Method Financial Account Verification Sessions API
+  description: Verification sessions for accounts
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Account Verification Sessions
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-account-verification-sessions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-accounts-api
+  name: Method Financial Accounts API
+  description: Financial accounts (ACH, liability, clearing, debit card)
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-card-products-api
+  name: Method Financial Card Products API
+  description: Card product definitions
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Card Products
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-card-products-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-elements-api
+  name: Method Financial Elements API
+  description: Client-side Element endpoints
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Elements
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-elements-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-entities-api
+  name: Method Financial Entities API
+  description: Individuals, corporations, and receive-only entities
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Entities
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-entities-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-entity-attributes-api
+  name: Method Financial Entity Attributes API
+  description: Attribute data for entities
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Entity Attributes
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-entity-attributes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-entity-connects-api
+  name: Method Financial Entity Connects API
+  description: Account connection sessions for entities
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Entity Connects
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-entity-connects-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-entity-consent-api
+  name: Method Financial Entity Consent API
+  description: Consent management for entities
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Entity Consent
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-entity-consent-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-entity-credit-scores-api
+  name: Method Financial Entity Credit Scores API
+  description: Credit score data for entities
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Entity Credit Scores
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-entity-credit-scores-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-entity-identities-api
+  name: Method Financial Entity Identities API
+  description: Identity verification data for entities
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Entity Identities
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-entity-identities-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-entity-products-api
+  name: Method Financial Entity Products API
+  description: Products associated with entities
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Entity Products
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-entity-products-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-entity-subscriptions-api
+  name: Method Financial Entity Subscriptions API
+  description: Subscriptions for entities
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Entity Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-entity-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-entity-vehicles-api
+  name: Method Financial Entity Vehicles API
+  description: Vehicle data for entities
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Entity Vehicles
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-entity-vehicles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-entity-verification-sessions-api
+  name: Method Financial Entity Verification Sessions API
+  description: Verification sessions for entities
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Entity Verification Sessions
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-entity-verification-sessions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-events-api
+  name: Method Financial Events API
+  description: Webhook event log
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-events-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-forwarding-requests-api
+  name: Method Financial Forwarding Requests API
+  description: Request forwarding with sensitive data injection
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Forwarding Requests
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-forwarding-requests-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-managed-accounts-api
+  name: Method Financial Managed Accounts API
+  description: Method-managed accounts
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Managed Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-managed-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-merchants-api
+  name: Method Financial Merchants API
+  description: Merchant directory
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Merchants
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-merchants-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-opal-api
+  name: Method Financial Opal API
+  description: Opal client-side session and token management
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Opal
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-opal-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-payment-reversals-api
+  name: Method Financial Payment Reversals API
+  description: Reversals for payments
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Payment Reversals
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-payment-reversals-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-payments-api
+  name: Method Financial Payments API
+  description: ACH and clearing payments
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
   - Payments
-  - Credit
-  - Identity Verification
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-payments-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-ping-api
+  name: Method Financial Ping API
+  description: Health check endpoint
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Ping
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-ping-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-public-keys-api
+  name: Method Financial Public Keys API
+  description: Public key discovery endpoints for Message-Level Encryption.
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Public Keys
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-public-keys-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-reports-api
+  name: Method Financial Reports API
+  description: Downloadable reports
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-reports-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-secrets-api
+  name: Method Financial Secrets API
+  description: Secure secret storage
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Secrets
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-secrets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-simulate-accounts-api
+  name: Method Financial Simulate Accounts API
+  description: Sandbox account simulation
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Simulate Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-simulate-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-simulate-entities-api
+  name: Method Financial Simulate Entities API
+  description: Sandbox entity simulation
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Simulate Entities
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-simulate-entities-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-simulate-events-api
+  name: Method Financial Simulate Events API
+  description: Sandbox event simulation
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Simulate Events
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-simulate-events-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-simulate-payments-api
+  name: Method Financial Simulate Payments API
+  description: Sandbox payment simulation
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Simulate Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-simulate-payments-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-teams-api
+  name: Method Financial Teams API
+  description: Team and API key management
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
+  - Teams
+  properties:
+  - type: OpenAPI
+    url: openapi/method-financial-teams-api-openapi.yml
+  - type: Documentation
+    url: https://docs.methodfi.com/
+  - type: APIReference
+    url: https://docs.methodfi.com/reference/authentication
+- aid: method-financial:method-financial-webhooks-api
+  name: Method Financial Webhooks API
+  description: Webhook subscriptions
+  humanURL: https://docs.methodfi.com/
+  baseURL: https://production.methodfi.com
+  tags:
   - Webhooks
   properties:
   - type: OpenAPI
-    url: openapi/method-financial-openapi-original.yml
-  - type: Overlay
-    url: overlays/method-financial-method-api-overlay.yaml
+    url: openapi/method-financial-webhooks-api-openapi.yml
   - type: Documentation
     url: https://docs.methodfi.com/
   - type: APIReference
@@ -98,7 +661,7 @@ common:
 - type: ChangeLog
   url: https://docs.methodfi.com/changelog
 - type: OpenAPI
-  url: openapi/method-financial-openapi-original.yml
+  url: openapi/_original/method-financial-openapi-original.yml
 - type: Packages
   url: packages/method-financial-packages.yml
 - type: SDKs
