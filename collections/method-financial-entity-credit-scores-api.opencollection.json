@@ -1,0 +1,151 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Entity Credit Scores API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Entity Credit Scores",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all entity credit scores",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/entities/:entityId/credit_scores",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "entityId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination (1-indexed)."
+              },
+              {
+                "name": "page_limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page."
+              },
+              {
+                "name": "page_cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for cursor-based pagination. Use the value from `Pagination-Page-Cursor-Next` or `Pagination-Page-Cursor-Prev` response headers."
+              },
+              {
+                "name": "from_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this date (inclusive, YYYY-MM-DD format)."
+              },
+              {
+                "name": "to_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to this date (inclusive, YYYY-MM-DD format)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list of credit scores for the specified entity."
+        },
+        {
+          "info": {
+            "name": "Create an entity credit score",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/entities/:entityId/credit_scores",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              },
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "entityId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new credit score retrieval for the specified entity."
+        },
+        {
+          "info": {
+            "name": "Retrieve an entity credit score",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/entities/:entityId/credit_scores/:crsId",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "entityId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity."
+              },
+              {
+                "name": "crsId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity credit score."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a single entity credit score by its identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

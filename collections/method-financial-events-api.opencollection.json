@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Events API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/events",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination (1-indexed)."
+              },
+              {
+                "name": "page_limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page."
+              },
+              {
+                "name": "page_cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for cursor-based pagination. Use the value from `Pagination-Page-Cursor-Next` or `Pagination-Page-Cursor-Prev` response headers."
+              },
+              {
+                "name": "from_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this date (inclusive, YYYY-MM-DD format)."
+              },
+              {
+                "name": "to_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to this date (inclusive, YYYY-MM-DD format)."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by event type."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a paginated list of webhook event records."
+        },
+        {
+          "info": {
+            "name": "Retrieve an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/events/:evtId",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "evtId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the event."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a single event by its identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

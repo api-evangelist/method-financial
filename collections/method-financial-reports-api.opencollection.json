@@ -1,0 +1,111 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Reports API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/reports",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              },
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new report of the specified type. The report will be generated asynchronously and can be downloaded once its status is `completed`."
+        },
+        {
+          "info": {
+            "name": "Retrieve a report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/reports/:reportId",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "reportId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the report."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a single report by its identifier. Use this to check the status of a report before downloading."
+        },
+        {
+          "info": {
+            "name": "Download a report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/reports/:reportId/download",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "reportId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the report."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the completed report as a CSV file attachment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,2425 @@
+{
+  "item": [
+    {
+      "id": "288d902a-8a45-4c6f-a252-9a0e4e701dc8",
+      "name": "Payments",
+      "description": {
+        "content": "ACH and clearing payments",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "020458f6-37cd-4430-b287-7a8046ae673d",
+          "name": "List all payments",
+          "request": {
+            "name": "List all payments",
+            "description": {
+              "content": "Returns a paginated list of payments. Results can be filtered by status, type, accounts, holders, reversal, and date range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination (1-indexed)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_limit",
+                  "value": "10",
+                  "description": "Number of items per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_cursor",
+                  "value": "<string>",
+                  "description": "Cursor for cursor-based pagination. Use the value from `Pagination-Page-Cursor-Next` or `Pagination-Page-Cursor-Prev` response headers."
+                },
+                {
+                  "disabled": false,
+                  "key": "from_date",
+                  "value": "<date>",
+                  "description": "Filter results from this date (inclusive, YYYY-MM-DD format)."
+                },
+                {
+                  "disabled": false,
+                  "key": "to_date",
+                  "value": "<date>",
+                  "description": "Filter results to this date (inclusive, YYYY-MM-DD format)."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter payments by status."
+                },
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "Filter payments by source account ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "destination",
+                  "value": "<string>",
+                  "description": "Filter payments by destination account ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Filter payments by payment type."
+                },
+                {
+                  "disabled": false,
+                  "key": "reversal_id",
+                  "value": "<string>",
+                  "description": "Filter payments by reversal ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "acc_id",
+                  "value": "<string>",
+                  "description": "Filter payments by either the source or destination account ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "destination_holder_id",
+                  "value": "<string>",
+                  "description": "Filter payments by destination entity ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "source_holder_id",
+                  "value": "<string>",
+                  "description": "Filter payments by source entity ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "holder_id",
+                  "value": "<string>",
+                  "description": "Filter payments by either the source or destination entity ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "Expand payment source or destination accounts inline. Nested account expansion\nis supported for latest verification sessions on the source or destination.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "Expand payment source or destination accounts inline. Nested account expansion\nis supported for latest verification sessions on the source or destination.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                "key": "Method-Version",
+                "value": "2026-03-30"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2b58d593-6182-4264-9687-eeead79e4432",
+              "name": "A paginated list of payments.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "page_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reversal_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "acc_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination_holder_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source_holder_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "holder_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Current page number.",
+                  "key": "Pagination-Page",
+                  "value": "794"
+                },
+                {
+                  "disabled": false,
+                  "description": "Total number of pages.",
+                  "key": "Pagination-Page-Count",
+                  "value": "794"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of items per page.",
+                  "key": "Pagination-Page-Limit",
+                  "value": "794"
+                },
+                {
+                  "disabled": false,
+                  "description": "Total number of items across all pages.",
+                  "key": "Pagination-Total-Count",
+                  "value": "794"
+                },
+                {
+                  "disabled": false,
+                  "description": "Cursor for the previous page, if available.",
+                  "key": "Pagination-Page-Cursor-Prev",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Cursor for the next page, if available.",
+                  "key": "Pagination-Page-Cursor-Next",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"value\": \"<Error: Could not resolve allOf schema\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d2d34a9-a9fe-41b1-af46-22616b3287da",
+              "name": "Bad request - invalid parameters or request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "page_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reversal_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "acc_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination_holder_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source_holder_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "holder_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "913f196f-74be-4b1b-ae91-a0bb1e1d035d",
+              "name": "Unauthorized - missing or invalid authentication token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "page_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reversal_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "acc_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination_holder_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source_holder_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "holder_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31a3f458-2229-4216-9654-14aa87dce09f",
+              "name": "Not found - the requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "page_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reversal_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "acc_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination_holder_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source_holder_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "holder_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7fe0636f-83fe-4aea-a758-bbf2d0e3d556",
+              "name": "Too many requests - rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "page_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reversal_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "acc_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination_holder_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source_holder_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "holder_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "794"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34232354-0b94-464d-b06e-e3094347f023",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "page_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reversal_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "acc_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destination_holder_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source_holder_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "holder_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c1b42a4d-b7e0-469b-b2b0-20db07bfb1d5",
+          "name": "Create a payment",
+          "request": {
+            "name": "Create a payment",
+            "description": {
+              "content": "Creates a new payment to transfer funds from a source account to a destination account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                "key": "Method-Version",
+                "value": "2026-03-30"
+              },
+              {
+                "disabled": false,
+                "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                "key": "Idempotency-Key",
+                "value": "<uuid>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"amount\": \"<integer>\",\n  \"description\": \"<string>\",\n  \"reversal_account\": \"<string>\",\n  \"metadata\": \"<object,null>\",\n  \"dry_run\": \"<boolean>\",\n  \"fee\": {\n    \"type\": \"<string>\",\n    \"amount\": \"<integer>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "73d649af-7c31-4ed9-b46e-1a520a64afe0",
+              "name": "The newly created payment.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": \"acc_b9q2XVAnNFbp3\",\n  \"destination\": \"acc_Y8u3qL9mNa1Bz\",\n  \"amount\": 5000,\n  \"description\": \"Monthly card payment\",\n  \"metadata\": {\n    \"invoice_id\": \"inv_1001\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"pmt_rPrDPEwyCVUcm\",\n    \"reversal_id\": null,\n    \"source_trace_id\": null,\n    \"destination_trace_id\": null,\n    \"source\": \"acc_b9q2XVAnNFbp3\",\n    \"destination\": \"acc_Y8u3qL9mNa1Bz\",\n    \"amount\": 5000,\n    \"description\": \"Monthly card payment\",\n    \"status\": \"pending\",\n    \"fund_status\": \"transmitting\",\n    \"estimated_completion_date\": \"2026-01-19\",\n    \"source_settlement_date\": null,\n    \"destination_settlement_date\": null,\n    \"source_status\": null,\n    \"destination_status\": null,\n    \"destination_payment_method\": null,\n    \"fee\": null,\n    \"type\": \"standard\",\n    \"error\": null,\n    \"metadata\": {\n      \"invoice_id\": \"inv_1001\"\n    },\n    \"created_at\": \"2026-01-15T18:30:00.000Z\",\n    \"updated_at\": \"2026-01-15T18:30:00.000Z\"\n  },\n  \"message\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8dc1ae9-17db-4717-82ff-c5ad6ae68c81",
+              "name": "Bad request - invalid parameters or request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": \"acc_b9q2XVAnNFbp3\",\n  \"destination\": \"acc_Y8u3qL9mNa1Bz\",\n  \"amount\": 5000,\n  \"description\": \"Monthly card payment\",\n  \"metadata\": {\n    \"invoice_id\": \"inv_1001\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73c827fc-2ad6-4182-8b8b-fc44cb511d5d",
+              "name": "Unauthorized - missing or invalid authentication token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": \"acc_b9q2XVAnNFbp3\",\n  \"destination\": \"acc_Y8u3qL9mNa1Bz\",\n  \"amount\": 5000,\n  \"description\": \"Monthly card payment\",\n  \"metadata\": {\n    \"invoice_id\": \"inv_1001\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bfb4eb79-0e52-4f94-8508-911f08c56b71",
+              "name": "Not found - the requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": \"acc_b9q2XVAnNFbp3\",\n  \"destination\": \"acc_Y8u3qL9mNa1Bz\",\n  \"amount\": 5000,\n  \"description\": \"Monthly card payment\",\n  \"metadata\": {\n    \"invoice_id\": \"inv_1001\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f993c887-0f3f-4409-95df-93f849f7807b",
+              "name": "Unprocessable entity - the request was valid JSON but failed business or validation rules.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": \"acc_b9q2XVAnNFbp3\",\n  \"destination\": \"acc_Y8u3qL9mNa1Bz\",\n  \"amount\": 5000,\n  \"description\": \"Monthly card payment\",\n  \"metadata\": {\n    \"invoice_id\": \"inv_1001\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11a7eeb2-b434-4d0b-beeb-08e274a5eb07",
+              "name": "Too many requests - rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": \"acc_b9q2XVAnNFbp3\",\n  \"destination\": \"acc_Y8u3qL9mNa1Bz\",\n  \"amount\": 5000,\n  \"description\": \"Monthly card payment\",\n  \"metadata\": {\n    \"invoice_id\": \"inv_1001\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "794"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "854d28aa-856e-4575-acc2-cc720bb97715",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": \"acc_b9q2XVAnNFbp3\",\n  \"destination\": \"acc_Y8u3qL9mNa1Bz\",\n  \"amount\": 5000,\n  \"description\": \"Monthly card payment\",\n  \"metadata\": {\n    \"invoice_id\": \"inv_1001\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "68776c52-d740-4146-be26-d631cf0b9d70",
+          "name": "Retrieve a payment",
+          "request": {
+            "name": "Retrieve a payment",
+            "description": {
+              "content": "Retrieves a payment by its unique identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                ":paymentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "Expand payment source or destination accounts inline. Nested account expansion\nis supported for latest verification sessions on the source or destination.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "Expand payment source or destination accounts inline. Nested account expansion\nis supported for latest verification sessions on the source or destination.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "paymentId",
+                  "description": "(Required) Unique identifier for the payment."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                "key": "Method-Version",
+                "value": "2026-03-30"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5f6f65e1-86b0-4e60-945f-c8f0b8f43e47",
+              "name": "The requested payment.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"pmt_rPrDPEwyCVUcm\",\n    \"source\": \"acc_kX\",\n    \"destination\": \"acc_4BhYrGO9BG\",\n    \"amount\": 5000,\n    \"status\": \"posted\",\n    \"type\": \"standard\",\n    \"created_at\": \"2017-01-08T16:30:57.933Z\",\n    \"updated_at\": \"2009-09-09T21:36:50.777Z\",\n    \"reversal_id\": \"rvs_ktOr_g2np\",\n    \"reversal_account\": \"acc_zVk85OPD\",\n    \"payment_instrument\": \"pmt_inst_aTJMbnCjw34yQ\",\n    \"source_trace_id\": \"string\",\n    \"destination_trace_id\": null,\n    \"description\": null,\n    \"fund_status\": \"unknown\",\n    \"estimated_completion_date\": null,\n    \"source_settlement_date\": null,\n    \"destination_settlement_date\": \"1958-08-08\",\n    \"destination_posted_date\": \"1998-07-20\",\n    \"source_status\": \"string\",\n    \"destination_status\": \"string\",\n    \"destination_payment_method\": null,\n    \"fee\": {\n      \"type\": \"total\",\n      \"amount\": 3455\n    },\n    \"error\": {\n      \"type\": \"PAYMENT_FAILED\",\n      \"code\": 10001,\n      \"sub_type\": \"PAYMENT_INSUFFICIENT_FUNDS\",\n      \"message\": \"Payment failed due to insufficient funds from the source account.\"\n    },\n    \"idempotency_key\": \"string\",\n    \"metadata\": \"<object,null>\"\n  },\n  \"message\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "945d8d14-e06b-4ec5-94bf-8e0cadaae638",
+              "name": "Bad request - invalid parameters or request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c286659-3054-43bf-8bb4-ca557f44d404",
+              "name": "Unauthorized - missing or invalid authentication token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87158e96-cdae-4c90-b939-102e0a2a5ac5",
+              "name": "Not found - the requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04bf533f-e530-4b62-9b20-0fd9fb277e45",
+              "name": "Too many requests - rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "794"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4fe20e2b-fe3b-4ad1-b2f7-efe9f324995a",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "76d6caba-86c9-4241-b243-cd23c0b1e80c",
+          "name": "Delete a payment",
+          "request": {
+            "name": "Delete a payment",
+            "description": {
+              "content": "Cancels a pending payment. Only payments with a `pending` status can be canceled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                ":paymentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "paymentId",
+                  "description": "(Required) Unique identifier for the payment."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                "key": "Method-Version",
+                "value": "2026-03-30"
+              },
+              {
+                "disabled": false,
+                "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                "key": "Idempotency-Key",
+                "value": "<uuid>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7e6a3d59-28d4-452a-b6c5-f2e4f143e9fd",
+              "name": "The canceled payment.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"pmt_rPrDPEwyCVUcm\",\n    \"source\": \"acc_kX\",\n    \"destination\": \"acc_4BhYrGO9BG\",\n    \"amount\": 5000,\n    \"status\": \"posted\",\n    \"type\": \"standard\",\n    \"created_at\": \"2017-01-08T16:30:57.933Z\",\n    \"updated_at\": \"2009-09-09T21:36:50.777Z\",\n    \"reversal_id\": \"rvs_ktOr_g2np\",\n    \"reversal_account\": \"acc_zVk85OPD\",\n    \"payment_instrument\": \"pmt_inst_aTJMbnCjw34yQ\",\n    \"source_trace_id\": \"string\",\n    \"destination_trace_id\": null,\n    \"description\": null,\n    \"fund_status\": \"unknown\",\n    \"estimated_completion_date\": null,\n    \"source_settlement_date\": null,\n    \"destination_settlement_date\": \"1958-08-08\",\n    \"destination_posted_date\": \"1998-07-20\",\n    \"source_status\": \"string\",\n    \"destination_status\": \"string\",\n    \"destination_payment_method\": null,\n    \"fee\": {\n      \"type\": \"total\",\n      \"amount\": 3455\n    },\n    \"error\": {\n      \"type\": \"PAYMENT_FAILED\",\n      \"code\": 10001,\n      \"sub_type\": \"PAYMENT_INSUFFICIENT_FUNDS\",\n      \"message\": \"Payment failed due to insufficient funds from the source account.\"\n    },\n    \"idempotency_key\": \"string\",\n    \"metadata\": \"<object,null>\"\n  },\n  \"message\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa7e28da-ca5f-49b7-a04f-a73d86a4b15f",
+              "name": "Bad request - invalid parameters or request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "841b9d5b-58d0-43c0-bc1b-7de02ae96282",
+              "name": "Unauthorized - missing or invalid authentication token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b51d3b70-26dc-48bd-91a6-4577daa15ad9",
+              "name": "Not found - the requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b1a9aa0-c4f8-4fc9-a1de-3a2def6daa59",
+              "name": "Unprocessable entity - the request was valid JSON but failed business or validation rules.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9bde7237-46b4-4f1c-9404-4af415638820",
+              "name": "Too many requests - rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "794"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a91dd1c-7b57-4a55-97a9-f10cd400467b",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": {\n    \"error\": {\n      \"type\": \"api_error\",\n      \"code\": 4114,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://production.methodfi.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "14156e79-201c-4963-978a-f83f4d78ce8e",
+    "name": "Method Payments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Method API enables you to retrieve financial data, create payments, and manage\nentities and accounts programmatically. This specification covers the public API\nsurface for version `2026-03-30`.\n\n## Authentication\n\nMost API requests require a Bearer token in the `Authorization` header.\nUse your secret key (`sk_...`) for server-side requests and public key (`pk_...`)\nfor client-side Element requests. Public Message-Level Encryption key discovery\nendpoints are documented separately and do not require authentication.\n\n## Versioning\n\nThe API version is selected via the `Method-Version` header. This spec targets\nversion `2026-03-30`. The SDK sets this header automatically.\n\n## Response Envelope\n\nMost JSON responses are wrapped in a standard envelope:\n\n```json\n{\n  \"success\": true,\n  \"data\": { ... },\n  \"message\": null\n}\n```\n\nThe `/.well-known/jwks.json` endpoint is an exception and returns a bare JWK set.\n\n## Pagination\n\nList endpoints return pagination metadata in response headers:\n`Pagination-Page`, `Pagination-Page-Count`, `Pagination-Page-Limit`,\n`Pagination-Total-Count`, `Pagination-Page-Cursor-Prev`, `Pagination-Page-Cursor-Next`.\n\n## Expandable Fields\n\nCertain resource fields can be expanded from IDs to full objects using the\n`expand` query parameter. Maximum nesting depth is 4 levels.\n\n\nContact Support:\n Name: Method Financial\n Email: team@methodfi.com",
+      "type": "text/plain"
+    }
+  }
+}

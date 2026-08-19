@@ -1,0 +1,164 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Account Subscriptions API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all account subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/accounts/:accountId/subscriptions",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list of subscriptions for the specified account."
+        },
+        {
+          "info": {
+            "name": "Create an account subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/accounts/:accountId/subscriptions",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              },
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new subscription for the specified account."
+        },
+        {
+          "info": {
+            "name": "Retrieve an account subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/accounts/:accountId/subscriptions/:subId",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account."
+              },
+              {
+                "name": "subId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account subscription."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves an account subscription by its unique identifier."
+        },
+        {
+          "info": {
+            "name": "Delete an account subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://production.methodfi.com/accounts/:accountId/subscriptions/:subId",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              },
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account."
+              },
+              {
+                "name": "subId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account subscription."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an account subscription."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

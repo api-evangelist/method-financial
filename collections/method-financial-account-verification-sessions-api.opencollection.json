@@ -1,0 +1,221 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Account Verification Sessions API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account Verification Sessions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all account verification sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/accounts/:accountId/verification_sessions",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination (1-indexed)."
+              },
+              {
+                "name": "page_limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page."
+              },
+              {
+                "name": "page_cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for cursor-based pagination. Use the value from `Pagination-Page-Cursor-Next` or `Pagination-Page-Cursor-Prev` response headers."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list of verification sessions for the specified account."
+        },
+        {
+          "info": {
+            "name": "Create an account verification session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/accounts/:accountId/verification_sessions",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              },
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new verification session for the specified account."
+        },
+        {
+          "info": {
+            "name": "Retrieve an account verification session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/accounts/:accountId/verification_sessions/:avfId",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account."
+              },
+              {
+                "name": "avfId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account verification session."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves an account verification session by its unique identifier."
+        },
+        {
+          "info": {
+            "name": "Update an account verification session",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://production.methodfi.com/accounts/:accountId/verification_sessions/:avfId",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              },
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account."
+              },
+              {
+                "name": "avfId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account verification session."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an account verification session, typically to submit micro deposit amounts for verification."
+        },
+        {
+          "info": {
+            "name": "Retrieve verification session amounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/accounts/:accountId/verification_sessions/:avfId/amounts",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account."
+              },
+              {
+                "name": "avfId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account verification session."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves the micro deposit amounts for a verification session."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

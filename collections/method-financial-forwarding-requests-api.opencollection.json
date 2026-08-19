@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Forwarding Requests API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Forwarding Requests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a forwarding request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/forwarding_requests",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              },
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new forwarding request that proxies an HTTP request to a third-party endpoint with sensitive data injection.\n\nForwarding-specific validation and execution failures are returned in the standard error envelope.\nCommon forwarding `sub_type` values include `URL_NOT_ALLOWED`, `INVALID_METHOD`,\n`BODY_JSON_INVALID`, `BINDING_NOT_FOUND`, `FORWARDED_REQUEST_NETWORK_ERROR`,\nand `FORWARDED_REQUEST_TIMEOUT`.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve a forwarding request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/forwarding_requests/:id",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the forwarding request."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a single forwarding request by its identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

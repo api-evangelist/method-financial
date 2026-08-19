@@ -1,0 +1,355 @@
+openapi: 3.2.0
+info:
+  title: Method Elements API
+  version: '2026-03-30'
+  license:
+    name: Proprietary
+    url: https://methodfi.com
+  description: "The Method API enables you to retrieve financial data, create payments, and manage\nentities and accounts programmatically. This specification covers the public API\nsurface for version `2026-03-30`.\n\n## Authentication\n\nMost API requests require a Bearer token in the `Authorization` header.\nUse your secret key (`sk_...`) for server-side requests and public key (`pk_...`)\nfor client-side Element requests. Public Message-Level Encryption key discovery\nendpoints are documented separately and do not require authentication.\n\n## Versioning\n\nThe API version is selected via the `Method-Version` header. This spec targets\nversion `2026-03-30`. The SDK sets this header automatically.\n\n## Response Envelope\n\nMost JSON responses are wrapped in a standard envelope:\n\n```json\n{\n  \"success\": true,\n  \"data\": { ... },\n  \"message\": null\n}\n```\n\nThe `/.well-known/jwks.json` endpoint is an exception and returns a bare JWK set.\n\n## Pagination\n\nList endpoints return pagination metadata in response headers:\n`Pagination-Page`, `Pagination-Page-Count`, `Pagination-Page-Limit`,\n`Pagination-Total-Count`, `Pagination-Page-Cursor-Prev`, `Pagination-Page-Cursor-Next`.\n\n## Expandable Fields\n\nCertain resource fields can be expanded from IDs to full objects using the\n`expand` query parameter. Maximum nesting depth is 4 levels.\n"
+  contact:
+    name: Method Financial
+    url: https://methodfi.com
+    email: team@methodfi.com
+servers:
+- url: https://production.methodfi.com
+  description: Production
+  x-fern-server-name: Production
+- url: https://sandbox.methodfi.com
+  description: Sandbox
+  x-fern-server-name: Sandbox
+- url: https://dev.methodfi.com
+  description: Development
+  x-fern-server-name: Development
+security:
+- SecretKey: []
+tags:
+- name: Elements
+  description: Client-side Element endpoints
+paths:
+  /elements/token:
+    post:
+      operationId: elementsCreateToken
+      deprecated: true
+      summary: Create an element token
+      description: 'Creates a new element token for client-side use. The token is scoped to a specific entity
+
+        and has an expiration. Use this server-side to generate tokens for your frontend.
+
+        '
+      tags:
+      - Elements
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - entity_id
+              - type
+              properties:
+                entity_id:
+                  type: string
+                  description: The entity ID to scope the token to.
+                  pattern: ^ent_\w+$
+                type:
+                  type: string
+                  description: The type of element token to create.
+                element_type:
+                  type: string
+                  description: The specific element type for the token.
+      responses:
+        '200':
+          description: The created element token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /elements/token/{pk_elem_id}/results:
+    get:
+      operationId: elementsRetrieveSessionResults
+      deprecated: true
+      summary: Retrieve element session results
+      description: Returns the results of a completed element session. Use this to retrieve data collected during an element flow.
+      tags:
+      - Elements
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - name: pk_elem_id
+        in: path
+        required: true
+        description: The element token identifier.
+        schema:
+          type: string
+          pattern: ^pk_elem_\w+$
+      responses:
+        '200':
+          description: The session results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /elements/sessions/{session_id}:
+    get:
+      operationId: elementsRetrieveSession
+      deprecated: true
+      summary: Retrieve an element session
+      description: Returns a single element session by its identifier.
+      tags:
+      - Elements
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - name: session_id
+        in: path
+        required: true
+        description: Unique identifier for the element session.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The requested session.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    put:
+      operationId: elementsUpdateSession
+      deprecated: true
+      summary: Update an element session
+      description: Updates an element session by its identifier.
+      tags:
+      - Elements
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - name: session_id
+        in: path
+        required: true
+        description: Unique identifier for the element session.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Session update parameters.
+      responses:
+        '200':
+          description: The updated session.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /elements/accounts/exchange:
+    post:
+      operationId: elementsExchangeAccount
+      deprecated: true
+      summary: Exchange an account
+      description: Exchanges account information for use in element flows. This endpoint is called server-side.
+      tags:
+      - Elements
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Account exchange parameters.
+      responses:
+        '200':
+          description: The exchanged account data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+components:
+  responses:
+    NotFound:
+      description: Not found - the requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request - invalid parameters or request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    InternalError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  schemas:
+    ErrorObject:
+      type: object
+      required:
+      - type
+      - code
+      - message
+      properties:
+        type:
+          type: string
+          description: Error type category.
+          enum:
+          - invalid_request
+          - api_error
+          - resource_error
+        code:
+          type: integer
+          description: Numeric error code. Common codes include 400 (bad request), 401 (unauthorized), 403 (forbidden), 404 (not found), 422 (unprocessable entity), 429 (rate limited), and 500 (internal error).
+        sub_type:
+          type:
+          - string
+          - 'null'
+          description: More specific error classification.
+        message:
+          type: string
+          description: Human-readable error description.
+    SuccessEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a single payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific response payload.
+        message:
+          type:
+          - string
+          - 'null'
+      example:
+        success: true
+        data: {}
+        message: null
+    ErrorEnvelope:
+      type: object
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `false` for error responses.
+        data:
+          type: object
+          required:
+          - error
+          properties:
+            error:
+              $ref: '#/components/schemas/ErrorObject'
+        message:
+          type: string
+    JsonObject:
+      type: object
+      description: Arbitrary JSON object.
+      additionalProperties: true
+    ObjectResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/JsonObject'
+      example:
+        success: true
+        data:
+          id: obj_123
+        message: null
+  parameters:
+    method_version:
+      name: Method-Version
+      in: header
+      required: true
+      description: 'API version to use for this request. This spec targets `2026-03-30`.
+
+        The SDK sets this header automatically.
+
+        '
+      schema:
+        type: string
+        enum:
+        - '2026-03-30'
+        default: '2026-03-30'
+  securitySchemes:
+    OpalToken:
+      type: http
+      scheme: bearer
+      description: 'Opal token authentication for Opal session endpoints. Use an Opal token (`otkn_...`)
+
+        as the Bearer token. Created via POST /opal/token using a secret key.
+
+        '
+    SecretKey:
+      type: http
+      scheme: bearer
+      description: 'Secret key authentication. Use your team''s secret key (`sk_...`) as the Bearer token.
+
+        All authenticated API endpoints require this scheme unless otherwise noted.
+
+        '

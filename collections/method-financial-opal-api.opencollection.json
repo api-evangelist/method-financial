@@ -1,0 +1,91 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Opal API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Opal",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve an Opal session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/opal/token",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the current state of the Opal session associated with the authenticated token."
+        },
+        {
+          "info": {
+            "name": "Create an Opal token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/opal/token",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new Opal token and, depending on the creation pattern, a new session. Supports three patterns: (A) provide `entity_id` + `mode` + mode config, (B) provide inline `entity` + `mode` + mode config, or (C) provide `session_id` to create an additional token for an existing session."
+        },
+        {
+          "info": {
+            "name": "Deactivate an Opal token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://production.methodfi.com/opal/token",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deactivates the authenticated Opal token, preventing further use."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

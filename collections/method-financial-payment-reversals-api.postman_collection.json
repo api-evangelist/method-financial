@@ -1,0 +1,1594 @@
+{
+  "item": [
+    {
+      "id": "2e65dc56-c57b-411a-a328-3492c153d10b",
+      "name": "Payment Reversals",
+      "description": {
+        "content": "Reversals for payments",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e3894492-3cc0-4efe-b5d8-1e86086aaea1",
+          "name": "List all reversals for a payment",
+          "request": {
+            "name": "List all reversals for a payment",
+            "description": {
+              "content": "Returns a list of all reversals associated with a specific payment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                ":paymentId",
+                "reversals"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "paymentId",
+                  "description": "(Required) Unique identifier for the payment."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                "key": "Method-Version",
+                "value": "2026-03-30"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "10078eba-83a1-4958-91c6-abf249a118d8",
+              "name": "A list of payment reversals.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId",
+                    "reversals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"value\": \"<Error: Could not resolve allOf schema\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e8eedb8-2066-4ac5-8572-d7482efffa55",
+              "name": "Bad request - invalid parameters or request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId",
+                    "reversals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"resource_error\",\n      \"code\": 5047,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "455c24e6-7a2b-4043-8ba4-b804ffac7a28",
+              "name": "Unauthorized - missing or invalid authentication token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId",
+                    "reversals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"resource_error\",\n      \"code\": 5047,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f8f5d2e-f904-4a23-8624-0f3f1096814a",
+              "name": "Not found - the requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId",
+                    "reversals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"resource_error\",\n      \"code\": 5047,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0936cffa-5406-4bb3-9d07-42372f79accf",
+              "name": "Too many requests - rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId",
+                    "reversals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "3636"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"resource_error\",\n      \"code\": 5047,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "098af729-717b-4076-8631-8d373161f9fe",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId",
+                    "reversals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"resource_error\",\n      \"code\": 5047,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d990fe9a-bf73-4784-86d7-96094a6ad093",
+          "name": "Retrieve a payment reversal",
+          "request": {
+            "name": "Retrieve a payment reversal",
+            "description": {
+              "content": "Retrieves a specific reversal for a payment by its unique identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                ":paymentId",
+                "reversals",
+                ":reversalId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "paymentId",
+                  "description": "(Required) Unique identifier for the payment."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "reversalId",
+                  "description": "(Required) Unique identifier for the reversal."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                "key": "Method-Version",
+                "value": "2026-03-30"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a9bbb3aa-646a-479a-a880-752da3d0521a",
+              "name": "The requested payment reversal.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId",
+                    "reversals",
+                    ":reversalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reversalId",
+                      "description": "(Required) Unique identifier for the reversal."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"rvs_dKe9ehC3hEBYy\",\n    \"pmt_id\": \"pmt_28ldU\",\n    \"status\": \"sent\",\n    \"direction\": \"credit\",\n    \"trace_id\": \"string\",\n    \"target_account\": null,\n    \"amount\": 9827,\n    \"description\": null,\n    \"fee\": {},\n    \"created_at\": \"1988-11-13T09:51:01.827Z\",\n    \"updated_at\": \"2017-11-23T23:44:30.715Z\",\n    \"error\": {\n      \"type\": \"PAYMENT_REVERSAL_FAILED\",\n      \"code\": 14001,\n      \"sub_type\": \"PAYMENT_REVERSAL_INSUFFICIENT_FUNDS\",\n      \"message\": \"Payment reversal failed due to insufficient funds from the account.\"\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba59ccfe-8a7c-4a63-ad75-fe47f71f0a38",
+              "name": "Bad request - invalid parameters or request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId",
+                    "reversals",
+                    ":reversalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reversalId",
+                      "description": "(Required) Unique identifier for the reversal."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"resource_error\",\n      \"code\": 5047,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e939fe6-310f-4940-bebf-fce62b2ce07b",
+              "name": "Unauthorized - missing or invalid authentication token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId",
+                    "reversals",
+                    ":reversalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reversalId",
+                      "description": "(Required) Unique identifier for the reversal."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"resource_error\",\n      \"code\": 5047,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f68187ea-2155-489c-856f-4d001aeb0cb9",
+              "name": "Not found - the requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId",
+                    "reversals",
+                    ":reversalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reversalId",
+                      "description": "(Required) Unique identifier for the reversal."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"resource_error\",\n      \"code\": 5047,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab782abe-f971-45bf-8eb8-d961cfd03540",
+              "name": "Too many requests - rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId",
+                    "reversals",
+                    ":reversalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reversalId",
+                      "description": "(Required) Unique identifier for the reversal."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "3636"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"resource_error\",\n      \"code\": 5047,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "079573e7-d1aa-4895-bb17-15f05f5c6911",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId",
+                    "reversals",
+                    ":reversalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reversalId",
+                      "description": "(Required) Unique identifier for the reversal."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"resource_error\",\n      \"code\": 5047,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4a2ab38e-a974-48a0-b92d-31566640e936",
+          "name": "Update a payment reversal",
+          "request": {
+            "name": "Update a payment reversal",
+            "description": {
+              "content": "Updates a payment reversal. Currently supports updating the reversal status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                ":paymentId",
+                "reversals",
+                ":reversalId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "paymentId",
+                  "description": "(Required) Unique identifier for the payment."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "reversalId",
+                  "description": "(Required) Unique identifier for the reversal."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                "key": "Method-Version",
+                "value": "2026-03-30"
+              },
+              {
+                "disabled": false,
+                "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                "key": "Idempotency-Key",
+                "value": "<uuid>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0f0c6dc1-83c8-4a15-a513-0f6c0482266b",
+              "name": "The updated payment reversal.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId",
+                    "reversals",
+                    ":reversalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reversalId",
+                      "description": "(Required) Unique identifier for the reversal."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"rvs_dKe9ehC3hEBYy\",\n    \"pmt_id\": \"pmt_28ldU\",\n    \"status\": \"sent\",\n    \"direction\": \"credit\",\n    \"trace_id\": \"string\",\n    \"target_account\": null,\n    \"amount\": 9827,\n    \"description\": null,\n    \"fee\": {},\n    \"created_at\": \"1988-11-13T09:51:01.827Z\",\n    \"updated_at\": \"2017-11-23T23:44:30.715Z\",\n    \"error\": {\n      \"type\": \"PAYMENT_REVERSAL_FAILED\",\n      \"code\": 14001,\n      \"sub_type\": \"PAYMENT_REVERSAL_INSUFFICIENT_FUNDS\",\n      \"message\": \"Payment reversal failed due to insufficient funds from the account.\"\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "93d85747-8fb9-4ffe-8a28-2d400214fce3",
+              "name": "Bad request - invalid parameters or request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId",
+                    "reversals",
+                    ":reversalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reversalId",
+                      "description": "(Required) Unique identifier for the reversal."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"resource_error\",\n      \"code\": 5047,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c5839e36-76cc-4645-9166-3c88eeecfaf0",
+              "name": "Unauthorized - missing or invalid authentication token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId",
+                    "reversals",
+                    ":reversalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reversalId",
+                      "description": "(Required) Unique identifier for the reversal."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"resource_error\",\n      \"code\": 5047,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b44c2833-302b-4297-bc71-babc7f603b18",
+              "name": "Not found - the requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId",
+                    "reversals",
+                    ":reversalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reversalId",
+                      "description": "(Required) Unique identifier for the reversal."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"resource_error\",\n      \"code\": 5047,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ec9f6a8-8e92-4df8-9ffe-6c1f91686072",
+              "name": "Unprocessable entity - the request was valid JSON but failed business or validation rules.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId",
+                    "reversals",
+                    ":reversalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reversalId",
+                      "description": "(Required) Unique identifier for the reversal."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"resource_error\",\n      \"code\": 5047,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35495afa-6c2b-4f3a-b20b-3eaa139752c7",
+              "name": "Too many requests - rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId",
+                    "reversals",
+                    ":reversalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reversalId",
+                      "description": "(Required) Unique identifier for the reversal."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "3636"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"resource_error\",\n      \"code\": 5047,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8501e676-c50f-4f1b-9255-1eeb8f6a1a9a",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":paymentId",
+                    "reversals",
+                    ":reversalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentId",
+                      "description": "(Required) Unique identifier for the payment."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "reversalId",
+                      "description": "(Required) Unique identifier for the reversal."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Idempotency key for safely retrying a write request. Reuse the same value when\nretrying the same logical operation to avoid creating duplicate side effects.\n",
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"resource_error\",\n      \"code\": 5047,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://production.methodfi.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6a9975ff-2c23-4407-979f-b6a3f88e800a",
+    "name": "Method Payment Reversals API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Method API enables you to retrieve financial data, create payments, and manage\nentities and accounts programmatically. This specification covers the public API\nsurface for version `2026-03-30`.\n\n## Authentication\n\nMost API requests require a Bearer token in the `Authorization` header.\nUse your secret key (`sk_...`) for server-side requests and public key (`pk_...`)\nfor client-side Element requests. Public Message-Level Encryption key discovery\nendpoints are documented separately and do not require authentication.\n\n## Versioning\n\nThe API version is selected via the `Method-Version` header. This spec targets\nversion `2026-03-30`. The SDK sets this header automatically.\n\n## Response Envelope\n\nMost JSON responses are wrapped in a standard envelope:\n\n```json\n{\n  \"success\": true,\n  \"data\": { ... },\n  \"message\": null\n}\n```\n\nThe `/.well-known/jwks.json` endpoint is an exception and returns a bare JWK set.\n\n## Pagination\n\nList endpoints return pagination metadata in response headers:\n`Pagination-Page`, `Pagination-Page-Count`, `Pagination-Page-Limit`,\n`Pagination-Total-Count`, `Pagination-Page-Cursor-Prev`, `Pagination-Page-Cursor-Next`.\n\n## Expandable Fields\n\nCertain resource fields can be expanded from IDs to full objects using the\n`expand` query parameter. Maximum nesting depth is 4 levels.\n\n\nContact Support:\n Name: Method Financial\n Email: team@methodfi.com",
+      "type": "text/plain"
+    }
+  }
+}

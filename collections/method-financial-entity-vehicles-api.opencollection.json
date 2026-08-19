@@ -1,0 +1,125 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Entity Vehicles API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Entity Vehicles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all entity vehicles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/entities/:entityId/vehicles",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "entityId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list of vehicles for the specified entity."
+        },
+        {
+          "info": {
+            "name": "Search entity vehicles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/entities/:entityId/vehicles",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              },
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "entityId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Searches for vehicles associated with the specified entity."
+        },
+        {
+          "info": {
+            "name": "Retrieve an entity vehicle",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/entities/:entityId/vehicles/:vhlId",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "entityId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity."
+              },
+              {
+                "name": "vhlId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity vehicle."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a single entity vehicle by its identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

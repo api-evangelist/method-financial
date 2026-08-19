@@ -1,0 +1,1128 @@
+{
+  "item": [
+    {
+      "id": "d565d60c-23d1-4f18-a5df-5e05b4ada006",
+      "name": "Account Transactions",
+      "description": {
+        "content": "Transactions for accounts",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fa786285-c827-4568-8782-aabf285a7675",
+          "name": "List all account transactions",
+          "request": {
+            "name": "List all account transactions",
+            "description": {
+              "content": "Returns a paginated list of transactions for the specified account. Results can be filtered by status and date range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                ":accountId",
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination (1-indexed)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_limit",
+                  "value": "10",
+                  "description": "Number of items per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_cursor",
+                  "value": "<string>",
+                  "description": "Cursor for cursor-based pagination. Use the value from `Pagination-Page-Cursor-Next` or `Pagination-Page-Cursor-Prev` response headers."
+                },
+                {
+                  "disabled": false,
+                  "key": "from_date",
+                  "value": "<date>",
+                  "description": "Filter results from this date (inclusive, YYYY-MM-DD format)."
+                },
+                {
+                  "disabled": false,
+                  "key": "to_date",
+                  "value": "<date>",
+                  "description": "Filter results to this date (inclusive, YYYY-MM-DD format)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountId",
+                  "description": "(Required) Unique identifier for the account."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                "key": "Method-Version",
+                "value": "2026-03-30"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b55d94c1-3646-4cb7-ad79-cf20e134e7fd",
+              "name": "A paginated list of account transactions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "page_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to_date",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountId",
+                      "description": "(Required) Unique identifier for the account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Current page number.",
+                  "key": "Pagination-Page",
+                  "value": "5122"
+                },
+                {
+                  "disabled": false,
+                  "description": "Total number of pages.",
+                  "key": "Pagination-Page-Count",
+                  "value": "5122"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of items per page.",
+                  "key": "Pagination-Page-Limit",
+                  "value": "5122"
+                },
+                {
+                  "disabled": false,
+                  "description": "Total number of items across all pages.",
+                  "key": "Pagination-Total-Count",
+                  "value": "5122"
+                },
+                {
+                  "disabled": false,
+                  "description": "Cursor for the previous page, if available.",
+                  "key": "Pagination-Page-Cursor-Prev",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "description": "Cursor for the next page, if available.",
+                  "key": "Pagination-Page-Cursor-Next",
+                  "value": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"value\": \"<Error: Could not resolve allOf schema\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e46e120-460d-409c-9ab0-2b5c3c5301ed",
+              "name": "Bad request - invalid parameters or request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "page_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to_date",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountId",
+                      "description": "(Required) Unique identifier for the account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"invalid_request\",\n      \"code\": 8451,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7017aa7-7b58-4049-89dd-eee2385a5615",
+              "name": "Unauthorized - missing or invalid authentication token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "page_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to_date",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountId",
+                      "description": "(Required) Unique identifier for the account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"invalid_request\",\n      \"code\": 8451,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96fe69e5-c3a7-448b-8741-68a9b05814ed",
+              "name": "Not found - the requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "page_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to_date",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountId",
+                      "description": "(Required) Unique identifier for the account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"invalid_request\",\n      \"code\": 8451,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d2e5dc0-4743-4ba3-9567-4806d442dad5",
+              "name": "Too many requests - rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "page_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to_date",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountId",
+                      "description": "(Required) Unique identifier for the account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "5122"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"invalid_request\",\n      \"code\": 8451,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29422d63-51c7-45bb-9cba-2f9000f35a49",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "page_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to_date",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountId",
+                      "description": "(Required) Unique identifier for the account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"invalid_request\",\n      \"code\": 8451,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "07037d8d-c39e-4a04-89d0-57a959c44068",
+          "name": "Retrieve an account transaction",
+          "request": {
+            "name": "Retrieve an account transaction",
+            "description": {
+              "content": "Retrieves an account transaction by its unique identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                ":accountId",
+                "transactions",
+                ":accTxnId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountId",
+                  "description": "(Required) Unique identifier for the account."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accTxnId",
+                  "description": "(Required) Unique identifier for the account transaction."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                "key": "Method-Version",
+                "value": "2026-03-30"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8f830b9f-cb93-493f-91c2-ab962d7ad962",
+              "name": "The requested account transaction.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "transactions",
+                    ":accTxnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountId",
+                      "description": "(Required) Unique identifier for the account."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accTxnId",
+                      "description": "(Required) Unique identifier for the account transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"txn_aTJMbnCjw34yQ\",\n    \"account_id\": \"string\",\n    \"merchant\": {\n      \"name\": \"string\",\n      \"logo\": null\n    },\n    \"amount\": 9258.756825337545,\n    \"auth_amount\": 2325.5402766049683,\n    \"currency_code\": null,\n    \"transaction_amount\": null,\n    \"transaction_auth_amount\": null,\n    \"transaction_currency_code\": null,\n    \"status\": \"posted\",\n    \"descriptor\": null,\n    \"transacted_at\": null,\n    \"posted_at\": null,\n    \"voided_at\": \"1975-06-12T04:47:34.375Z\",\n    \"original_txn_id\": null,\n    \"created_at\": \"1959-08-28T10:27:54.294Z\",\n    \"updated_at\": \"2003-08-31T04:44:58.181Z\",\n    \"merchant_category_code\": \"string\"\n  },\n  \"message\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "226c8f64-9346-4431-923a-3358e4a60fd7",
+              "name": "Bad request - invalid parameters or request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "transactions",
+                    ":accTxnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountId",
+                      "description": "(Required) Unique identifier for the account."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accTxnId",
+                      "description": "(Required) Unique identifier for the account transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"invalid_request\",\n      \"code\": 8451,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "49ba3582-fd13-4bba-b559-9a6da3e5ae56",
+              "name": "Unauthorized - missing or invalid authentication token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "transactions",
+                    ":accTxnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountId",
+                      "description": "(Required) Unique identifier for the account."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accTxnId",
+                      "description": "(Required) Unique identifier for the account transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"invalid_request\",\n      \"code\": 8451,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26ade863-d56f-4bae-8601-7c47531b41e7",
+              "name": "Not found - the requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "transactions",
+                    ":accTxnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountId",
+                      "description": "(Required) Unique identifier for the account."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accTxnId",
+                      "description": "(Required) Unique identifier for the account transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"invalid_request\",\n      \"code\": 8451,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0db64aaa-7b71-4dad-923f-cd3ba76f053c",
+              "name": "Too many requests - rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "transactions",
+                    ":accTxnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountId",
+                      "description": "(Required) Unique identifier for the account."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accTxnId",
+                      "description": "(Required) Unique identifier for the account transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "5122"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"invalid_request\",\n      \"code\": 8451,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3f35a071-48e3-4e2b-ac50-c2c09495e9cb",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "transactions",
+                    ":accTxnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountId",
+                      "description": "(Required) Unique identifier for the account."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accTxnId",
+                      "description": "(Required) Unique identifier for the account transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version to use for this request. This spec targets `2026-03-30`.\nThe SDK sets this header automatically.\n",
+                    "key": "Method-Version",
+                    "value": "2026-03-30"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"invalid_request\",\n      \"code\": 8451,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://production.methodfi.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e9c9af92-6708-4d59-a3bf-a0ddb7841dea",
+    "name": "Method Account Transactions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Method API enables you to retrieve financial data, create payments, and manage\nentities and accounts programmatically. This specification covers the public API\nsurface for version `2026-03-30`.\n\n## Authentication\n\nMost API requests require a Bearer token in the `Authorization` header.\nUse your secret key (`sk_...`) for server-side requests and public key (`pk_...`)\nfor client-side Element requests. Public Message-Level Encryption key discovery\nendpoints are documented separately and do not require authentication.\n\n## Versioning\n\nThe API version is selected via the `Method-Version` header. This spec targets\nversion `2026-03-30`. The SDK sets this header automatically.\n\n## Response Envelope\n\nMost JSON responses are wrapped in a standard envelope:\n\n```json\n{\n  \"success\": true,\n  \"data\": { ... },\n  \"message\": null\n}\n```\n\nThe `/.well-known/jwks.json` endpoint is an exception and returns a bare JWK set.\n\n## Pagination\n\nList endpoints return pagination metadata in response headers:\n`Pagination-Page`, `Pagination-Page-Count`, `Pagination-Page-Limit`,\n`Pagination-Total-Count`, `Pagination-Page-Cursor-Prev`, `Pagination-Page-Cursor-Next`.\n\n## Expandable Fields\n\nCertain resource fields can be expanded from IDs to full objects using the\n`expand` query parameter. Maximum nesting depth is 4 levels.\n\n\nContact Support:\n Name: Method Financial\n Email: team@methodfi.com",
+      "type": "text/plain"
+    }
+  }
+}

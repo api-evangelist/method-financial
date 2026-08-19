@@ -1,0 +1,421 @@
+{
+  "item": [
+    {
+      "id": "2fac1905-f13f-4786-9074-cacdeb2d05e5",
+      "name": "Public Keys",
+      "description": {
+        "content": "Public key discovery endpoints for Message-Level Encryption.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "358d6373-1cee-4f1d-a2c4-c5ce6f2c1484",
+          "name": "List public JWKs",
+          "request": {
+            "name": "List public JWKs",
+            "description": {
+              "content": "Returns the currently active Method public keys for Message-Level Encryption.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ".well-known",
+                "jwks.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f03199fd-912e-4fd3-bf08-64ca157da48d",
+              "name": "Public JWK set for Method encryption.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ".well-known",
+                    "jwks.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Caching directive for the public JWK set.",
+                  "key": "Cache-Control",
+                  "value": "public, max-age=3600"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"keys\": [\n    {\n      \"kid\": \"mthd_jwk_abc123\",\n      \"kty\": \"RSA\",\n      \"alg\": \"RSA-OAEP-256\",\n      \"use\": \"enc\",\n      \"n\": \"sXchf3Hj7G6m1mQF2k38QeY7s9lQfV4sLzM0YJr7Q7B6U2CjQX8m5w\",\n      \"e\": \"AQAB\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b627943b-426f-45cf-836a-935f423100a7",
+              "name": "Bad request - invalid parameters or request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ".well-known",
+                    "jwks.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"invalid_request\",\n      \"code\": 6124,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d99252bc-fbc9-4b51-abba-43346e33984a",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ".well-known",
+                    "jwks.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"invalid_request\",\n      \"code\": 6124,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "064d0e9c-ad79-475c-a1cc-31733969f5a4",
+          "name": "Retrieve a public JWK",
+          "request": {
+            "name": "Retrieve a public JWK",
+            "description": {
+              "content": "Returns a single Method public key by identifier for Message-Level Encryption.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "auth",
+                ":jwk_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "jwk_id",
+                  "description": "(Required) Unique identifier for the Method public JWK."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9e935cea-03f5-4a09-b82f-8daa3fa272d8",
+              "name": "The requested public JWK.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    ":jwk_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jwk_id",
+                      "description": "(Required) Unique identifier for the Method public JWK."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Caching directive for the public JWK.",
+                  "key": "Cache-Control",
+                  "value": "public, max-age=3600"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"mthd_jwk_abc123\",\n    \"jwk\": {\n      \"kid\": \"mthd_jwk_abc123\",\n      \"kty\": \"RSA\",\n      \"alg\": \"RSA-OAEP-256\",\n      \"use\": \"enc\",\n      \"n\": \"sXchf3Hj7G6m1mQF2k38QeY7s9lQfV4sLzM0YJr7Q7B6U2CjQX8m5w\",\n      \"e\": \"AQAB\"\n    },\n    \"jwk_thumbprint\": \"qn0x2fG8X0F9S9RzM1Tq8vQw8ap8T7iWmS0o9C9y4Lw\",\n    \"status\": \"active\",\n    \"created_at\": \"2026-01-15T18:30:00.000Z\",\n    \"updated_at\": \"2026-01-15T18:30:00.000Z\"\n  },\n  \"message\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26091017-e329-4734-b32f-1c34ec251f39",
+              "name": "Not found - the requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    ":jwk_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jwk_id",
+                      "description": "(Required) Unique identifier for the Method public JWK."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"invalid_request\",\n      \"code\": 6124,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2bc0e863-06b6-4bcf-8fd8-3c3f6dd6c5de",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    ":jwk_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jwk_id",
+                      "description": "(Required) Unique identifier for the Method public JWK."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"error\": {\n      \"type\": \"invalid_request\",\n      \"code\": 6124,\n      \"message\": \"string\",\n      \"sub_type\": null\n    }\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://production.methodfi.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f1844086-0de3-48ef-908f-d5ce04b5c2d5",
+    "name": "Method Public Keys API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Method API enables you to retrieve financial data, create payments, and manage\nentities and accounts programmatically. This specification covers the public API\nsurface for version `2026-03-30`.\n\n## Authentication\n\nMost API requests require a Bearer token in the `Authorization` header.\nUse your secret key (`sk_...`) for server-side requests and public key (`pk_...`)\nfor client-side Element requests. Public Message-Level Encryption key discovery\nendpoints are documented separately and do not require authentication.\n\n## Versioning\n\nThe API version is selected via the `Method-Version` header. This spec targets\nversion `2026-03-30`. The SDK sets this header automatically.\n\n## Response Envelope\n\nMost JSON responses are wrapped in a standard envelope:\n\n```json\n{\n  \"success\": true,\n  \"data\": { ... },\n  \"message\": null\n}\n```\n\nThe `/.well-known/jwks.json` endpoint is an exception and returns a bare JWK set.\n\n## Pagination\n\nList endpoints return pagination metadata in response headers:\n`Pagination-Page`, `Pagination-Page-Count`, `Pagination-Page-Limit`,\n`Pagination-Total-Count`, `Pagination-Page-Cursor-Prev`, `Pagination-Page-Cursor-Next`.\n\n## Expandable Fields\n\nCertain resource fields can be expanded from IDs to full objects using the\n`expand` query parameter. Maximum nesting depth is 4 levels.\n\n\nContact Support:\n Name: Method Financial\n Email: team@methodfi.com",
+      "type": "text/plain"
+    }
+  }
+}

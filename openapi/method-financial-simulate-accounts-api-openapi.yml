@@ -1,0 +1,576 @@
+openapi: 3.2.0
+info:
+  title: Method Simulate Accounts API
+  version: '2026-03-30'
+  license:
+    name: Proprietary
+    url: https://methodfi.com
+  description: "The Method API enables you to retrieve financial data, create payments, and manage\nentities and accounts programmatically. This specification covers the public API\nsurface for version `2026-03-30`.\n\n## Authentication\n\nMost API requests require a Bearer token in the `Authorization` header.\nUse your secret key (`sk_...`) for server-side requests and public key (`pk_...`)\nfor client-side Element requests. Public Message-Level Encryption key discovery\nendpoints are documented separately and do not require authentication.\n\n## Versioning\n\nThe API version is selected via the `Method-Version` header. This spec targets\nversion `2026-03-30`. The SDK sets this header automatically.\n\n## Response Envelope\n\nMost JSON responses are wrapped in a standard envelope:\n\n```json\n{\n  \"success\": true,\n  \"data\": { ... },\n  \"message\": null\n}\n```\n\nThe `/.well-known/jwks.json` endpoint is an exception and returns a bare JWK set.\n\n## Pagination\n\nList endpoints return pagination metadata in response headers:\n`Pagination-Page`, `Pagination-Page-Count`, `Pagination-Page-Limit`,\n`Pagination-Total-Count`, `Pagination-Page-Cursor-Prev`, `Pagination-Page-Cursor-Next`.\n\n## Expandable Fields\n\nCertain resource fields can be expanded from IDs to full objects using the\n`expand` query parameter. Maximum nesting depth is 4 levels.\n"
+  contact:
+    name: Method Financial
+    url: https://methodfi.com
+    email: team@methodfi.com
+servers:
+- url: https://production.methodfi.com
+  description: Production
+  x-fern-server-name: Production
+- url: https://sandbox.methodfi.com
+  description: Sandbox
+  x-fern-server-name: Sandbox
+- url: https://dev.methodfi.com
+  description: Development
+  x-fern-server-name: Development
+security:
+- SecretKey: []
+tags:
+- name: Simulate Accounts
+  description: Sandbox account simulation
+paths:
+  /simulate/accounts/{accountId}/verification_sessions/{avfId}/amounts:
+    get:
+      operationId: simulateRetrieveVerificationAmounts
+      summary: Retrieve micro-deposit verification amounts
+      description: 'Returns the micro-deposit amounts for a verification session in the sandbox environment.
+
+        Use this to retrieve the test amounts needed to complete micro-deposit verification during development.
+
+
+        **Development only** - This endpoint is only available in the sandbox environment.
+
+        '
+      tags:
+      - Simulate Accounts
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - name: accountId
+        in: path
+        required: true
+        description: Unique identifier for the account.
+        schema:
+          type: string
+          pattern: ^acc_\w+$
+      - name: avfId
+        in: path
+        required: true
+        description: Unique identifier for the verification session.
+        schema:
+          type: string
+          pattern: ^avf_\w+$
+      responses:
+        '200':
+          description: The micro-deposit amounts for the verification session.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountVerificationSessionAmountsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /simulate/accounts/{accountId}/transactions:
+    post:
+      operationId: simulateCreateAccountTransaction
+      summary: Simulate a transaction
+      description: 'Creates a simulated transaction on an account in the sandbox environment.
+
+        Use this to test transaction-related flows during development.
+
+
+        **Development only** - This endpoint is only available in the sandbox environment.
+
+        '
+      tags:
+      - Simulate Accounts
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - name: accountId
+        in: path
+        required: true
+        description: Unique identifier for the account.
+        schema:
+          type: string
+          pattern: ^acc_\w+$
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - amount
+              properties:
+                amount:
+                  type: integer
+                  description: Transaction amount in cents.
+                  minimum: 1
+                type:
+                  type: string
+                  description: The type of transaction to simulate.
+                merchant_name:
+                  type: string
+                  description: Merchant name for the simulated transaction.
+      responses:
+        '200':
+          description: The simulated transaction.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountTransactionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /simulate/accounts/{accountId}/card_brands:
+    post:
+      operationId: simulateCreateAccountCardBrand
+      summary: Simulate a card brand
+      description: 'Creates a simulated card brand result for an account in the sandbox environment.
+
+        Use this to test card brand retrieval flows during development.
+
+
+        **Development only** - This endpoint is only available in the sandbox environment.
+
+        '
+      tags:
+      - Simulate Accounts
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - name: accountId
+        in: path
+        required: true
+        description: Unique identifier for the account.
+        schema:
+          type: string
+          pattern: ^acc_\w+$
+      responses:
+        '200':
+          description: The simulated card brand result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountCardBrandResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+components:
+  schemas:
+    AccountTransaction:
+      type: object
+      description: A transaction for an account.
+      required:
+      - id
+      - account_id
+      - merchant
+      - amount
+      - auth_amount
+      - currency_code
+      - transaction_amount
+      - transaction_auth_amount
+      - transaction_currency_code
+      - status
+      - descriptor
+      - transacted_at
+      - posted_at
+      - voided_at
+      - original_txn_id
+      - created_at
+      - updated_at
+      properties:
+        id:
+          type: string
+          pattern: ^txn_\w+$
+          description: Unique identifier for the transaction.
+          example: txn_aTJMbnCjw34yQ
+        account_id:
+          type: string
+          description: The ID of the account this transaction belongs to.
+        merchant:
+          type:
+          - object
+          - 'null'
+          description: Merchant information for this transaction.
+          properties:
+            name:
+              type:
+              - string
+              - 'null'
+              description: The merchant name.
+            logo:
+              type:
+              - string
+              - 'null'
+              description: URL of the merchant logo.
+        amount:
+          type:
+          - number
+          - 'null'
+          description: The transaction amount in cents.
+        auth_amount:
+          type:
+          - number
+          - 'null'
+          description: The authorized amount in cents.
+        currency_code:
+          type:
+          - string
+          - 'null'
+          description: The ISO 4217 currency code.
+        transaction_amount:
+          type:
+          - number
+          - 'null'
+          description: The transaction amount in the transaction currency.
+        transaction_auth_amount:
+          type:
+          - number
+          - 'null'
+          description: The authorized amount in the transaction currency.
+        transaction_currency_code:
+          type:
+          - string
+          - 'null'
+          description: The ISO 4217 currency code of the transaction currency.
+        status:
+          type: string
+          description: The current status of the transaction.
+          enum:
+          - pending
+          - posted
+          - voided
+        descriptor:
+          type:
+          - string
+          - 'null'
+          description: The transaction descriptor.
+        merchant_category_code:
+          type:
+          - string
+          - 'null'
+          description: The merchant category code (MCC) for this transaction.
+        transacted_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the transaction occurred.
+        posted_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the transaction was posted.
+        voided_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the transaction was voided.
+        original_txn_id:
+          type:
+          - string
+          - 'null'
+          description: The ID of the original transaction if this is a related transaction.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the transaction record was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the transaction record was last updated.
+    AccountTransactionResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/AccountTransaction'
+    AccountVerificationSessionAmountsResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              amounts:
+                type: array
+                description: The micro deposit amounts.
+                items:
+                  type: integer
+    ErrorObject:
+      type: object
+      required:
+      - type
+      - code
+      - message
+      properties:
+        type:
+          type: string
+          description: Error type category.
+          enum:
+          - invalid_request
+          - api_error
+          - resource_error
+        code:
+          type: integer
+          description: Numeric error code. Common codes include 400 (bad request), 401 (unauthorized), 403 (forbidden), 404 (not found), 422 (unprocessable entity), 429 (rate limited), and 500 (internal error).
+        sub_type:
+          type:
+          - string
+          - 'null'
+          description: More specific error classification.
+        message:
+          type: string
+          description: Human-readable error description.
+    SuccessEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a single payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific response payload.
+        message:
+          type:
+          - string
+          - 'null'
+      example:
+        success: true
+        data: {}
+        message: null
+    ErrorEnvelope:
+      type: object
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `false` for error responses.
+        data:
+          type: object
+          required:
+          - error
+          properties:
+            error:
+              $ref: '#/components/schemas/ErrorObject'
+        message:
+          type: string
+    ResourceError:
+      type:
+      - object
+      - 'null'
+      required:
+      - type
+      - code
+      - message
+      properties:
+        type:
+          type: string
+        code:
+          type: integer
+        sub_type:
+          type:
+          - string
+          - 'null'
+        message:
+          type: string
+    AccountCardBrandResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/AccountCardBrand'
+    AccountCardBrand:
+      type: object
+      description: Card brand information for an account.
+      required:
+      - id
+      - account_id
+      - status
+      - created_at
+      - updated_at
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the card brand.
+          pattern: ^cbrd_\w+$
+          example: cbrd_aTJMbnCjw34yQ
+        account_id:
+          type: string
+          description: The account this card brand belongs to.
+          pattern: ^acc_\w+$
+        brands:
+          type:
+          - array
+          - 'null'
+          description: Array of card brand entries for this account.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Unique identifier for the brand entry.
+              card_product_id:
+                type:
+                - string
+                - 'null'
+                description: Associated card product ID.
+              description:
+                type: string
+                description: Description of the brand.
+              name:
+                type: string
+                description: Name of the brand.
+              issuer:
+                type: string
+                description: The card issuer.
+              network:
+                type: string
+                description: The card network.
+              network_tier:
+                type: string
+                description: The tier of the card network.
+              type:
+                type:
+                - string
+                - 'null'
+                description: The brand type.
+              url:
+                type: string
+                description: URL for the brand image.
+        source:
+          type:
+          - string
+          - 'null'
+          description: Source of the card brand data.
+          enum:
+          - network
+          - method
+          - null
+        shared:
+          type: boolean
+          description: Whether this card brand record is shared.
+        network:
+          type:
+          - string
+          - 'null'
+          description: The card network. Deprecated in favor of brands[].network.
+          enum:
+          - visa
+          - mastercard
+          - amex
+          - discover
+          - null
+        issuer:
+          type:
+          - string
+          - 'null'
+          description: The card issuer. Deprecated in favor of brands[].issuer.
+        last4:
+          type:
+          - string
+          - 'null'
+          description: Last 4 digits of the card number. Deprecated in favor of brands[].
+        status:
+          type: string
+          description: Current status of the card brand request.
+          enum:
+          - completed
+          - pending
+          - failed
+        error:
+          $ref: '#/components/schemas/ResourceError'
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the card brand was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the card brand was last updated.
+  responses:
+    NotFound:
+      description: Not found - the requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request - invalid parameters or request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    InternalError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  parameters:
+    method_version:
+      name: Method-Version
+      in: header
+      required: true
+      description: 'API version to use for this request. This spec targets `2026-03-30`.
+
+        The SDK sets this header automatically.
+
+        '
+      schema:
+        type: string
+        enum:
+        - '2026-03-30'
+        default: '2026-03-30'
+  securitySchemes:
+    OpalToken:
+      type: http
+      scheme: bearer
+      description: 'Opal token authentication for Opal session endpoints. Use an Opal token (`otkn_...`)
+
+        as the Bearer token. Created via POST /opal/token using a secret key.
+
+        '
+    SecretKey:
+      type: http
+      scheme: bearer
+      description: 'Secret key authentication. Use your team''s secret key (`sk_...`) as the Bearer token.
+
+        All authenticated API endpoints require this scheme unless otherwise noted.
+
+        '

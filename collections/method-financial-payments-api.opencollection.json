@@ -1,0 +1,234 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Payments API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/payments",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination (1-indexed)."
+              },
+              {
+                "name": "page_limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page."
+              },
+              {
+                "name": "page_cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for cursor-based pagination. Use the value from `Pagination-Page-Cursor-Next` or `Pagination-Page-Cursor-Prev` response headers."
+              },
+              {
+                "name": "from_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this date (inclusive, YYYY-MM-DD format)."
+              },
+              {
+                "name": "to_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to this date (inclusive, YYYY-MM-DD format)."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter payments by status."
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "Filter payments by source account ID."
+              },
+              {
+                "name": "destination",
+                "value": "",
+                "type": "query",
+                "description": "Filter payments by destination account ID."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter payments by payment type."
+              },
+              {
+                "name": "reversal_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter payments by reversal ID."
+              },
+              {
+                "name": "acc_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter payments by either the source or destination account ID."
+              },
+              {
+                "name": "destination_holder_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter payments by destination entity ID."
+              },
+              {
+                "name": "source_holder_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter payments by source entity ID."
+              },
+              {
+                "name": "holder_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter payments by either the source or destination entity ID."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand payment source or destination accounts inline. Nested account expansion\nis supported for latest verification sessions on the source or destination.\n"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a paginated list of payments. Results can be filtered by status, type, accounts, holders, reversal, and date range."
+        },
+        {
+          "info": {
+            "name": "Create a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/payments",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              },
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new payment to transfer funds from a source account to a destination account."
+        },
+        {
+          "info": {
+            "name": "Retrieve a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/payments/:paymentId",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the payment."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand payment source or destination accounts inline. Nested account expansion\nis supported for latest verification sessions on the source or destination.\n"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves a payment by its unique identifier."
+        },
+        {
+          "info": {
+            "name": "Delete a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://production.methodfi.com/payments/:paymentId",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              },
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the payment."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancels a pending payment. Only payments with a `pending` status can be canceled."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

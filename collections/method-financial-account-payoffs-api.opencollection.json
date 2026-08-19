@@ -1,0 +1,139 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Account Payoffs API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account Payoffs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all account payoffs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/accounts/:accountId/payoffs",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination (1-indexed)."
+              },
+              {
+                "name": "page_limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page."
+              },
+              {
+                "name": "page_cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for cursor-based pagination. Use the value from `Pagination-Page-Cursor-Next` or `Pagination-Page-Cursor-Prev` response headers."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list of payoff records for the specified account."
+        },
+        {
+          "info": {
+            "name": "Create an account payoff",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/accounts/:accountId/payoffs",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              },
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Triggers a payoff sync for the specified account and returns the new payoff record."
+        },
+        {
+          "info": {
+            "name": "Retrieve an account payoff",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/accounts/:accountId/payoffs/:pyfId",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account."
+              },
+              {
+                "name": "pyfId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account payoff."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves an account payoff by its unique identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

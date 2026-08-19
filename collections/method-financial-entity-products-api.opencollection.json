@@ -1,0 +1,88 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Entity Products API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Entity Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all entity products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/entities/:entityId/products",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "entityId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list of products for the specified entity."
+        },
+        {
+          "info": {
+            "name": "Retrieve an entity product",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/entities/:entityId/products/:prdId",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "entityId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity."
+              },
+              {
+                "name": "prdId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity product."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a single entity product by its identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

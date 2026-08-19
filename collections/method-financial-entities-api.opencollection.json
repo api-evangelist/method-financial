@@ -1,0 +1,202 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Entities API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Entities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all entities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/entities",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination (1-indexed)."
+              },
+              {
+                "name": "page_limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page."
+              },
+              {
+                "name": "page_cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for cursor-based pagination. Use the value from `Pagination-Page-Cursor-Next` or `Pagination-Page-Cursor-Prev` response headers."
+              },
+              {
+                "name": "from_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this date (inclusive, YYYY-MM-DD format)."
+              },
+              {
+                "name": "to_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to this date (inclusive, YYYY-MM-DD format)."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter entities by status."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter entities by type."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter entities by their name."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand related entity resources inline. Supports the entity expandable fields\ndocumented by the API validator for entity list and retrieve operations.\n"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a paginated list of entities."
+        },
+        {
+          "info": {
+            "name": "Create an entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/entities",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              },
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new entity."
+        },
+        {
+          "info": {
+            "name": "Retrieve an entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/entities/:entityId",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "entityId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand related entity resources inline. Supports the entity expandable fields\ndocumented by the API validator for entity list and retrieve operations.\n"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a single entity by its identifier."
+        },
+        {
+          "info": {
+            "name": "Update an entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://production.methodfi.com/entities/:entityId",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              },
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "entityId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an existing entity."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

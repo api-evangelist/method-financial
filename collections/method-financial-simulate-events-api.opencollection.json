@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Simulate Events API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Simulate Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Simulate an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/simulate/events",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a simulated webhook event in the sandbox environment.\nUse this to test webhook handling and event processing during development.\n\n**Development only** - This endpoint is only available in the sandbox environment.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

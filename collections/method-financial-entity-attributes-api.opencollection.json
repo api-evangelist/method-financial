@@ -1,0 +1,151 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Entity Attributes API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Entity Attributes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all entity attributes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/entities/:entityId/attributes",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "entityId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination (1-indexed)."
+              },
+              {
+                "name": "page_limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page."
+              },
+              {
+                "name": "page_cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for cursor-based pagination. Use the value from `Pagination-Page-Cursor-Next` or `Pagination-Page-Cursor-Prev` response headers."
+              },
+              {
+                "name": "from_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this date (inclusive, YYYY-MM-DD format)."
+              },
+              {
+                "name": "to_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to this date (inclusive, YYYY-MM-DD format)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list of attributes for the specified entity."
+        },
+        {
+          "info": {
+            "name": "Create entity attributes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/entities/:entityId/attributes",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              },
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "entityId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new attribute retrieval for the specified entity. As of API version `2026-03-30`, this endpoint no longer accepts an `attributes` selector in the request body — all available attributes are requested automatically."
+        },
+        {
+          "info": {
+            "name": "Retrieve an entity attribute",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/entities/:entityId/attributes/:attrId",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "entityId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity."
+              },
+              {
+                "name": "attrId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity attribute."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a single entity attribute by its identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

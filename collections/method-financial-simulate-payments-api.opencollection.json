@@ -1,0 +1,90 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Simulate Payments API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Simulate Payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Simulate a payment status update",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/simulate/payments/:paymentId",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the payment."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates the status of a payment in the sandbox environment.\nUse this to test payment lifecycle and status transition flows during development.\n\n**Development only** - This endpoint is only available in the sandbox environment.\n"
+        },
+        {
+          "info": {
+            "name": "Simulate a payment via payment instrument",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/simulate/payments/payment_instruments/:pmt_inst_id",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pmt_inst_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the payment instrument."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Simulates posting a payment through a payment instrument in the sandbox environment.\nUse this to test payment instrument flows during development.\n\n**Development only** - This endpoint is only available in the sandbox environment.\nThis endpoint is available starting with API version `2026-03-30`.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

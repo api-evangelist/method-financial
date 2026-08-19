@@ -1,0 +1,1255 @@
+openapi: 3.2.0
+info:
+  title: Method Account Updates API
+  version: '2026-03-30'
+  license:
+    name: Proprietary
+    url: https://methodfi.com
+  description: "The Method API enables you to retrieve financial data, create payments, and manage\nentities and accounts programmatically. This specification covers the public API\nsurface for version `2026-03-30`.\n\n## Authentication\n\nMost API requests require a Bearer token in the `Authorization` header.\nUse your secret key (`sk_...`) for server-side requests and public key (`pk_...`)\nfor client-side Element requests. Public Message-Level Encryption key discovery\nendpoints are documented separately and do not require authentication.\n\n## Versioning\n\nThe API version is selected via the `Method-Version` header. This spec targets\nversion `2026-03-30`. The SDK sets this header automatically.\n\n## Response Envelope\n\nMost JSON responses are wrapped in a standard envelope:\n\n```json\n{\n  \"success\": true,\n  \"data\": { ... },\n  \"message\": null\n}\n```\n\nThe `/.well-known/jwks.json` endpoint is an exception and returns a bare JWK set.\n\n## Pagination\n\nList endpoints return pagination metadata in response headers:\n`Pagination-Page`, `Pagination-Page-Count`, `Pagination-Page-Limit`,\n`Pagination-Total-Count`, `Pagination-Page-Cursor-Prev`, `Pagination-Page-Cursor-Next`.\n\n## Expandable Fields\n\nCertain resource fields can be expanded from IDs to full objects using the\n`expand` query parameter. Maximum nesting depth is 4 levels.\n"
+  contact:
+    name: Method Financial
+    url: https://methodfi.com
+    email: team@methodfi.com
+servers:
+- url: https://production.methodfi.com
+  description: Production
+  x-fern-server-name: Production
+- url: https://sandbox.methodfi.com
+  description: Sandbox
+  x-fern-server-name: Sandbox
+- url: https://dev.methodfi.com
+  description: Development
+  x-fern-server-name: Development
+security:
+- SecretKey: []
+tags:
+- name: Account Updates
+  description: Update records for accounts
+paths:
+  /accounts/{accountId}/updates:
+    get:
+      operationId: listAccountUpdates
+      summary: List all account updates
+      description: Returns a list of update records for the specified account.
+      tags:
+      - Account Updates
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/AccountIdParam'
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageLimitParam'
+      - $ref: '#/components/parameters/PageCursorParam'
+      responses:
+        '200':
+          description: A paginated list of account updates.
+          headers:
+            Pagination-Page:
+              $ref: '#/components/headers/Pagination-Page'
+            Pagination-Page-Count:
+              $ref: '#/components/headers/Pagination-Page-Count'
+            Pagination-Page-Limit:
+              $ref: '#/components/headers/Pagination-Page-Limit'
+            Pagination-Total-Count:
+              $ref: '#/components/headers/Pagination-Total-Count'
+            Pagination-Page-Cursor-Prev:
+              $ref: '#/components/headers/Pagination-Page-Cursor-Prev'
+            Pagination-Page-Cursor-Next:
+              $ref: '#/components/headers/Pagination-Page-Cursor-Next'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountUpdateListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    post:
+      operationId: createAccountUpdate
+      summary: Create an account update
+      description: Creates a new update request for the specified account.
+      tags:
+      - Account Updates
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/idempotency_key'
+      - $ref: '#/components/parameters/AccountIdParam'
+      responses:
+        '200':
+          description: The newly created account update.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountUpdateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /accounts/{accountId}/updates/{updateId}:
+    get:
+      operationId: retrieveAccountUpdate
+      summary: Retrieve an account update
+      description: Retrieves an account update by its unique identifier.
+      tags:
+      - Account Updates
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/AccountIdParam'
+      - $ref: '#/components/parameters/AccountUpdateIdParam'
+      responses:
+        '200':
+          description: The requested account update.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountUpdateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+components:
+  schemas:
+    ListEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a list payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific list payload.
+        message:
+          type:
+          - string
+          - 'null'
+      example:
+        success: true
+        data: []
+        message: null
+    ErrorEnvelope:
+      type: object
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `false` for error responses.
+        data:
+          type: object
+          required:
+          - error
+          properties:
+            error:
+              $ref: '#/components/schemas/ErrorObject'
+        message:
+          type: string
+    AccountUpdateResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/AccountUpdate'
+    SuccessEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a single payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific response payload.
+        message:
+          type:
+          - string
+          - 'null'
+      example:
+        success: true
+        data: {}
+        message: null
+    AccountUpdate:
+      type: object
+      description: An update record for an account.
+      required:
+      - id
+      - account_id
+      - status
+      - type
+      - created_at
+      - updated_at
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the update.
+          pattern: ^upd_\w+$
+          example: upd_aTJMbnCjw34yQ
+        account_id:
+          type: string
+          description: The account this update belongs to.
+          pattern: ^acc_\w+$
+        status:
+          type: string
+          description: Current status of the update.
+          enum:
+          - completed
+          - pending
+          - failed
+        type:
+          type: string
+          description: The liability type of the account being updated.
+          enum:
+          - credit_card
+          - auto_loan
+          - mortgage
+          - personal_loan
+          - student_loan
+          - student_loans
+          - collection
+          - credit_builder
+          - insurance
+          - loan
+          - medical
+          - utility
+          - bnpl
+          - fintech
+        source:
+          type: string
+          description: The data source used for this update.
+          enum:
+          - direct
+          - snapshot
+        data_as_of:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The timestamp of the data used to complete this update.
+        credit_card:
+          type:
+          - object
+          - 'null'
+          description: Credit card update data. Present when `type` is `credit_card`.
+          properties:
+            sub_type:
+              type:
+              - string
+              - 'null'
+            opened_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            closed_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            balance:
+              type:
+              - integer
+              - 'null'
+              description: Current balance in cents.
+            last_payment_amount:
+              type:
+              - integer
+              - 'null'
+              description: Last payment amount in cents.
+            last_payment_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_due_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_minimum_amount:
+              type:
+              - integer
+              - 'null'
+              description: Minimum payment due in cents.
+            interest_rate_type:
+              type:
+              - string
+              - 'null'
+            interest_rate_percentage_max:
+              type:
+              - number
+              - 'null'
+            interest_rate_percentage_min:
+              type:
+              - number
+              - 'null'
+            available_credit:
+              type:
+              - integer
+              - 'null'
+              description: Available credit in cents.
+            credit_limit:
+              type:
+              - integer
+              - 'null'
+              description: Credit limit in cents.
+            usage_pattern:
+              type:
+              - string
+              - 'null'
+        auto_loan:
+          type:
+          - object
+          - 'null'
+          description: Auto loan update data. Present when `type` is `auto_loan`.
+          properties:
+            sub_type:
+              type:
+              - string
+              - 'null'
+            opened_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            closed_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            balance:
+              type:
+              - integer
+              - 'null'
+              description: Current balance in cents.
+            last_payment_amount:
+              type:
+              - integer
+              - 'null'
+              description: Last payment amount in cents.
+            last_payment_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_due_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_minimum_amount:
+              type:
+              - integer
+              - 'null'
+              description: Minimum payment due in cents.
+            interest_rate_type:
+              type:
+              - string
+              - 'null'
+            expected_payoff_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            original_loan_amount:
+              type:
+              - integer
+              - 'null'
+              description: Original loan amount in cents.
+            term_length:
+              type:
+              - integer
+              - 'null'
+            interest_rate_percentage:
+              type:
+              - number
+              - 'null'
+            interest_rate_source:
+              type:
+              - string
+              - 'null'
+        mortgage:
+          type:
+          - object
+          - 'null'
+          description: Mortgage update data. Present when `type` is `mortgage`.
+          properties:
+            sub_type:
+              type:
+              - string
+              - 'null'
+            opened_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            closed_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            balance:
+              type:
+              - integer
+              - 'null'
+              description: Current balance in cents.
+            last_payment_amount:
+              type:
+              - integer
+              - 'null'
+              description: Last payment amount in cents.
+            last_payment_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_due_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_minimum_amount:
+              type:
+              - integer
+              - 'null'
+              description: Minimum payment due in cents.
+            interest_rate_type:
+              type:
+              - string
+              - 'null'
+            expected_payoff_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            original_loan_amount:
+              type:
+              - integer
+              - 'null'
+              description: Original loan amount in cents.
+            term_length:
+              type:
+              - integer
+              - 'null'
+            interest_rate_percentage:
+              type:
+              - number
+              - 'null'
+            interest_rate_source:
+              type:
+              - string
+              - 'null'
+        personal_loan:
+          type:
+          - object
+          - 'null'
+          description: Personal loan update data. Present when `type` is `personal_loan`.
+          properties:
+            sub_type:
+              type:
+              - string
+              - 'null'
+            opened_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            closed_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            balance:
+              type:
+              - integer
+              - 'null'
+              description: Current balance in cents.
+            last_payment_amount:
+              type:
+              - integer
+              - 'null'
+              description: Last payment amount in cents.
+            last_payment_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_due_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_minimum_amount:
+              type:
+              - integer
+              - 'null'
+              description: Minimum payment due in cents.
+            interest_rate_type:
+              type:
+              - string
+              - 'null'
+            available_credit:
+              type:
+              - integer
+              - 'null'
+              description: Available credit in cents.
+            original_loan_amount:
+              type:
+              - integer
+              - 'null'
+              description: Original loan amount in cents.
+            term_length:
+              type:
+              - integer
+              - 'null'
+            interest_rate_percentage:
+              type:
+              - number
+              - 'null'
+            interest_rate_source:
+              type:
+              - string
+              - 'null'
+        student_loan:
+          type:
+          - object
+          - 'null'
+          description: Student loan update data. Present when `type` is `student_loan`.
+          properties:
+            sub_type:
+              type:
+              - string
+              - 'null'
+            opened_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            closed_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            balance:
+              type:
+              - integer
+              - 'null'
+              description: Current balance in cents.
+            last_payment_amount:
+              type:
+              - integer
+              - 'null'
+              description: Last payment amount in cents.
+            last_payment_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_due_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_minimum_amount:
+              type:
+              - integer
+              - 'null'
+              description: Minimum payment due in cents.
+            interest_rate_type:
+              type:
+              - string
+              - 'null'
+            expected_payoff_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            original_loan_amount:
+              type:
+              - integer
+              - 'null'
+              description: Original loan amount in cents.
+            term_length:
+              type:
+              - integer
+              - 'null'
+            interest_rate_percentage:
+              type:
+              - number
+              - 'null'
+            interest_rate_source:
+              type:
+              - string
+              - 'null'
+        student_loans:
+          type:
+          - object
+          - 'null'
+          description: Student loans aggregate update data. Present when `type` is `student_loans`.
+          properties:
+            sub_type:
+              type:
+              - string
+              - 'null'
+            opened_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            closed_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            balance:
+              type:
+              - integer
+              - 'null'
+              description: Current balance in cents.
+            last_payment_amount:
+              type:
+              - integer
+              - 'null'
+              description: Last payment amount in cents.
+            last_payment_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_due_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_minimum_amount:
+              type:
+              - integer
+              - 'null'
+              description: Minimum payment due in cents.
+            interest_rate_type:
+              type:
+              - string
+              - 'null'
+            disbursements:
+              type:
+              - array
+              - 'null'
+              items:
+                type: object
+            original_loan_amount:
+              type:
+              - integer
+              - 'null'
+              description: Original loan amount in cents.
+            interest_rate_percentage:
+              type:
+              - number
+              - 'null'
+            interest_rate_source:
+              type:
+              - string
+              - 'null'
+        collection:
+          type:
+          - object
+          - 'null'
+          description: Collection account update data. Present when `type` is `collection`.
+          properties:
+            sub_type:
+              type:
+              - string
+              - 'null'
+            opened_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            closed_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            balance:
+              type:
+              - integer
+              - 'null'
+              description: Current balance in cents.
+            last_payment_amount:
+              type:
+              - integer
+              - 'null'
+              description: Last payment amount in cents.
+            last_payment_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_due_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_minimum_amount:
+              type:
+              - integer
+              - 'null'
+              description: Minimum payment due in cents.
+            interest_rate_type:
+              type:
+              - string
+              - 'null'
+        credit_builder:
+          type:
+          - object
+          - 'null'
+          description: Credit builder update data. Present when `type` is `credit_builder`.
+          properties:
+            sub_type:
+              type:
+              - string
+              - 'null'
+            opened_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            closed_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            balance:
+              type:
+              - integer
+              - 'null'
+              description: Current balance in cents.
+            last_payment_amount:
+              type:
+              - integer
+              - 'null'
+              description: Last payment amount in cents.
+            last_payment_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_due_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_minimum_amount:
+              type:
+              - integer
+              - 'null'
+              description: Minimum payment due in cents.
+            interest_rate_type:
+              type:
+              - string
+              - 'null'
+        insurance:
+          type:
+          - object
+          - 'null'
+          description: Insurance update data. Present when `type` is `insurance`.
+          properties:
+            sub_type:
+              type:
+              - string
+              - 'null'
+            opened_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            closed_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            balance:
+              type:
+              - integer
+              - 'null'
+              description: Current balance in cents.
+            last_payment_amount:
+              type:
+              - integer
+              - 'null'
+              description: Last payment amount in cents.
+            last_payment_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_due_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_minimum_amount:
+              type:
+              - integer
+              - 'null'
+              description: Minimum payment due in cents.
+            interest_rate_type:
+              type:
+              - string
+              - 'null'
+        loan:
+          type:
+          - object
+          - 'null'
+          description: Loan update data. Present when `type` is `loan`.
+          properties:
+            sub_type:
+              type:
+              - string
+              - 'null'
+            opened_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            closed_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            balance:
+              type:
+              - integer
+              - 'null'
+              description: Current balance in cents.
+            last_payment_amount:
+              type:
+              - integer
+              - 'null'
+              description: Last payment amount in cents.
+            last_payment_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_due_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_minimum_amount:
+              type:
+              - integer
+              - 'null'
+              description: Minimum payment due in cents.
+            interest_rate_type:
+              type:
+              - string
+              - 'null'
+        medical:
+          type:
+          - object
+          - 'null'
+          description: Medical update data. Present when `type` is `medical`.
+          properties:
+            sub_type:
+              type:
+              - string
+              - 'null'
+            opened_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            closed_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            balance:
+              type:
+              - integer
+              - 'null'
+              description: Current balance in cents.
+            last_payment_amount:
+              type:
+              - integer
+              - 'null'
+              description: Last payment amount in cents.
+            last_payment_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_due_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_minimum_amount:
+              type:
+              - integer
+              - 'null'
+              description: Minimum payment due in cents.
+            interest_rate_type:
+              type:
+              - string
+              - 'null'
+        utility:
+          type:
+          - object
+          - 'null'
+          description: Utility update data. Present when `type` is `utility`.
+          properties:
+            sub_type:
+              type:
+              - string
+              - 'null'
+            opened_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            closed_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            balance:
+              type:
+              - integer
+              - 'null'
+              description: Current balance in cents.
+            last_payment_amount:
+              type:
+              - integer
+              - 'null'
+              description: Last payment amount in cents.
+            last_payment_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_due_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            next_payment_minimum_amount:
+              type:
+              - integer
+              - 'null'
+              description: Minimum payment due in cents.
+            interest_rate_type:
+              type:
+              - string
+              - 'null'
+        bnpl:
+          type:
+          - object
+          - 'null'
+          description: Buy now pay later update data. Present when `type` is `bnpl`.
+          properties:
+            balance:
+              type:
+              - integer
+              - 'null'
+              description: Current balance in cents.
+            opened_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            closed_at:
+              type:
+              - string
+              - 'null'
+              format: date
+        fintech:
+          type:
+          - object
+          - 'null'
+          description: Fintech account update data. Present when `type` is `fintech`.
+          properties:
+            balance:
+              type:
+              - integer
+              - 'null'
+              description: Current balance in cents.
+            opened_at:
+              type:
+              - string
+              - 'null'
+              format: date
+            closed_at:
+              type:
+              - string
+              - 'null'
+              format: date
+        error:
+          $ref: '#/components/schemas/UpdateResourceError'
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the update was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the update was last updated.
+    AccountUpdateListResponse:
+      allOf:
+      - $ref: '#/components/schemas/ListEnvelope'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/AccountUpdate'
+    UpdateResourceError:
+      type:
+      - object
+      - 'null'
+      description: Error details when an account update fails.
+      required:
+      - type
+      - code
+      - sub_type
+      - message
+      properties:
+        type:
+          type: string
+          description: The category of update error.
+          enum:
+          - UPDATE_FAILED
+        code:
+          type: integer
+          description: Numeric error code (21XXX range).
+          enum:
+          - 21001
+        sub_type:
+          type: string
+          description: Specific update error classification.
+          enum:
+          - UPDATE_TEMPORARILY_UNAVAILABLE
+        message:
+          type: string
+          description: Human-readable error description.
+      example:
+        type: UPDATE_FAILED
+        code: 21001
+        sub_type: UPDATE_TEMPORARILY_UNAVAILABLE
+        message: Update is temporarily unavailable for this account.
+    ErrorObject:
+      type: object
+      required:
+      - type
+      - code
+      - message
+      properties:
+        type:
+          type: string
+          description: Error type category.
+          enum:
+          - invalid_request
+          - api_error
+          - resource_error
+        code:
+          type: integer
+          description: Numeric error code. Common codes include 400 (bad request), 401 (unauthorized), 403 (forbidden), 404 (not found), 422 (unprocessable entity), 429 (rate limited), and 500 (internal error).
+        sub_type:
+          type:
+          - string
+          - 'null'
+          description: More specific error classification.
+        message:
+          type: string
+          description: Human-readable error description.
+  parameters:
+    PageLimitParam:
+      name: page_limit
+      in: query
+      required: false
+      description: Number of items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 10
+    PageCursorParam:
+      name: page_cursor
+      in: query
+      required: false
+      description: Cursor for cursor-based pagination. Use the value from `Pagination-Page-Cursor-Next` or `Pagination-Page-Cursor-Prev` response headers.
+      schema:
+        type: string
+    idempotency_key:
+      name: Idempotency-Key
+      in: header
+      required: false
+      description: 'Idempotency key for safely retrying a write request. Reuse the same value when
+
+        retrying the same logical operation to avoid creating duplicate side effects.
+
+        '
+      schema:
+        type: string
+        format: uuid
+    method_version:
+      name: Method-Version
+      in: header
+      required: true
+      description: 'API version to use for this request. This spec targets `2026-03-30`.
+
+        The SDK sets this header automatically.
+
+        '
+      schema:
+        type: string
+        enum:
+        - '2026-03-30'
+        default: '2026-03-30'
+    AccountUpdateIdParam:
+      name: updateId
+      in: path
+      required: true
+      description: Unique identifier for the account update.
+      schema:
+        type: string
+        pattern: ^upd_\w+$
+    PageParam:
+      name: page
+      in: query
+      required: false
+      description: Page number for pagination (1-indexed).
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    AccountIdParam:
+      name: accountId
+      in: path
+      required: true
+      description: Unique identifier for the account.
+      schema:
+        type: string
+        pattern: ^acc_\w+$
+  responses:
+    RateLimited:
+      description: Too many requests - rate limit exceeded.
+      headers:
+        Retry-After:
+          description: Number of seconds to wait before retrying.
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found - the requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request - invalid parameters or request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    UnprocessableEntity:
+      description: Unprocessable entity - the request was valid JSON but failed business or validation rules.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    InternalError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  headers:
+    Pagination-Page:
+      description: Current page number.
+      schema:
+        type: integer
+    Pagination-Page-Cursor-Prev:
+      description: Cursor for the previous page, if available.
+      schema:
+        type:
+        - string
+        - 'null'
+    Pagination-Page-Cursor-Next:
+      description: Cursor for the next page, if available.
+      schema:
+        type:
+        - string
+        - 'null'
+    Pagination-Total-Count:
+      description: Total number of items across all pages.
+      schema:
+        type: integer
+    Pagination-Page-Limit:
+      description: Number of items per page.
+      schema:
+        type: integer
+    Pagination-Page-Count:
+      description: Total number of pages.
+      schema:
+        type: integer
+  securitySchemes:
+    OpalToken:
+      type: http
+      scheme: bearer
+      description: 'Opal token authentication for Opal session endpoints. Use an Opal token (`otkn_...`)
+
+        as the Bearer token. Created via POST /opal/token using a secret key.
+
+        '
+    SecretKey:
+      type: http
+      scheme: bearer
+      description: 'Secret key authentication. Use your team''s secret key (`sk_...`) as the Bearer token.
+
+        All authenticated API endpoints require this scheme unless otherwise noted.
+
+        '

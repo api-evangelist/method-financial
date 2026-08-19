@@ -1,0 +1,121 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Simulate Entities API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Simulate Entities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Simulate a credit score",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/simulate/entities/:entity_id/credit_scores/:crs_id",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity."
+              },
+              {
+                "name": "crs_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the credit score resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Simulates a credit score result for an entity in the sandbox environment.\nUse this to test credit score retrieval flows during development.\n\n**Development only** - This endpoint is only available in the sandbox environment.\n"
+        },
+        {
+          "info": {
+            "name": "Simulate entity connect",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/simulate/entities/:entity_id/connect",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Simulates the entity connect flow in the sandbox environment.\nUse this to test account discovery and connection flows during development.\n\n**Development only** - This endpoint is only available in the sandbox environment.\n"
+        },
+        {
+          "info": {
+            "name": "Simulate entity attributes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/simulate/entities/:entity_id/attributes",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the entity."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Simulates attribute data for an entity in the sandbox environment.\nUse this to test attribute retrieval flows during development.\n\n**Development only** - This endpoint is only available in the sandbox environment.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

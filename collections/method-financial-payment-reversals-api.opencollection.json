@@ -1,0 +1,131 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Payment Reversals API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payment Reversals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all reversals for a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/payments/:paymentId/reversals",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the payment."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list of all reversals associated with a specific payment."
+        },
+        {
+          "info": {
+            "name": "Retrieve a payment reversal",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/payments/:paymentId/reversals/:reversalId",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the payment."
+              },
+              {
+                "name": "reversalId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the reversal."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves a specific reversal for a payment by its unique identifier."
+        },
+        {
+          "info": {
+            "name": "Update a payment reversal",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://production.methodfi.com/payments/:paymentId/reversals/:reversalId",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              },
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the payment."
+              },
+              {
+                "name": "reversalId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the reversal."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a payment reversal. Currently supports updating the reversal status."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,697 @@
+openapi: 3.2.0
+info:
+  title: Method Entity Verification Sessions API
+  version: '2026-03-30'
+  license:
+    name: Proprietary
+    url: https://methodfi.com
+  description: "The Method API enables you to retrieve financial data, create payments, and manage\nentities and accounts programmatically. This specification covers the public API\nsurface for version `2026-03-30`.\n\n## Authentication\n\nMost API requests require a Bearer token in the `Authorization` header.\nUse your secret key (`sk_...`) for server-side requests and public key (`pk_...`)\nfor client-side Element requests. Public Message-Level Encryption key discovery\nendpoints are documented separately and do not require authentication.\n\n## Versioning\n\nThe API version is selected via the `Method-Version` header. This spec targets\nversion `2026-03-30`. The SDK sets this header automatically.\n\n## Response Envelope\n\nMost JSON responses are wrapped in a standard envelope:\n\n```json\n{\n  \"success\": true,\n  \"data\": { ... },\n  \"message\": null\n}\n```\n\nThe `/.well-known/jwks.json` endpoint is an exception and returns a bare JWK set.\n\n## Pagination\n\nList endpoints return pagination metadata in response headers:\n`Pagination-Page`, `Pagination-Page-Count`, `Pagination-Page-Limit`,\n`Pagination-Total-Count`, `Pagination-Page-Cursor-Prev`, `Pagination-Page-Cursor-Next`.\n\n## Expandable Fields\n\nCertain resource fields can be expanded from IDs to full objects using the\n`expand` query parameter. Maximum nesting depth is 4 levels.\n"
+  contact:
+    name: Method Financial
+    url: https://methodfi.com
+    email: team@methodfi.com
+servers:
+- url: https://production.methodfi.com
+  description: Production
+  x-fern-server-name: Production
+- url: https://sandbox.methodfi.com
+  description: Sandbox
+  x-fern-server-name: Sandbox
+- url: https://dev.methodfi.com
+  description: Development
+  x-fern-server-name: Development
+security:
+- SecretKey: []
+tags:
+- name: Entity Verification Sessions
+  description: Verification sessions for entities
+paths:
+  /entities/{entityId}/verification_sessions:
+    get:
+      operationId: listEntityVerificationSessions
+      summary: List all entity verification sessions
+      description: Returns a list of verification sessions for the specified entity.
+      tags:
+      - Entity Verification Sessions
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/EntityIdParam'
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageLimitParam'
+      - $ref: '#/components/parameters/PageCursorParam'
+      - $ref: '#/components/parameters/FromDateParam'
+      - $ref: '#/components/parameters/ToDateParam'
+      responses:
+        '200':
+          description: A list of entity verification sessions.
+          headers:
+            Pagination-Page:
+              description: Current page number.
+              schema:
+                type: integer
+            Pagination-Page-Count:
+              description: Total number of pages.
+              schema:
+                type: integer
+            Pagination-Page-Limit:
+              description: Number of items per page.
+              schema:
+                type: integer
+            Pagination-Total-Count:
+              description: Total number of items across all pages.
+              schema:
+                type: integer
+            Pagination-Page-Cursor-Prev:
+              description: Cursor for the previous page, if available.
+              schema:
+                type:
+                - string
+                - 'null'
+            Pagination-Page-Cursor-Next:
+              description: Cursor for the next page, if available.
+              schema:
+                type:
+                - string
+                - 'null'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityVerificationSessionListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    post:
+      operationId: createEntityVerificationSession
+      summary: Create an entity verification session
+      description: Creates a new verification session for the specified entity.
+      tags:
+      - Entity Verification Sessions
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/idempotency_key'
+      - $ref: '#/components/parameters/EntityIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEntityVerificationSessionRequest'
+      responses:
+        '200':
+          description: The created entity verification session.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityVerificationSessionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /entities/{entityId}/verification_sessions/{evfId}:
+    get:
+      operationId: retrieveEntityVerificationSession
+      summary: Retrieve an entity verification session
+      description: Returns a single entity verification session by its identifier.
+      tags:
+      - Entity Verification Sessions
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/EntityIdParam'
+      - $ref: '#/components/parameters/EntityVerificationSessionIdParam'
+      responses:
+        '200':
+          description: The requested entity verification session.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityVerificationSessionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    put:
+      operationId: updateEntityVerificationSession
+      summary: Update an entity verification session
+      description: 'Updates a verification session, for example by submitting an SMS verification code or KBA answers. The request body shape depends on the verification type and method.
+
+        '
+      tags:
+      - Entity Verification Sessions
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/idempotency_key'
+      - $ref: '#/components/parameters/EntityIdParam'
+      - $ref: '#/components/parameters/EntityVerificationSessionIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEntityVerificationSessionRequest'
+      responses:
+        '200':
+          description: The updated entity verification session.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityVerificationSessionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+components:
+  schemas:
+    ListEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a list payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific list payload.
+        message:
+          type:
+          - string
+          - 'null'
+      example:
+        success: true
+        data: []
+        message: null
+    VerificationSessionResourceError:
+      type:
+      - object
+      - 'null'
+      description: Error details when an entity verification session fails.
+      required:
+      - type
+      - code
+      - sub_type
+      - message
+      properties:
+        type:
+          type: string
+          description: The category of verification session error.
+          enum:
+          - VERIFICATION_SESSION_FAILED
+        code:
+          type: integer
+          description: Numeric error code (19XXX range).
+          enum:
+          - 19001
+          - 19002
+          - 19003
+          - 19004
+        sub_type:
+          type: string
+          description: Specific verification session error classification.
+          enum:
+          - VERIFICATION_SESSION_EXPIRED
+          - VERIFICATION_SESSION_INCORRECT_SMS_CODE
+          - VERIFICATION_SESSION_FAILED_SNA
+          - VERIFICATION_SESSION_FAILED_INVALID_ANSWER
+        message:
+          type: string
+          description: Human-readable error description.
+      example:
+        type: VERIFICATION_SESSION_FAILED
+        code: 19001
+        sub_type: VERIFICATION_SESSION_EXPIRED
+        message: The verification session has expired. Please re-initiate the verification process.
+    ErrorEnvelope:
+      type: object
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `false` for error responses.
+        data:
+          type: object
+          required:
+          - error
+          properties:
+            error:
+              $ref: '#/components/schemas/ErrorObject'
+        message:
+          type: string
+    CreateEntityVerificationSessionRequest:
+      type: object
+      required:
+      - type
+      - method
+      properties:
+        type:
+          type: string
+          description: The type of verification to perform.
+          enum:
+          - identity
+          - phone
+        method:
+          type: string
+          description: The verification method to use.
+          enum:
+          - sms
+          - sna
+          - byo_sms
+          - byo_kyc
+          - kba
+          - element
+          - opal
+        sms:
+          type: object
+          description: SMS-specific options. Required when method is sms.
+        sna:
+          type: object
+          description: SNA-specific options. Required when method is sna.
+        byo_sms:
+          type: object
+          description: BYO SMS-specific options. Required when method is byo_sms.
+          properties:
+            timestamp:
+              type: string
+              description: Timestamp of the SMS verification.
+        byo_kyc:
+          type: object
+          description: BYO KYC-specific options. Required when method is byo_kyc.
+        kba:
+          type: object
+          description: KBA-specific options. Required when method is kba.
+    SuccessEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a single payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific response payload.
+        message:
+          type:
+          - string
+          - 'null'
+      example:
+        success: true
+        data: {}
+        message: null
+    UpdateEntityVerificationSessionRequest:
+      type: object
+      required:
+      - type
+      - method
+      properties:
+        type:
+          type: string
+          description: The verification session type.
+        method:
+          type: string
+          description: The verification method.
+          enum:
+          - sms
+          - sna
+          - byo_sms
+          - byo_kyc
+          - kba
+          - element
+          - opal
+        sms:
+          type: object
+          description: SMS verification data.
+          properties:
+            sms_code:
+              type: string
+              description: The 6-character SMS verification code.
+              minLength: 6
+              maxLength: 6
+        sna:
+          type: object
+          description: SNA verification data.
+        kba:
+          type: object
+          description: KBA verification data.
+          properties:
+            answers:
+              type: array
+              description: Array of KBA question answers.
+              items:
+                type: object
+                required:
+                - question_id
+                - answer_id
+                properties:
+                  question_id:
+                    type: string
+                    description: The question identifier.
+                  answer_id:
+                    type: string
+                    description: The selected answer identifier.
+    EntityVerificationSessionResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/EntityVerificationSession'
+    EntityVerificationSessionListResponse:
+      allOf:
+      - $ref: '#/components/schemas/ListEnvelope'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/EntityVerificationSession'
+    EntityVerificationSession:
+      type: object
+      required:
+      - id
+      - entity_id
+      - status
+      - type
+      - method
+      - created_at
+      - updated_at
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the verification session.
+          example: evf_TRUJMEr8kn3Nh
+        entity_id:
+          type: string
+          description: The ID of the entity this verification session belongs to.
+          example: ent_au22b1fbFJbp8
+        status:
+          type: string
+          description: Current status of the verification session.
+          enum:
+          - pending
+          - in_progress
+          - verified
+          - failed
+        type:
+          type: string
+          description: The type of verification being performed.
+          enum:
+          - identity
+          - phone
+        method:
+          type:
+          - string
+          - 'null'
+          description: The verification method used.
+          enum:
+          - sms
+          - sna
+          - byo_sms
+          - byo_kyc
+          - kba
+          - element
+          - opal
+          - method_verified
+          - null
+        error:
+          type:
+          - object
+          - 'null'
+          description: Error details if the resource encountered an error.
+          allOf:
+          - $ref: '#/components/schemas/VerificationSessionResourceError'
+        expired_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the verification session expired.
+        sms:
+          type:
+          - object
+          - 'null'
+          description: SMS verification details. Present when method is sms.
+        sna:
+          type:
+          - object
+          - 'null'
+          description: SNA verification details. Present when method is sna.
+        byo_sms:
+          type:
+          - object
+          - 'null'
+          description: BYO SMS verification details. Present when method is byo_sms.
+        byo_kyc:
+          type:
+          - object
+          - 'null'
+          description: BYO KYC verification details. Present when method is byo_kyc.
+        kba:
+          type:
+          - object
+          - 'null'
+          description: KBA verification details. Present when method is kba.
+        element:
+          type:
+          - object
+          - 'null'
+          description: Element verification details. Present when method is element.
+        opal:
+          type:
+          - object
+          - 'null'
+          description: Opal verification details. Present when method is opal.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the verification session was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the verification session was last updated.
+    ErrorObject:
+      type: object
+      required:
+      - type
+      - code
+      - message
+      properties:
+        type:
+          type: string
+          description: Error type category.
+          enum:
+          - invalid_request
+          - api_error
+          - resource_error
+        code:
+          type: integer
+          description: Numeric error code. Common codes include 400 (bad request), 401 (unauthorized), 403 (forbidden), 404 (not found), 422 (unprocessable entity), 429 (rate limited), and 500 (internal error).
+        sub_type:
+          type:
+          - string
+          - 'null'
+          description: More specific error classification.
+        message:
+          type: string
+          description: Human-readable error description.
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions for this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    RateLimited:
+      description: Too many requests - rate limit exceeded.
+      headers:
+        Retry-After:
+          description: Number of seconds to wait before retrying.
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found - the requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request - invalid parameters or request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    UnprocessableEntity:
+      description: Unprocessable entity - the request was valid JSON but failed business or validation rules.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    InternalError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  parameters:
+    PageLimitParam:
+      name: page_limit
+      in: query
+      required: false
+      description: Number of items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 10
+    PageCursorParam:
+      name: page_cursor
+      in: query
+      required: false
+      description: Cursor for cursor-based pagination. Use the value from `Pagination-Page-Cursor-Next` or `Pagination-Page-Cursor-Prev` response headers.
+      schema:
+        type: string
+    ToDateParam:
+      name: to_date
+      in: query
+      required: false
+      description: Filter results to this date (inclusive, YYYY-MM-DD format).
+      schema:
+        type: string
+        format: date
+    idempotency_key:
+      name: Idempotency-Key
+      in: header
+      required: false
+      description: 'Idempotency key for safely retrying a write request. Reuse the same value when
+
+        retrying the same logical operation to avoid creating duplicate side effects.
+
+        '
+      schema:
+        type: string
+        format: uuid
+    EntityVerificationSessionIdParam:
+      name: evfId
+      in: path
+      required: true
+      description: Unique identifier for the entity verification session.
+      schema:
+        type: string
+        pattern: ^evf_\w+$
+    FromDateParam:
+      name: from_date
+      in: query
+      required: false
+      description: Filter results from this date (inclusive, YYYY-MM-DD format).
+      schema:
+        type: string
+        format: date
+    EntityIdParam:
+      name: entityId
+      in: path
+      required: true
+      description: Unique identifier for the entity.
+      schema:
+        type: string
+        pattern: ^ent_\w+$
+    method_version:
+      name: Method-Version
+      in: header
+      required: true
+      description: 'API version to use for this request. This spec targets `2026-03-30`.
+
+        The SDK sets this header automatically.
+
+        '
+      schema:
+        type: string
+        enum:
+        - '2026-03-30'
+        default: '2026-03-30'
+    PageParam:
+      name: page
+      in: query
+      required: false
+      description: Page number for pagination (1-indexed).
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+  securitySchemes:
+    OpalToken:
+      type: http
+      scheme: bearer
+      description: 'Opal token authentication for Opal session endpoints. Use an Opal token (`otkn_...`)
+
+        as the Bearer token. Created via POST /opal/token using a secret key.
+
+        '
+    SecretKey:
+      type: http
+      scheme: bearer
+      description: 'Secret key authentication. Use your team''s secret key (`sk_...`) as the Bearer token.
+
+        All authenticated API endpoints require this scheme unless otherwise noted.
+
+        '

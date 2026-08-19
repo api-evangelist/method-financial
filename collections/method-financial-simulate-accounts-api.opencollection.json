@@ -1,0 +1,121 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Simulate Accounts API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Simulate Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve micro-deposit verification amounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/simulate/accounts/:accountId/verification_sessions/:avfId/amounts",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account."
+              },
+              {
+                "name": "avfId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the verification session."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the micro-deposit amounts for a verification session in the sandbox environment.\nUse this to retrieve the test amounts needed to complete micro-deposit verification during development.\n\n**Development only** - This endpoint is only available in the sandbox environment.\n"
+        },
+        {
+          "info": {
+            "name": "Simulate a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/simulate/accounts/:accountId/transactions",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a simulated transaction on an account in the sandbox environment.\nUse this to test transaction-related flows during development.\n\n**Development only** - This endpoint is only available in the sandbox environment.\n"
+        },
+        {
+          "info": {
+            "name": "Simulate a card brand",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/simulate/accounts/:accountId/card_brands",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the account."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a simulated card brand result for an account in the sandbox environment.\nUse this to test card brand retrieval flows during development.\n\n**Development only** - This endpoint is only available in the sandbox environment.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

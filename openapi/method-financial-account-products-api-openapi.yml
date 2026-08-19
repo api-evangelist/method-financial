@@ -1,0 +1,342 @@
+openapi: 3.2.0
+info:
+  title: Method Account Products API
+  version: '2026-03-30'
+  license:
+    name: Proprietary
+    url: https://methodfi.com
+  description: "The Method API enables you to retrieve financial data, create payments, and manage\nentities and accounts programmatically. This specification covers the public API\nsurface for version `2026-03-30`.\n\n## Authentication\n\nMost API requests require a Bearer token in the `Authorization` header.\nUse your secret key (`sk_...`) for server-side requests and public key (`pk_...`)\nfor client-side Element requests. Public Message-Level Encryption key discovery\nendpoints are documented separately and do not require authentication.\n\n## Versioning\n\nThe API version is selected via the `Method-Version` header. This spec targets\nversion `2026-03-30`. The SDK sets this header automatically.\n\n## Response Envelope\n\nMost JSON responses are wrapped in a standard envelope:\n\n```json\n{\n  \"success\": true,\n  \"data\": { ... },\n  \"message\": null\n}\n```\n\nThe `/.well-known/jwks.json` endpoint is an exception and returns a bare JWK set.\n\n## Pagination\n\nList endpoints return pagination metadata in response headers:\n`Pagination-Page`, `Pagination-Page-Count`, `Pagination-Page-Limit`,\n`Pagination-Total-Count`, `Pagination-Page-Cursor-Prev`, `Pagination-Page-Cursor-Next`.\n\n## Expandable Fields\n\nCertain resource fields can be expanded from IDs to full objects using the\n`expand` query parameter. Maximum nesting depth is 4 levels.\n"
+  contact:
+    name: Method Financial
+    url: https://methodfi.com
+    email: team@methodfi.com
+servers:
+- url: https://production.methodfi.com
+  description: Production
+  x-fern-server-name: Production
+- url: https://sandbox.methodfi.com
+  description: Sandbox
+  x-fern-server-name: Sandbox
+- url: https://dev.methodfi.com
+  description: Development
+  x-fern-server-name: Development
+security:
+- SecretKey: []
+tags:
+- name: Account Products
+  description: Products associated with accounts
+paths:
+  /accounts/{accountId}/products:
+    get:
+      operationId: listAccountProducts
+      summary: List all account products
+      description: Returns a list of products for the specified account.
+      tags:
+      - Account Products
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/AccountIdParam'
+      responses:
+        '200':
+          description: A list of account products.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountProductListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /accounts/{accountId}/products/{prdId}:
+    get:
+      operationId: retrieveAccountProduct
+      summary: Retrieve an account product
+      description: Retrieves an account product by its unique identifier.
+      tags:
+      - Account Products
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/AccountIdParam'
+      - $ref: '#/components/parameters/AccountProductIdParam'
+      responses:
+        '200':
+          description: The requested account product.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountProductResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+components:
+  schemas:
+    AccountProductResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/AccountProduct'
+    ProductResourceError:
+      type:
+      - object
+      - 'null'
+      description: Error details when a product execution fails.
+      required:
+      - type
+      - code
+      - sub_type
+      - message
+      properties:
+        type:
+          type: string
+          description: The category of product error.
+          enum:
+          - PRODUCT_EXECUTION_FAILED
+        code:
+          type: integer
+          description: Numeric error code (24XXX range).
+          enum:
+          - 24001
+        sub_type:
+          type: string
+          description: Specific product error classification.
+          enum:
+          - PRODUCT_EXECUTION_FAILED
+        message:
+          type: string
+          description: Human-readable error description.
+      example:
+        type: PRODUCT_EXECUTION_FAILED
+        code: 24001
+        sub_type: PRODUCT_EXECUTION_FAILED
+        message: Product execution failed.
+    AccountProductListResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            type: object
+            description: Object keyed by product name.
+            additionalProperties:
+              $ref: '#/components/schemas/AccountProduct'
+    ErrorObject:
+      type: object
+      required:
+      - type
+      - code
+      - message
+      properties:
+        type:
+          type: string
+          description: Error type category.
+          enum:
+          - invalid_request
+          - api_error
+          - resource_error
+        code:
+          type: integer
+          description: Numeric error code. Common codes include 400 (bad request), 401 (unauthorized), 403 (forbidden), 404 (not found), 422 (unprocessable entity), 429 (rate limited), and 500 (internal error).
+        sub_type:
+          type:
+          - string
+          - 'null'
+          description: More specific error classification.
+        message:
+          type: string
+          description: Human-readable error description.
+    SuccessEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a single payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific response payload.
+        message:
+          type:
+          - string
+          - 'null'
+      example:
+        success: true
+        data: {}
+        message: null
+    ErrorEnvelope:
+      type: object
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `false` for error responses.
+        data:
+          type: object
+          required:
+          - error
+          properties:
+            error:
+              $ref: '#/components/schemas/ErrorObject'
+        message:
+          type: string
+    AccountProduct:
+      type: object
+      description: A product associated with an account.
+      required:
+      - name
+      - status
+      - status_error
+      - is_subscribable
+      - latest_request_id
+      - latest_successful_request_id
+      - created_at
+      - updated_at
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier for the product, if applicable.
+          pattern: ^prd_\w+$
+          example: prd_aTJMbnCjw34yQ
+        name:
+          type: string
+          description: Name of the product.
+        status:
+          type: string
+          description: Current status of the product.
+          enum:
+          - available
+          - unavailable
+          - restricted
+        status_error:
+          $ref: '#/components/schemas/ProductResourceError'
+        is_subscribable:
+          type: boolean
+          description: Whether this product can be subscribed to for ongoing updates.
+        latest_request_id:
+          type:
+          - string
+          - 'null'
+          description: ID of the latest request made for this product.
+        latest_successful_request_id:
+          type:
+          - string
+          - 'null'
+          description: ID of the latest successful request made for this product.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the product was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the product was last updated.
+  responses:
+    RateLimited:
+      description: Too many requests - rate limit exceeded.
+      headers:
+        Retry-After:
+          description: Number of seconds to wait before retrying.
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found - the requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request - invalid parameters or request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    InternalError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  parameters:
+    method_version:
+      name: Method-Version
+      in: header
+      required: true
+      description: 'API version to use for this request. This spec targets `2026-03-30`.
+
+        The SDK sets this header automatically.
+
+        '
+      schema:
+        type: string
+        enum:
+        - '2026-03-30'
+        default: '2026-03-30'
+    AccountProductIdParam:
+      name: prdId
+      in: path
+      required: true
+      description: Unique identifier for the account product.
+      schema:
+        type: string
+        pattern: ^prd_\w+$
+    AccountIdParam:
+      name: accountId
+      in: path
+      required: true
+      description: Unique identifier for the account.
+      schema:
+        type: string
+        pattern: ^acc_\w+$
+  securitySchemes:
+    OpalToken:
+      type: http
+      scheme: bearer
+      description: 'Opal token authentication for Opal session endpoints. Use an Opal token (`otkn_...`)
+
+        as the Bearer token. Created via POST /opal/token using a secret key.
+
+        '
+    SecretKey:
+      type: http
+      scheme: bearer
+      description: 'Secret key authentication. Use your team''s secret key (`sk_...`) as the Bearer token.
+
+        All authenticated API endpoints require this scheme unless otherwise noted.
+
+        '

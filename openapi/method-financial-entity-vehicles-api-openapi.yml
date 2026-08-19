@@ -1,0 +1,448 @@
+openapi: 3.2.0
+info:
+  title: Method Entity Vehicles API
+  version: '2026-03-30'
+  license:
+    name: Proprietary
+    url: https://methodfi.com
+  description: "The Method API enables you to retrieve financial data, create payments, and manage\nentities and accounts programmatically. This specification covers the public API\nsurface for version `2026-03-30`.\n\n## Authentication\n\nMost API requests require a Bearer token in the `Authorization` header.\nUse your secret key (`sk_...`) for server-side requests and public key (`pk_...`)\nfor client-side Element requests. Public Message-Level Encryption key discovery\nendpoints are documented separately and do not require authentication.\n\n## Versioning\n\nThe API version is selected via the `Method-Version` header. This spec targets\nversion `2026-03-30`. The SDK sets this header automatically.\n\n## Response Envelope\n\nMost JSON responses are wrapped in a standard envelope:\n\n```json\n{\n  \"success\": true,\n  \"data\": { ... },\n  \"message\": null\n}\n```\n\nThe `/.well-known/jwks.json` endpoint is an exception and returns a bare JWK set.\n\n## Pagination\n\nList endpoints return pagination metadata in response headers:\n`Pagination-Page`, `Pagination-Page-Count`, `Pagination-Page-Limit`,\n`Pagination-Total-Count`, `Pagination-Page-Cursor-Prev`, `Pagination-Page-Cursor-Next`.\n\n## Expandable Fields\n\nCertain resource fields can be expanded from IDs to full objects using the\n`expand` query parameter. Maximum nesting depth is 4 levels.\n"
+  contact:
+    name: Method Financial
+    url: https://methodfi.com
+    email: team@methodfi.com
+servers:
+- url: https://production.methodfi.com
+  description: Production
+  x-fern-server-name: Production
+- url: https://sandbox.methodfi.com
+  description: Sandbox
+  x-fern-server-name: Sandbox
+- url: https://dev.methodfi.com
+  description: Development
+  x-fern-server-name: Development
+security:
+- SecretKey: []
+tags:
+- name: Entity Vehicles
+  description: Vehicle data for entities
+paths:
+  /entities/{entityId}/vehicles:
+    get:
+      operationId: listEntityVehicles
+      summary: List all entity vehicles
+      description: Returns a list of vehicles for the specified entity.
+      tags:
+      - Entity Vehicles
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/EntityIdParam'
+      responses:
+        '200':
+          description: A list of entity vehicles.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityVehicleListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    post:
+      operationId: searchEntityVehicles
+      summary: Search entity vehicles
+      description: Searches for vehicles associated with the specified entity.
+      tags:
+      - Entity Vehicles
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/idempotency_key'
+      - $ref: '#/components/parameters/EntityIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchEntityVehiclesRequest'
+      responses:
+        '200':
+          description: The created entity vehicle record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityVehicleResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /entities/{entityId}/vehicles/{vhlId}:
+    get:
+      operationId: retrieveEntityVehicle
+      summary: Retrieve an entity vehicle
+      description: Returns a single entity vehicle by its identifier.
+      tags:
+      - Entity Vehicles
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/EntityIdParam'
+      - $ref: '#/components/parameters/EntityVehicleIdParam'
+      responses:
+        '200':
+          description: The requested entity vehicle.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityVehicleResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+components:
+  schemas:
+    ListEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a list payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific list payload.
+        message:
+          type:
+          - string
+          - 'null'
+      example:
+        success: true
+        data: []
+        message: null
+    ErrorEnvelope:
+      type: object
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `false` for error responses.
+        data:
+          type: object
+          required:
+          - error
+          properties:
+            error:
+              $ref: '#/components/schemas/ErrorObject'
+        message:
+          type: string
+    ResourceError:
+      type:
+      - object
+      - 'null'
+      required:
+      - type
+      - code
+      - message
+      properties:
+        type:
+          type: string
+        code:
+          type: integer
+        sub_type:
+          type:
+          - string
+          - 'null'
+        message:
+          type: string
+    SuccessEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a single payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific response payload.
+        message:
+          type:
+          - string
+          - 'null'
+      example:
+        success: true
+        data: {}
+        message: null
+    EntityVehicleResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/EntityVehicle'
+    EntityVehicle:
+      type: object
+      required:
+      - id
+      - entity_id
+      - status
+      - vehicles
+      - created_at
+      - updated_at
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the vehicle record.
+          example: vhl_JMDEwMTY1Qw4c
+        entity_id:
+          type: string
+          description: The ID of the entity this vehicle belongs to.
+          example: ent_au22b1fbFJbp8
+        status:
+          type: string
+          description: Status of the vehicle data retrieval.
+          enum:
+          - completed
+          - in_progress
+          - pending
+          - failed
+        vehicles:
+          type:
+          - array
+          - 'null'
+          description: Array of vehicles associated with this entity.
+          items:
+            type: object
+            properties:
+              vin:
+                type:
+                - string
+                - 'null'
+                description: Vehicle identification number.
+              year:
+                type:
+                - string
+                - 'null'
+                description: Model year.
+              make:
+                type:
+                - string
+                - 'null'
+                description: Vehicle make.
+              model:
+                type:
+                - string
+                - 'null'
+                description: Vehicle model.
+              series:
+                type:
+                - string
+                - 'null'
+                description: Vehicle series.
+              major_color:
+                type:
+                - string
+                - 'null'
+                description: Primary color of the vehicle.
+              style:
+                type:
+                - string
+                - 'null'
+                description: Body style.
+        error:
+          type:
+          - object
+          - 'null'
+          description: Error details if the resource encountered an error.
+          allOf:
+          - $ref: '#/components/schemas/ResourceError'
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the vehicle record was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the vehicle record was last updated.
+    EntityVehicleListResponse:
+      allOf:
+      - $ref: '#/components/schemas/ListEnvelope'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/EntityVehicle'
+    ErrorObject:
+      type: object
+      required:
+      - type
+      - code
+      - message
+      properties:
+        type:
+          type: string
+          description: Error type category.
+          enum:
+          - invalid_request
+          - api_error
+          - resource_error
+        code:
+          type: integer
+          description: Numeric error code. Common codes include 400 (bad request), 401 (unauthorized), 403 (forbidden), 404 (not found), 422 (unprocessable entity), 429 (rate limited), and 500 (internal error).
+        sub_type:
+          type:
+          - string
+          - 'null'
+          description: More specific error classification.
+        message:
+          type: string
+          description: Human-readable error description.
+    SearchEntityVehiclesRequest:
+      type: object
+      description: Request body for searching entity vehicles. Treated as a product execution.
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions for this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    RateLimited:
+      description: Too many requests - rate limit exceeded.
+      headers:
+        Retry-After:
+          description: Number of seconds to wait before retrying.
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found - the requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request - invalid parameters or request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    UnprocessableEntity:
+      description: Unprocessable entity - the request was valid JSON but failed business or validation rules.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    InternalError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  parameters:
+    EntityVehicleIdParam:
+      name: vhlId
+      in: path
+      required: true
+      description: Unique identifier for the entity vehicle.
+      schema:
+        type: string
+        pattern: ^vhl_\w+$
+    idempotency_key:
+      name: Idempotency-Key
+      in: header
+      required: false
+      description: 'Idempotency key for safely retrying a write request. Reuse the same value when
+
+        retrying the same logical operation to avoid creating duplicate side effects.
+
+        '
+      schema:
+        type: string
+        format: uuid
+    EntityIdParam:
+      name: entityId
+      in: path
+      required: true
+      description: Unique identifier for the entity.
+      schema:
+        type: string
+        pattern: ^ent_\w+$
+    method_version:
+      name: Method-Version
+      in: header
+      required: true
+      description: 'API version to use for this request. This spec targets `2026-03-30`.
+
+        The SDK sets this header automatically.
+
+        '
+      schema:
+        type: string
+        enum:
+        - '2026-03-30'
+        default: '2026-03-30'
+  securitySchemes:
+    OpalToken:
+      type: http
+      scheme: bearer
+      description: 'Opal token authentication for Opal session endpoints. Use an Opal token (`otkn_...`)
+
+        as the Bearer token. Created via POST /opal/token using a secret key.
+
+        '
+    SecretKey:
+      type: http
+      scheme: bearer
+      description: 'Secret key authentication. Use your team''s secret key (`sk_...`) as the Bearer token.
+
+        All authenticated API endpoints require this scheme unless otherwise noted.
+
+        '

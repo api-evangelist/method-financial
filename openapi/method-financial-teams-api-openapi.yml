@@ -1,0 +1,676 @@
+openapi: 3.2.0
+info:
+  title: Method Teams API
+  version: '2026-03-30'
+  license:
+    name: Proprietary
+    url: https://methodfi.com
+  description: "The Method API enables you to retrieve financial data, create payments, and manage\nentities and accounts programmatically. This specification covers the public API\nsurface for version `2026-03-30`.\n\n## Authentication\n\nMost API requests require a Bearer token in the `Authorization` header.\nUse your secret key (`sk_...`) for server-side requests and public key (`pk_...`)\nfor client-side Element requests. Public Message-Level Encryption key discovery\nendpoints are documented separately and do not require authentication.\n\n## Versioning\n\nThe API version is selected via the `Method-Version` header. This spec targets\nversion `2026-03-30`. The SDK sets this header automatically.\n\n## Response Envelope\n\nMost JSON responses are wrapped in a standard envelope:\n\n```json\n{\n  \"success\": true,\n  \"data\": { ... },\n  \"message\": null\n}\n```\n\nThe `/.well-known/jwks.json` endpoint is an exception and returns a bare JWK set.\n\n## Pagination\n\nList endpoints return pagination metadata in response headers:\n`Pagination-Page`, `Pagination-Page-Count`, `Pagination-Page-Limit`,\n`Pagination-Total-Count`, `Pagination-Page-Cursor-Prev`, `Pagination-Page-Cursor-Next`.\n\n## Expandable Fields\n\nCertain resource fields can be expanded from IDs to full objects using the\n`expand` query parameter. Maximum nesting depth is 4 levels.\n"
+  contact:
+    name: Method Financial
+    url: https://methodfi.com
+    email: team@methodfi.com
+servers:
+- url: https://production.methodfi.com
+  description: Production
+  x-fern-server-name: Production
+- url: https://sandbox.methodfi.com
+  description: Sandbox
+  x-fern-server-name: Sandbox
+- url: https://dev.methodfi.com
+  description: Development
+  x-fern-server-name: Development
+security:
+- SecretKey: []
+tags:
+- name: Teams
+  description: Team and API key management
+paths:
+  /teams:
+    get:
+      operationId: retrieveTeam
+      summary: Retrieve the current team
+      description: Returns the team hierarchy (the team associated with the current API key, plus any parent/child teams) as a list.
+      tags:
+      - Teams
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      responses:
+        '200':
+          description: The team hierarchy for the current API key.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    post:
+      operationId: createTeam
+      summary: Create a child team
+      description: Creates a new child team under the current team.
+      tags:
+      - Teams
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/idempotency_key'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamCreateRequest'
+      responses:
+        '200':
+          description: The newly created child team.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /teams/default_encryption_key:
+    post:
+      operationId: createTeamEncryptionKey
+      summary: Set default encryption key
+      description: Sets the default encryption key for the team. Used for encrypting sensitive data in API responses.
+      tags:
+      - Teams
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/idempotency_key'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamEncryptionKeyRequest'
+      responses:
+        '200':
+          description: The updated team with the encryption key set.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /teams/mle/public_keys:
+    get:
+      operationId: listTeamPublicKeys
+      summary: List MLE public keys
+      description: Returns all Message-Level Encryption (MLE) public keys registered for the team.
+      tags:
+      - Teams
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      responses:
+        '200':
+          description: A list of MLE public keys.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MLEPublicKeyListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    post:
+      operationId: createTeamPublicKey
+      summary: Create an MLE public key
+      description: Registers a new Message-Level Encryption (MLE) public key for the team.
+      tags:
+      - Teams
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/idempotency_key'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MLEPublicKeyCreateRequest'
+      responses:
+        '200':
+          description: The newly created MLE public key.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MLEPublicKeyResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /teams/mle/public_keys/{id}:
+    get:
+      operationId: retrieveTeamPublicKey
+      summary: Retrieve an MLE public key
+      description: Returns a single MLE public key by its identifier.
+      tags:
+      - Teams
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the MLE public key.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The requested MLE public key.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MLEPublicKeyResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    delete:
+      operationId: deleteTeamPublicKey
+      summary: Delete an MLE public key
+      description: Deletes an MLE public key by its identifier. This action is irreversible.
+      tags:
+      - Teams
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/idempotency_key'
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the MLE public key.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The deleted MLE public key.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MLEPublicKeyResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+components:
+  schemas:
+    ListEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a list payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific list payload.
+        message:
+          type:
+          - string
+          - 'null'
+      example:
+        success: true
+        data: []
+        message: null
+    TeamResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/Team'
+    ErrorEnvelope:
+      type: object
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `false` for error responses.
+        data:
+          type: object
+          required:
+          - error
+          properties:
+            error:
+              $ref: '#/components/schemas/ErrorObject'
+        message:
+          type: string
+    TeamEncryptionKeyRequest:
+      type: object
+      description: Request body for setting the default encryption key.
+      required:
+      - key
+      properties:
+        key:
+          type: string
+          description: The encryption key value.
+    MLEPublicKeyListResponse:
+      allOf:
+      - $ref: '#/components/schemas/ListEnvelope'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/MLEPublicKey'
+    TeamCreateRequest:
+      type: object
+      description: Request body for creating a child team.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Display name for the new child team.
+    SuccessEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a single payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific response payload.
+        message:
+          type:
+          - string
+          - 'null'
+      example:
+        success: true
+        data: {}
+        message: null
+    Team:
+      type: object
+      description: A Team represents your organization and its API configuration.
+      required:
+      - id
+      - parent_id
+      - name
+      - legal_name
+      - ein
+      - contacts
+      - address
+      - status
+      - logo
+      - created_at
+      - updated_at
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the team.
+          example: team_PmL8JBBnQNpYZ
+        parent_id:
+          type:
+          - string
+          - 'null'
+          description: Identifier of the parent team, if this is a child team.
+        name:
+          type: string
+          description: Display name of the team.
+          example: My Team
+        legal_name:
+          type: string
+          description: Legal business name of the team.
+          example: My Company Inc.
+        ein:
+          type:
+          - string
+          - 'null'
+          description: Employer Identification Number for the team.
+        contacts:
+          type: array
+          description: Contacts associated with the team.
+          items:
+            $ref: '#/components/schemas/TeamContact'
+        address:
+          type:
+          - object
+          - 'null'
+          description: The team's registered address.
+          properties:
+            line1:
+              type:
+              - string
+              - 'null'
+            city:
+              type:
+              - string
+              - 'null'
+            state:
+              type:
+              - string
+              - 'null'
+            zipcode:
+              type:
+              - string
+              - 'null'
+            country:
+              type:
+              - string
+              - 'null'
+        status:
+          type: string
+          description: Current status of the team.
+          enum:
+          - active
+          - verified
+          - disabled
+          - pending_disablement
+        logo:
+          type:
+          - string
+          - 'null'
+          description: URL of the team logo.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the team was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the team was last updated.
+    MLEPublicKeyResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/MLEPublicKey'
+    MLEPublicKey:
+      type: object
+      description: An MLE (Message-Level Encryption) public key for the team.
+      required:
+      - id
+      - type
+      - jwk
+      - well_known_endpoint
+      - contact
+      - status
+      - created_at
+      - updated_at
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the public key.
+        type:
+          type: string
+          description: How the public key is distributed.
+          enum:
+          - direct
+          - well_known
+        jwk:
+          type:
+          - object
+          - 'null'
+          description: JSON Web Key (JWK) representation of the public key. Present when type is direct.
+          additionalProperties: true
+        well_known_endpoint:
+          type:
+          - string
+          - 'null'
+          description: The well-known JWKS endpoint URL. Present when type is well_known.
+        contact:
+          type: string
+          description: Contact email for this public key registration.
+        status:
+          type: string
+          description: Current status of the public key.
+          enum:
+          - active
+          - deleted
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the public key was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the public key was last updated.
+    MLEPublicKeyCreateRequest:
+      type: object
+      description: Request body for creating an MLE public key.
+      required:
+      - type
+      - contact
+      properties:
+        type:
+          type: string
+          description: How the public key should be distributed.
+          enum:
+          - direct
+          - well_known
+        contact:
+          type: string
+          description: Contact email for this public key registration.
+        jwk:
+          type: object
+          description: JSON Web Key (JWK) to register. Required when type is direct.
+          additionalProperties: true
+        well_known_endpoint:
+          type: string
+          description: The well-known JWKS endpoint URL. Required when type is well_known.
+    ErrorObject:
+      type: object
+      required:
+      - type
+      - code
+      - message
+      properties:
+        type:
+          type: string
+          description: Error type category.
+          enum:
+          - invalid_request
+          - api_error
+          - resource_error
+        code:
+          type: integer
+          description: Numeric error code. Common codes include 400 (bad request), 401 (unauthorized), 403 (forbidden), 404 (not found), 422 (unprocessable entity), 429 (rate limited), and 500 (internal error).
+        sub_type:
+          type:
+          - string
+          - 'null'
+          description: More specific error classification.
+        message:
+          type: string
+          description: Human-readable error description.
+    TeamListResponse:
+      allOf:
+      - $ref: '#/components/schemas/ListEnvelope'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/Team'
+      example:
+        success: true
+        data:
+        - id: team_PmL8JBBnQNpYZ
+          parent_id: null
+          name: My Team
+          legal_name: My Company Inc.
+          ein: '1234567'
+          contacts:
+          - name: Jane Doe
+            email: jane@example.com
+            type: Admin
+          address:
+            line1: null
+            city: null
+            state: null
+            zipcode: null
+            country: null
+          status: active
+          logo: null
+          created_at: '2026-01-15T18:30:00.000Z'
+          updated_at: '2026-01-15T18:30:00.000Z'
+        message: null
+    TeamContact:
+      type: object
+      description: A contact associated with a team.
+      properties:
+        name:
+          type: string
+          description: Name of the contact.
+        email:
+          type: string
+          description: Email address of the contact.
+        type:
+          type: string
+          description: The contact's role/type (e.g. `Admin`).
+  responses:
+    RateLimited:
+      description: Too many requests - rate limit exceeded.
+      headers:
+        Retry-After:
+          description: Number of seconds to wait before retrying.
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found - the requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request - invalid parameters or request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    UnprocessableEntity:
+      description: Unprocessable entity - the request was valid JSON but failed business or validation rules.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    InternalError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  parameters:
+    idempotency_key:
+      name: Idempotency-Key
+      in: header
+      required: false
+      description: 'Idempotency key for safely retrying a write request. Reuse the same value when
+
+        retrying the same logical operation to avoid creating duplicate side effects.
+
+        '
+      schema:
+        type: string
+        format: uuid
+    method_version:
+      name: Method-Version
+      in: header
+      required: true
+      description: 'API version to use for this request. This spec targets `2026-03-30`.
+
+        The SDK sets this header automatically.
+
+        '
+      schema:
+        type: string
+        enum:
+        - '2026-03-30'
+        default: '2026-03-30'
+  securitySchemes:
+    OpalToken:
+      type: http
+      scheme: bearer
+      description: 'Opal token authentication for Opal session endpoints. Use an Opal token (`otkn_...`)
+
+        as the Bearer token. Created via POST /opal/token using a secret key.
+
+        '
+    SecretKey:
+      type: http
+      scheme: bearer
+      description: 'Secret key authentication. Use your team''s secret key (`sk_...`) as the Bearer token.
+
+        All authenticated API endpoints require this scheme unless otherwise noted.
+
+        '

@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Public Keys API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Public Keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List public JWKs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/.well-known/jwks.json"
+          },
+          "docs": "Returns the currently active Method public keys for Message-Level Encryption."
+        },
+        {
+          "info": {
+            "name": "Retrieve a public JWK",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/auth/:jwk_id",
+            "params": [
+              {
+                "name": "jwk_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the Method public JWK."
+              }
+            ]
+          },
+          "docs": "Returns a single Method public key by identifier for Message-Level Encryption."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

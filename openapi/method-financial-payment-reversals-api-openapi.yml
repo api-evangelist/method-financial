@@ -1,0 +1,451 @@
+openapi: 3.2.0
+info:
+  title: Method Payment Reversals API
+  version: '2026-03-30'
+  license:
+    name: Proprietary
+    url: https://methodfi.com
+  description: "The Method API enables you to retrieve financial data, create payments, and manage\nentities and accounts programmatically. This specification covers the public API\nsurface for version `2026-03-30`.\n\n## Authentication\n\nMost API requests require a Bearer token in the `Authorization` header.\nUse your secret key (`sk_...`) for server-side requests and public key (`pk_...`)\nfor client-side Element requests. Public Message-Level Encryption key discovery\nendpoints are documented separately and do not require authentication.\n\n## Versioning\n\nThe API version is selected via the `Method-Version` header. This spec targets\nversion `2026-03-30`. The SDK sets this header automatically.\n\n## Response Envelope\n\nMost JSON responses are wrapped in a standard envelope:\n\n```json\n{\n  \"success\": true,\n  \"data\": { ... },\n  \"message\": null\n}\n```\n\nThe `/.well-known/jwks.json` endpoint is an exception and returns a bare JWK set.\n\n## Pagination\n\nList endpoints return pagination metadata in response headers:\n`Pagination-Page`, `Pagination-Page-Count`, `Pagination-Page-Limit`,\n`Pagination-Total-Count`, `Pagination-Page-Cursor-Prev`, `Pagination-Page-Cursor-Next`.\n\n## Expandable Fields\n\nCertain resource fields can be expanded from IDs to full objects using the\n`expand` query parameter. Maximum nesting depth is 4 levels.\n"
+  contact:
+    name: Method Financial
+    url: https://methodfi.com
+    email: team@methodfi.com
+servers:
+- url: https://production.methodfi.com
+  description: Production
+  x-fern-server-name: Production
+- url: https://sandbox.methodfi.com
+  description: Sandbox
+  x-fern-server-name: Sandbox
+- url: https://dev.methodfi.com
+  description: Development
+  x-fern-server-name: Development
+security:
+- SecretKey: []
+tags:
+- name: Payment Reversals
+  description: Reversals for payments
+paths:
+  /payments/{paymentId}/reversals:
+    get:
+      operationId: listPaymentReversals
+      summary: List all reversals for a payment
+      description: Returns a list of all reversals associated with a specific payment.
+      tags:
+      - Payment Reversals
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/PaymentIdParam'
+      responses:
+        '200':
+          description: A list of payment reversals.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentReversalListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /payments/{paymentId}/reversals/{reversalId}:
+    get:
+      operationId: retrievePaymentReversal
+      summary: Retrieve a payment reversal
+      description: Retrieves a specific reversal for a payment by its unique identifier.
+      tags:
+      - Payment Reversals
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/PaymentIdParam'
+      - $ref: '#/components/parameters/ReversalIdParam'
+      responses:
+        '200':
+          description: The requested payment reversal.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentReversalResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    put:
+      operationId: updatePaymentReversal
+      summary: Update a payment reversal
+      description: Updates a payment reversal. Currently supports updating the reversal status.
+      tags:
+      - Payment Reversals
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/idempotency_key'
+      - $ref: '#/components/parameters/PaymentIdParam'
+      - $ref: '#/components/parameters/ReversalIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentReversalUpdateRequest'
+      responses:
+        '200':
+          description: The updated payment reversal.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentReversalResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+components:
+  schemas:
+    ListEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a list payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific list payload.
+        message:
+          type:
+          - string
+          - 'null'
+      example:
+        success: true
+        data: []
+        message: null
+    ErrorEnvelope:
+      type: object
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `false` for error responses.
+        data:
+          type: object
+          required:
+          - error
+          properties:
+            error:
+              $ref: '#/components/schemas/ErrorObject'
+        message:
+          type: string
+    PaymentReversalUpdateRequest:
+      type: object
+      description: Request body for updating a payment reversal.
+      properties:
+        status:
+          type: string
+          description: Updated status for the reversal.
+    PaymentReversalListResponse:
+      allOf:
+      - $ref: '#/components/schemas/ListEnvelope'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/PaymentReversal'
+    SuccessEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a single payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific response payload.
+        message:
+          type:
+          - string
+          - 'null'
+      example:
+        success: true
+        data: {}
+        message: null
+    PaymentReversalResourceError:
+      type:
+      - object
+      - 'null'
+      description: Error details when a payment reversal fails.
+      required:
+      - type
+      - code
+      - sub_type
+      - message
+      properties:
+        type:
+          type: string
+          description: The category of reversal error.
+          enum:
+          - PAYMENT_REVERSAL_FAILED
+        code:
+          type: integer
+          description: Numeric error code (14XXX range).
+          enum:
+          - 14001
+          - 14002
+          - 14003
+        sub_type:
+          type: string
+          description: Specific reversal error classification.
+          enum:
+          - PAYMENT_REVERSAL_INSUFFICIENT_FUNDS
+          - PAYMENT_REVERSAL_UNAUTHORIZED
+          - PAYMENT_REVERSAL_INVALID_ACCOUNT
+        message:
+          type: string
+          description: Human-readable error description.
+      example:
+        type: PAYMENT_REVERSAL_FAILED
+        code: 14001
+        sub_type: PAYMENT_REVERSAL_INSUFFICIENT_FUNDS
+        message: Payment reversal failed due to insufficient funds from the account.
+    PaymentReversal:
+      type: object
+      description: A reversal for a payment, representing a return of funds.
+      required:
+      - id
+      - pmt_id
+      - status
+      - direction
+      - trace_id
+      - target_account
+      - amount
+      - description
+      - fee
+      - created_at
+      - updated_at
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the reversal.
+          pattern: ^rvs_\w+$
+          example: rvs_dKe9ehC3hEBYy
+        pmt_id:
+          type: string
+          description: Identifier of the payment being reversed.
+          pattern: ^pmt_\w+$
+        status:
+          type: string
+          description: Current status of the reversal.
+          enum:
+          - pending_approval
+          - pending
+          - processing
+          - failed
+          - sent
+          - pending_settlement
+        direction:
+          type: string
+          description: Direction of the reversal relative to the original payment.
+          enum:
+          - credit
+          - debit
+        trace_id:
+          type:
+          - string
+          - 'null'
+          description: Trace identifier for the reversal.
+        target_account:
+          type:
+          - string
+          - 'null'
+          description: The target account for the reversal.
+        amount:
+          type: integer
+          description: Reversal amount in cents.
+          minimum: 0
+        description:
+          type:
+          - string
+          - 'null'
+          description: Human-readable description for the reversal.
+        fee:
+          type:
+          - object
+          - 'null'
+          description: Fee information for the reversal.
+        error:
+          $ref: '#/components/schemas/PaymentReversalResourceError'
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the reversal was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the reversal was last updated.
+    PaymentReversalResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/PaymentReversal'
+    ErrorObject:
+      type: object
+      required:
+      - type
+      - code
+      - message
+      properties:
+        type:
+          type: string
+          description: Error type category.
+          enum:
+          - invalid_request
+          - api_error
+          - resource_error
+        code:
+          type: integer
+          description: Numeric error code. Common codes include 400 (bad request), 401 (unauthorized), 403 (forbidden), 404 (not found), 422 (unprocessable entity), 429 (rate limited), and 500 (internal error).
+        sub_type:
+          type:
+          - string
+          - 'null'
+          description: More specific error classification.
+        message:
+          type: string
+          description: Human-readable error description.
+  parameters:
+    ReversalIdParam:
+      name: reversalId
+      in: path
+      required: true
+      description: Unique identifier for the reversal.
+      schema:
+        type: string
+        pattern: ^rvs_\w+$
+    idempotency_key:
+      name: Idempotency-Key
+      in: header
+      required: false
+      description: 'Idempotency key for safely retrying a write request. Reuse the same value when
+
+        retrying the same logical operation to avoid creating duplicate side effects.
+
+        '
+      schema:
+        type: string
+        format: uuid
+    method_version:
+      name: Method-Version
+      in: header
+      required: true
+      description: 'API version to use for this request. This spec targets `2026-03-30`.
+
+        The SDK sets this header automatically.
+
+        '
+      schema:
+        type: string
+        enum:
+        - '2026-03-30'
+        default: '2026-03-30'
+    PaymentIdParam:
+      name: paymentId
+      in: path
+      required: true
+      description: Unique identifier for the payment.
+      schema:
+        type: string
+        pattern: ^pmt_\w+$
+  responses:
+    RateLimited:
+      description: Too many requests - rate limit exceeded.
+      headers:
+        Retry-After:
+          description: Number of seconds to wait before retrying.
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found - the requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request - invalid parameters or request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    UnprocessableEntity:
+      description: Unprocessable entity - the request was valid JSON but failed business or validation rules.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    InternalError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  securitySchemes:
+    OpalToken:
+      type: http
+      scheme: bearer
+      description: 'Opal token authentication for Opal session endpoints. Use an Opal token (`otkn_...`)
+
+        as the Bearer token. Created via POST /opal/token using a secret key.
+
+        '
+    SecretKey:
+      type: http
+      scheme: bearer
+      description: 'Secret key authentication. Use your team''s secret key (`sk_...`) as the Bearer token.
+
+        All authenticated API endpoints require this scheme unless otherwise noted.
+
+        '

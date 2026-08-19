@@ -1,0 +1,365 @@
+openapi: 3.2.0
+info:
+  title: Method Simulate Events API
+  version: '2026-03-30'
+  license:
+    name: Proprietary
+    url: https://methodfi.com
+  description: "The Method API enables you to retrieve financial data, create payments, and manage\nentities and accounts programmatically. This specification covers the public API\nsurface for version `2026-03-30`.\n\n## Authentication\n\nMost API requests require a Bearer token in the `Authorization` header.\nUse your secret key (`sk_...`) for server-side requests and public key (`pk_...`)\nfor client-side Element requests. Public Message-Level Encryption key discovery\nendpoints are documented separately and do not require authentication.\n\n## Versioning\n\nThe API version is selected via the `Method-Version` header. This spec targets\nversion `2026-03-30`. The SDK sets this header automatically.\n\n## Response Envelope\n\nMost JSON responses are wrapped in a standard envelope:\n\n```json\n{\n  \"success\": true,\n  \"data\": { ... },\n  \"message\": null\n}\n```\n\nThe `/.well-known/jwks.json` endpoint is an exception and returns a bare JWK set.\n\n## Pagination\n\nList endpoints return pagination metadata in response headers:\n`Pagination-Page`, `Pagination-Page-Count`, `Pagination-Page-Limit`,\n`Pagination-Total-Count`, `Pagination-Page-Cursor-Prev`, `Pagination-Page-Cursor-Next`.\n\n## Expandable Fields\n\nCertain resource fields can be expanded from IDs to full objects using the\n`expand` query parameter. Maximum nesting depth is 4 levels.\n"
+  contact:
+    name: Method Financial
+    url: https://methodfi.com
+    email: team@methodfi.com
+servers:
+- url: https://production.methodfi.com
+  description: Production
+  x-fern-server-name: Production
+- url: https://sandbox.methodfi.com
+  description: Sandbox
+  x-fern-server-name: Sandbox
+- url: https://dev.methodfi.com
+  description: Development
+  x-fern-server-name: Development
+security:
+- SecretKey: []
+tags:
+- name: Simulate Events
+  description: Sandbox event simulation
+paths:
+  /simulate/events:
+    post:
+      operationId: simulateCreateEvent
+      summary: Simulate an event
+      description: 'Creates a simulated webhook event in the sandbox environment.
+
+        Use this to test webhook handling and event processing during development.
+
+
+        **Development only** - This endpoint is only available in the sandbox environment.
+
+        '
+      tags:
+      - Simulate Events
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - type
+              - entity_id
+              properties:
+                type:
+                  type: string
+                  description: The event type to simulate (e.g., `payment.update`).
+                entity_id:
+                  type: string
+                  description: The identifier of the entity to associate with the event.
+      responses:
+        '200':
+          description: The simulated event.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+components:
+  schemas:
+    Event:
+      type: object
+      required:
+      - id
+      - type
+      - resource_id
+      - resource_type
+      - related_ids
+      - data
+      - diff
+      - created_at
+      - updated_at
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the event.
+          example: evt_HnEJMFWS8rJbh
+        type:
+          description: The webhook event type.
+          example: payment.create
+          $ref: '#/components/schemas/WebhookType'
+        resource_id:
+          type: string
+          description: Identifier of the resource that triggered the event.
+          example: pmt_rPrDPEwyCVUFm
+        resource_type:
+          type: string
+          description: Type of the resource that triggered the event.
+          example: payment
+        related_ids:
+          type: array
+          items:
+            type: string
+          description: Identifiers of related resources.
+        data:
+          description: Current state of the resource at the time of the event.
+          $ref: '#/components/schemas/JsonObject'
+        diff:
+          description: Changes from the previous state of the resource.
+          $ref: '#/components/schemas/JsonObject'
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the event was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the event was last updated.
+    ErrorObject:
+      type: object
+      required:
+      - type
+      - code
+      - message
+      properties:
+        type:
+          type: string
+          description: Error type category.
+          enum:
+          - invalid_request
+          - api_error
+          - resource_error
+        code:
+          type: integer
+          description: Numeric error code. Common codes include 400 (bad request), 401 (unauthorized), 403 (forbidden), 404 (not found), 422 (unprocessable entity), 429 (rate limited), and 500 (internal error).
+        sub_type:
+          type:
+          - string
+          - 'null'
+          description: More specific error classification.
+        message:
+          type: string
+          description: Human-readable error description.
+    SuccessEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a single payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific response payload.
+        message:
+          type:
+          - string
+          - 'null'
+      example:
+        success: true
+        data: {}
+        message: null
+    ErrorEnvelope:
+      type: object
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `false` for error responses.
+        data:
+          type: object
+          required:
+          - error
+          properties:
+            error:
+              $ref: '#/components/schemas/ErrorObject'
+        message:
+          type: string
+    WebhookType:
+      type: string
+      description: The event type this webhook subscribes to.
+      enum:
+      - payment.create
+      - payment.update
+      - account.create
+      - account.update
+      - account.opened
+      - account.closed
+      - account.balance_increased
+      - account.balance_decreased
+      - account.credit_limit_increased
+      - account.credit_limit_decreased
+      - account.number.update
+      - entity.create
+      - entity.update
+      - entity.new_accounts_pending_consent
+      - account_verification.create
+      - account_verification.update
+      - entity_verification_session.create
+      - entity_verification_session.update
+      - payment_reversal.create
+      - payment_reversal.update
+      - connection.create
+      - connection.update
+      - connect.create
+      - connect.available
+      - connect.update
+      - manual_connect.create
+      - manual_connect.update
+      - report.create
+      - report.update
+      - product.create
+      - product.update
+      - subscription.create
+      - subscription.update
+      - credit_score.create
+      - credit_score.update
+      - credit_score.available
+      - credit_score.increased
+      - credit_score.decreased
+      - payoff.create
+      - payoff.update
+      - balance.create
+      - balance.update
+      - identity.create
+      - identity.update
+      - account_verification_session.create
+      - account_verification_session.update
+      - card_brand.create
+      - card_brand.available
+      - card_brand.update
+      - payment_instrument.create
+      - payment_instrument.update
+      - sensitive.create
+      - sensitive.update
+      - update.create
+      - update.update
+      - attribute.create
+      - attribute.update
+      - entity_attribute.create
+      - entity_attribute.update
+      - account_attribute.create
+      - account_attribute.update
+      - transaction.create
+      - transaction.update
+      - entity_vehicle.create
+      - entity_vehicle.update
+      - method_jwk.create
+      - method_jwk.update
+      - attribute.credit_health_credit_card_usage.increased
+      - attribute.credit_health_credit_card_usage.decreased
+      - attribute.credit_health_derogatory_marks.increased
+      - attribute.credit_health_derogatory_marks.decreased
+      - attribute.credit_health_hard_inquiries.increased
+      - attribute.credit_health_hard_inquiries.decreased
+      - attribute.credit_health_total_accounts.increased
+      - attribute.credit_health_total_accounts.decreased
+      - attribute.credit_health_credit_age.increased
+      - attribute.credit_health_credit_age.decreased
+      - attribute.credit_health_payment_history.increased
+      - attribute.credit_health_payment_history.decreased
+      - attribute.credit_health_open_accounts.increased
+      - attribute.credit_health_open_accounts.decreased
+      - entity_attribute.credit_health_open_accounts_value.decreased
+      - entity_attribute.credit_health_open_accounts_value.increased
+      - entity_attribute.credit_health_total_accounts_value.decreased
+      - entity_attribute.credit_health_total_accounts_value.increased
+      - entity_attribute.credit_health_credit_card_usage_value.decreased
+      - entity_attribute.credit_health_credit_card_usage_value.increased
+      - entity_attribute.credit_health_soft_inquiries_value.decreased
+      - entity_attribute.credit_health_soft_inquiries_value.increased
+      - entity_attribute.credit_health_hard_inquiries_value.decreased
+      - entity_attribute.credit_health_hard_inquiries_value.increased
+    EventResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/Event'
+      example:
+        success: true
+        data:
+          id: evt_HnEJMFWS8rJbh
+          type: payment.create
+          resource_id: pmt_rPrDPEwyCVUcm
+          resource_type: payment
+          related_ids:
+          - acc_b9q2XVAnNFbp3
+          - acc_Y8u3qL9mNa1Bz
+          data:
+            id: pmt_rPrDPEwyCVUcm
+            status: pending
+            amount: 5000
+          diff: {}
+          created_at: '2026-01-15T18:30:00.000Z'
+          updated_at: '2026-01-15T18:30:00.000Z'
+        message: null
+    JsonObject:
+      type: object
+      description: Arbitrary JSON object.
+      additionalProperties: true
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    InternalError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  parameters:
+    method_version:
+      name: Method-Version
+      in: header
+      required: true
+      description: 'API version to use for this request. This spec targets `2026-03-30`.
+
+        The SDK sets this header automatically.
+
+        '
+      schema:
+        type: string
+        enum:
+        - '2026-03-30'
+        default: '2026-03-30'
+  securitySchemes:
+    OpalToken:
+      type: http
+      scheme: bearer
+      description: 'Opal token authentication for Opal session endpoints. Use an Opal token (`otkn_...`)
+
+        as the Bearer token. Created via POST /opal/token using a secret key.
+
+        '
+    SecretKey:
+      type: http
+      scheme: bearer
+      description: 'Secret key authentication. Use your team''s secret key (`sk_...`) as the Bearer token.
+
+        All authenticated API endpoints require this scheme unless otherwise noted.
+
+        '

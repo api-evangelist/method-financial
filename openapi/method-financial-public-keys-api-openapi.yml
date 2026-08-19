@@ -1,0 +1,298 @@
+openapi: 3.2.0
+info:
+  title: Method Public Keys API
+  version: '2026-03-30'
+  license:
+    name: Proprietary
+    url: https://methodfi.com
+  description: "The Method API enables you to retrieve financial data, create payments, and manage\nentities and accounts programmatically. This specification covers the public API\nsurface for version `2026-03-30`.\n\n## Authentication\n\nMost API requests require a Bearer token in the `Authorization` header.\nUse your secret key (`sk_...`) for server-side requests and public key (`pk_...`)\nfor client-side Element requests. Public Message-Level Encryption key discovery\nendpoints are documented separately and do not require authentication.\n\n## Versioning\n\nThe API version is selected via the `Method-Version` header. This spec targets\nversion `2026-03-30`. The SDK sets this header automatically.\n\n## Response Envelope\n\nMost JSON responses are wrapped in a standard envelope:\n\n```json\n{\n  \"success\": true,\n  \"data\": { ... },\n  \"message\": null\n}\n```\n\nThe `/.well-known/jwks.json` endpoint is an exception and returns a bare JWK set.\n\n## Pagination\n\nList endpoints return pagination metadata in response headers:\n`Pagination-Page`, `Pagination-Page-Count`, `Pagination-Page-Limit`,\n`Pagination-Total-Count`, `Pagination-Page-Cursor-Prev`, `Pagination-Page-Cursor-Next`.\n\n## Expandable Fields\n\nCertain resource fields can be expanded from IDs to full objects using the\n`expand` query parameter. Maximum nesting depth is 4 levels.\n"
+  contact:
+    name: Method Financial
+    url: https://methodfi.com
+    email: team@methodfi.com
+servers:
+- url: https://production.methodfi.com
+  description: Production
+  x-fern-server-name: Production
+- url: https://sandbox.methodfi.com
+  description: Sandbox
+  x-fern-server-name: Sandbox
+- url: https://dev.methodfi.com
+  description: Development
+  x-fern-server-name: Development
+security:
+- SecretKey: []
+tags:
+- name: Public Keys
+  description: Public key discovery endpoints for Message-Level Encryption.
+paths:
+  /.well-known/jwks.json:
+    get:
+      operationId: listPublicJwks
+      summary: List public JWKs
+      description: Returns the currently active Method public keys for Message-Level Encryption.
+      tags:
+      - Public Keys
+      security: []
+      responses:
+        '200':
+          description: Public JWK set for Method encryption.
+          headers:
+            Cache-Control:
+              description: Caching directive for the public JWK set.
+              schema:
+                type: string
+                example: public, max-age=3600
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WellKnownJwksResponse'
+              example:
+                keys:
+                - kid: mthd_jwk_abc123
+                  kty: RSA
+                  alg: RSA-OAEP-256
+                  use: enc
+                  n: sXchf3Hj7G6m1mQF2k38QeY7s9lQfV4sLzM0YJr7Q7B6U2CjQX8m5w
+                  e: AQAB
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /auth/{jwk_id}:
+    get:
+      operationId: retrievePublicJwk
+      summary: Retrieve a public JWK
+      description: Returns a single Method public key by identifier for Message-Level Encryption.
+      tags:
+      - Public Keys
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/MethodJwkIdParam'
+      responses:
+        '200':
+          description: The requested public JWK.
+          headers:
+            Cache-Control:
+              description: Caching directive for the public JWK.
+              schema:
+                type: string
+                example: public, max-age=3600
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MethodPublicKeyResponse'
+              example:
+                success: true
+                data:
+                  id: mthd_jwk_abc123
+                  jwk:
+                    kid: mthd_jwk_abc123
+                    kty: RSA
+                    alg: RSA-OAEP-256
+                    use: enc
+                    n: sXchf3Hj7G6m1mQF2k38QeY7s9lQfV4sLzM0YJr7Q7B6U2CjQX8m5w
+                    e: AQAB
+                  jwk_thumbprint: qn0x2fG8X0F9S9RzM1Tq8vQw8ap8T7iWmS0o9C9y4Lw
+                  status: active
+                  created_at: '2026-01-15T18:30:00.000Z'
+                  updated_at: '2026-01-15T18:30:00.000Z'
+                message: null
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+components:
+  schemas:
+    WellKnownJwksResponse:
+      type: object
+      required:
+      - keys
+      properties:
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/JwkPublic'
+    JwkPublic:
+      type: object
+      required:
+      - kid
+      - kty
+      - alg
+      - use
+      - n
+      - e
+      properties:
+        kid:
+          type: string
+          description: Key identifier.
+          example: mthd_jwk_abc123
+        kty:
+          type: string
+          description: Key type.
+          example: RSA
+        alg:
+          type: string
+          description: JWK algorithm.
+          example: RSA-OAEP-256
+        use:
+          type: string
+          description: Intended key use.
+          example: enc
+        n:
+          type: string
+          description: RSA modulus.
+        e:
+          type: string
+          description: RSA public exponent.
+    ErrorObject:
+      type: object
+      required:
+      - type
+      - code
+      - message
+      properties:
+        type:
+          type: string
+          description: Error type category.
+          enum:
+          - invalid_request
+          - api_error
+          - resource_error
+        code:
+          type: integer
+          description: Numeric error code. Common codes include 400 (bad request), 401 (unauthorized), 403 (forbidden), 404 (not found), 422 (unprocessable entity), 429 (rate limited), and 500 (internal error).
+        sub_type:
+          type:
+          - string
+          - 'null'
+          description: More specific error classification.
+        message:
+          type: string
+          description: Human-readable error description.
+    SuccessEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a single payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific response payload.
+        message:
+          type:
+          - string
+          - 'null'
+      example:
+        success: true
+        data: {}
+        message: null
+    MethodPublicKeyResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/MethodPublicKey'
+    ErrorEnvelope:
+      type: object
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `false` for error responses.
+        data:
+          type: object
+          required:
+          - error
+          properties:
+            error:
+              $ref: '#/components/schemas/ErrorObject'
+        message:
+          type: string
+    MethodPublicKey:
+      type: object
+      required:
+      - id
+      - jwk
+      - jwk_thumbprint
+      - status
+      - created_at
+      - updated_at
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the Method JWK.
+          pattern: ^mthd_jwk_\w+$
+        jwk:
+          $ref: '#/components/schemas/JwkPublic'
+        jwk_thumbprint:
+          type: string
+          description: SHA-256 thumbprint for the public JWK.
+        status:
+          type: string
+          description: Lifecycle status of the public key.
+          enum:
+          - active
+          - deprecated
+          - disabled
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the key was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the key was last updated.
+  responses:
+    NotFound:
+      description: Not found - the requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request - invalid parameters or request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    InternalError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  parameters:
+    MethodJwkIdParam:
+      name: jwk_id
+      in: path
+      required: true
+      description: Unique identifier for the Method public JWK.
+      schema:
+        type: string
+        pattern: ^mthd_jwk_\w+$
+  securitySchemes:
+    OpalToken:
+      type: http
+      scheme: bearer
+      description: 'Opal token authentication for Opal session endpoints. Use an Opal token (`otkn_...`)
+
+        as the Bearer token. Created via POST /opal/token using a secret key.
+
+        '
+    SecretKey:
+      type: http
+      scheme: bearer
+      description: 'Secret key authentication. Use your team''s secret key (`sk_...`) as the Bearer token.
+
+        All authenticated API endpoints require this scheme unless otherwise noted.
+
+        '

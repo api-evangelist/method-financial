@@ -1,0 +1,551 @@
+openapi: 3.2.0
+info:
+  title: Method Account Payment Instruments API
+  version: '2026-03-30'
+  license:
+    name: Proprietary
+    url: https://methodfi.com
+  description: "The Method API enables you to retrieve financial data, create payments, and manage\nentities and accounts programmatically. This specification covers the public API\nsurface for version `2026-03-30`.\n\n## Authentication\n\nMost API requests require a Bearer token in the `Authorization` header.\nUse your secret key (`sk_...`) for server-side requests and public key (`pk_...`)\nfor client-side Element requests. Public Message-Level Encryption key discovery\nendpoints are documented separately and do not require authentication.\n\n## Versioning\n\nThe API version is selected via the `Method-Version` header. This spec targets\nversion `2026-03-30`. The SDK sets this header automatically.\n\n## Response Envelope\n\nMost JSON responses are wrapped in a standard envelope:\n\n```json\n{\n  \"success\": true,\n  \"data\": { ... },\n  \"message\": null\n}\n```\n\nThe `/.well-known/jwks.json` endpoint is an exception and returns a bare JWK set.\n\n## Pagination\n\nList endpoints return pagination metadata in response headers:\n`Pagination-Page`, `Pagination-Page-Count`, `Pagination-Page-Limit`,\n`Pagination-Total-Count`, `Pagination-Page-Cursor-Prev`, `Pagination-Page-Cursor-Next`.\n\n## Expandable Fields\n\nCertain resource fields can be expanded from IDs to full objects using the\n`expand` query parameter. Maximum nesting depth is 4 levels.\n"
+  contact:
+    name: Method Financial
+    url: https://methodfi.com
+    email: team@methodfi.com
+servers:
+- url: https://production.methodfi.com
+  description: Production
+  x-fern-server-name: Production
+- url: https://sandbox.methodfi.com
+  description: Sandbox
+  x-fern-server-name: Sandbox
+- url: https://dev.methodfi.com
+  description: Development
+  x-fern-server-name: Development
+security:
+- SecretKey: []
+tags:
+- name: Account Payment Instruments
+  description: Payment instruments for accounts
+paths:
+  /accounts/{accountId}/payment_instruments:
+    get:
+      operationId: listAccountPaymentInstruments
+      summary: List all account payment instruments
+      description: Returns a list of payment instruments for the specified account.
+      tags:
+      - Account Payment Instruments
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/AccountIdParam'
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PageLimitParam'
+      - $ref: '#/components/parameters/PageCursorParam'
+      responses:
+        '200':
+          description: A paginated list of account payment instruments.
+          headers:
+            Pagination-Page:
+              $ref: '#/components/headers/Pagination-Page'
+            Pagination-Page-Count:
+              $ref: '#/components/headers/Pagination-Page-Count'
+            Pagination-Page-Limit:
+              $ref: '#/components/headers/Pagination-Page-Limit'
+            Pagination-Total-Count:
+              $ref: '#/components/headers/Pagination-Total-Count'
+            Pagination-Page-Cursor-Prev:
+              $ref: '#/components/headers/Pagination-Page-Cursor-Prev'
+            Pagination-Page-Cursor-Next:
+              $ref: '#/components/headers/Pagination-Page-Cursor-Next'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountPaymentInstrumentListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    post:
+      operationId: createAccountPaymentInstrument
+      summary: Create an account payment instrument
+      description: Creates a new payment instrument for the specified account.
+      tags:
+      - Account Payment Instruments
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/idempotency_key'
+      - $ref: '#/components/parameters/AccountIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountPaymentInstrumentCreateRequest'
+      responses:
+        '200':
+          description: The newly created account payment instrument.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountPaymentInstrumentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /accounts/{accountId}/payment_instruments/{pmtInsId}:
+    get:
+      operationId: retrieveAccountPaymentInstrument
+      summary: Retrieve an account payment instrument
+      description: Retrieves an account payment instrument by its unique identifier.
+      tags:
+      - Account Payment Instruments
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/AccountIdParam'
+      - $ref: '#/components/parameters/AccountPaymentInstrumentIdParam'
+      responses:
+        '200':
+          description: The requested account payment instrument.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountPaymentInstrumentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    delete:
+      operationId: closeAccountPaymentInstrument
+      summary: Close an account payment instrument
+      description: Closes an account payment instrument. This endpoint is only available starting with API version `2026-03-30`.
+      tags:
+      - Account Payment Instruments
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      - $ref: '#/components/parameters/idempotency_key'
+      - $ref: '#/components/parameters/AccountIdParam'
+      - $ref: '#/components/parameters/AccountPaymentInstrumentIdParam'
+      responses:
+        '200':
+          description: The closed account payment instrument.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountPaymentInstrumentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+components:
+  schemas:
+    ListEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a list payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific list payload.
+        message:
+          type:
+          - string
+          - 'null'
+      example:
+        success: true
+        data: []
+        message: null
+    ErrorEnvelope:
+      type: object
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `false` for error responses.
+        data:
+          type: object
+          required:
+          - error
+          properties:
+            error:
+              $ref: '#/components/schemas/ErrorObject'
+        message:
+          type: string
+    ResourceError:
+      type:
+      - object
+      - 'null'
+      required:
+      - type
+      - code
+      - message
+      properties:
+        type:
+          type: string
+        code:
+          type: integer
+        sub_type:
+          type:
+          - string
+          - 'null'
+        message:
+          type: string
+    AccountPaymentInstrumentCreateRequest:
+      type: object
+      description: Request body for creating an account payment instrument.
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          description: The type of payment instrument to create.
+          enum:
+          - card
+          - network_token
+          - inbound_achwire_payment
+    SuccessEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a single payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific response payload.
+        message:
+          type:
+          - string
+          - 'null'
+      example:
+        success: true
+        data: {}
+        message: null
+    AccountPaymentInstrumentResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/AccountPaymentInstrument'
+    AccountPaymentInstrumentListResponse:
+      allOf:
+      - $ref: '#/components/schemas/ListEnvelope'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/AccountPaymentInstrument'
+    AccountPaymentInstrument:
+      type: object
+      description: A payment instrument for an account.
+      required:
+      - id
+      - account_id
+      - status
+      - type
+      - created_at
+      - updated_at
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the payment instrument.
+          pattern: ^pmt_inst_\w+$
+          example: pmt_inst_aTJMbnCjw34yQ
+        account_id:
+          type: string
+          description: The account this payment instrument belongs to.
+          pattern: ^acc_\w+$
+        status:
+          type: string
+          description: Current status of the payment instrument.
+          enum:
+          - pending
+          - in_progress
+          - completed
+        type:
+          type: string
+          description: The type of payment instrument.
+          enum:
+          - card
+          - network_token
+          - inbound_achwire_payment
+        chargeable:
+          type: boolean
+          description: Whether this payment instrument is currently chargeable.
+        card:
+          type:
+          - object
+          - 'null'
+          description: Card details. Present when type is card.
+          properties:
+            number:
+              type: string
+              description: The card number.
+            exp_month:
+              type: string
+              description: Card expiration month.
+            exp_year:
+              type: string
+              description: Card expiration year.
+            billing_zip_code:
+              type: string
+              description: Billing zip code.
+        network_token:
+          type:
+          - object
+          - 'null'
+          description: Network token details. Present when type is network_token.
+          properties:
+            token:
+              type: string
+              description: The network token value.
+        inbound_achwire_payment:
+          type:
+          - object
+          - 'null'
+          description: ACH/wire payment details. Present when type is inbound_achwire_payment.
+          properties:
+            account_number:
+              type: string
+              description: The account number.
+            routing_number:
+              type: string
+              description: The routing number.
+        error:
+          $ref: '#/components/schemas/ResourceError'
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the payment instrument was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the payment instrument was last updated.
+    ErrorObject:
+      type: object
+      required:
+      - type
+      - code
+      - message
+      properties:
+        type:
+          type: string
+          description: Error type category.
+          enum:
+          - invalid_request
+          - api_error
+          - resource_error
+        code:
+          type: integer
+          description: Numeric error code. Common codes include 400 (bad request), 401 (unauthorized), 403 (forbidden), 404 (not found), 422 (unprocessable entity), 429 (rate limited), and 500 (internal error).
+        sub_type:
+          type:
+          - string
+          - 'null'
+          description: More specific error classification.
+        message:
+          type: string
+          description: Human-readable error description.
+  parameters:
+    AccountPaymentInstrumentIdParam:
+      name: pmtInsId
+      in: path
+      required: true
+      description: Unique identifier for the account payment instrument.
+      schema:
+        type: string
+        pattern: ^pmt_ins_\w+$
+    PageLimitParam:
+      name: page_limit
+      in: query
+      required: false
+      description: Number of items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 10
+    PageCursorParam:
+      name: page_cursor
+      in: query
+      required: false
+      description: Cursor for cursor-based pagination. Use the value from `Pagination-Page-Cursor-Next` or `Pagination-Page-Cursor-Prev` response headers.
+      schema:
+        type: string
+    idempotency_key:
+      name: Idempotency-Key
+      in: header
+      required: false
+      description: 'Idempotency key for safely retrying a write request. Reuse the same value when
+
+        retrying the same logical operation to avoid creating duplicate side effects.
+
+        '
+      schema:
+        type: string
+        format: uuid
+    method_version:
+      name: Method-Version
+      in: header
+      required: true
+      description: 'API version to use for this request. This spec targets `2026-03-30`.
+
+        The SDK sets this header automatically.
+
+        '
+      schema:
+        type: string
+        enum:
+        - '2026-03-30'
+        default: '2026-03-30'
+    PageParam:
+      name: page
+      in: query
+      required: false
+      description: Page number for pagination (1-indexed).
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    AccountIdParam:
+      name: accountId
+      in: path
+      required: true
+      description: Unique identifier for the account.
+      schema:
+        type: string
+        pattern: ^acc_\w+$
+  responses:
+    RateLimited:
+      description: Too many requests - rate limit exceeded.
+      headers:
+        Retry-After:
+          description: Number of seconds to wait before retrying.
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found - the requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request - invalid parameters or request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    UnprocessableEntity:
+      description: Unprocessable entity - the request was valid JSON but failed business or validation rules.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    InternalError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  headers:
+    Pagination-Page:
+      description: Current page number.
+      schema:
+        type: integer
+    Pagination-Page-Cursor-Prev:
+      description: Cursor for the previous page, if available.
+      schema:
+        type:
+        - string
+        - 'null'
+    Pagination-Page-Cursor-Next:
+      description: Cursor for the next page, if available.
+      schema:
+        type:
+        - string
+        - 'null'
+    Pagination-Total-Count:
+      description: Total number of items across all pages.
+      schema:
+        type: integer
+    Pagination-Page-Limit:
+      description: Number of items per page.
+      schema:
+        type: integer
+    Pagination-Page-Count:
+      description: Total number of pages.
+      schema:
+        type: integer
+  securitySchemes:
+    OpalToken:
+      type: http
+      scheme: bearer
+      description: 'Opal token authentication for Opal session endpoints. Use an Opal token (`otkn_...`)
+
+        as the Bearer token. Created via POST /opal/token using a secret key.
+
+        '
+    SecretKey:
+      type: http
+      scheme: bearer
+      description: 'Secret key authentication. Use your team''s secret key (`sk_...`) as the Bearer token.
+
+        All authenticated API endpoints require this scheme unless otherwise noted.
+
+        '

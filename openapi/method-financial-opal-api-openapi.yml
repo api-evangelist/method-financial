@@ -1,0 +1,592 @@
+openapi: 3.2.0
+info:
+  title: Method Opal API
+  version: '2026-03-30'
+  license:
+    name: Proprietary
+    url: https://methodfi.com
+  description: "The Method API enables you to retrieve financial data, create payments, and manage\nentities and accounts programmatically. This specification covers the public API\nsurface for version `2026-03-30`.\n\n## Authentication\n\nMost API requests require a Bearer token in the `Authorization` header.\nUse your secret key (`sk_...`) for server-side requests and public key (`pk_...`)\nfor client-side Element requests. Public Message-Level Encryption key discovery\nendpoints are documented separately and do not require authentication.\n\n## Versioning\n\nThe API version is selected via the `Method-Version` header. This spec targets\nversion `2026-03-30`. The SDK sets this header automatically.\n\n## Response Envelope\n\nMost JSON responses are wrapped in a standard envelope:\n\n```json\n{\n  \"success\": true,\n  \"data\": { ... },\n  \"message\": null\n}\n```\n\nThe `/.well-known/jwks.json` endpoint is an exception and returns a bare JWK set.\n\n## Pagination\n\nList endpoints return pagination metadata in response headers:\n`Pagination-Page`, `Pagination-Page-Count`, `Pagination-Page-Limit`,\n`Pagination-Total-Count`, `Pagination-Page-Cursor-Prev`, `Pagination-Page-Cursor-Next`.\n\n## Expandable Fields\n\nCertain resource fields can be expanded from IDs to full objects using the\n`expand` query parameter. Maximum nesting depth is 4 levels.\n"
+  contact:
+    name: Method Financial
+    url: https://methodfi.com
+    email: team@methodfi.com
+servers:
+- url: https://production.methodfi.com
+  description: Production
+  x-fern-server-name: Production
+- url: https://sandbox.methodfi.com
+  description: Sandbox
+  x-fern-server-name: Sandbox
+- url: https://dev.methodfi.com
+  description: Development
+  x-fern-server-name: Development
+security:
+- SecretKey: []
+tags:
+- name: Opal
+  description: Opal client-side session and token management
+paths:
+  /opal/token:
+    get:
+      operationId: retrieveOpalToken
+      summary: Retrieve an Opal session
+      description: Returns the current state of the Opal session associated with the authenticated token.
+      tags:
+      - Opal
+      security:
+      - OpalToken: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      responses:
+        '200':
+          description: The current session state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpalSessionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    post:
+      operationId: createOpalToken
+      summary: Create an Opal token
+      description: 'Creates a new Opal token and, depending on the creation pattern, a new session. Supports three patterns: (A) provide `entity_id` + `mode` + mode config, (B) provide inline `entity` + `mode` + mode config, or (C) provide `session_id` to create an additional token for an existing session.'
+      tags:
+      - Opal
+      security:
+      - SecretKey: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpalTokenCreateRequest'
+            example:
+              entity_id: ent_au22b1fbFJbp8
+              mode: card_connect
+              card_connect:
+                selection_type: single
+      responses:
+        '200':
+          description: The created Opal token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpalTokenResponse'
+              example:
+                success: true
+                data:
+                  token: otkn_yVf8MKZcGj3a9P2xLwR7nT
+                  session_id: osess_4kR8mNpL2xQvW7jY
+                  valid_until: '2026-03-14T19:30:00.000Z'
+                message: null
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    delete:
+      operationId: deactivateOpalToken
+      summary: Deactivate an Opal token
+      description: Deactivates the authenticated Opal token, preventing further use.
+      tags:
+      - Opal
+      security:
+      - OpalToken: []
+      parameters:
+      - $ref: '#/components/parameters/method_version'
+      responses:
+        '200':
+          description: Token deactivated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpalNullResponse'
+              example:
+                success: true
+                data: null
+                message: null
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+components:
+  responses:
+    RateLimited:
+      description: Too many requests - rate limit exceeded.
+      headers:
+        Retry-After:
+          description: Number of seconds to wait before retrying.
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request - invalid parameters or request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    UnprocessableEntity:
+      description: Unprocessable entity - the request was valid JSON but failed business or validation rules.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    InternalError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  schemas:
+    OpalSessionMode:
+      type: string
+      description: The mode that determines which flows are configured for the session.
+      enum:
+      - identity_verification
+      - card_connect
+      - connect
+      - account_verification
+      - transactions
+    OpalToken:
+      type: object
+      description: A short-lived token used to authenticate an Opal session from a client application.
+      required:
+      - token
+      - session_id
+      - valid_until
+      properties:
+        token:
+          type: string
+          description: The bearer token value used for Opal client authentication.
+          example: otkn_yVf8MKZcGj3a9P2xLwR7nT
+        session_id:
+          type: string
+          description: Unique identifier for the associated Opal session.
+          example: osess_4kR8mNpL2xQvW7jY
+        valid_until:
+          type: string
+          format: date-time
+          description: Timestamp when this token expires (30 minutes after creation).
+    ErrorObject:
+      type: object
+      required:
+      - type
+      - code
+      - message
+      properties:
+        type:
+          type: string
+          description: Error type category.
+          enum:
+          - invalid_request
+          - api_error
+          - resource_error
+        code:
+          type: integer
+          description: Numeric error code. Common codes include 400 (bad request), 401 (unauthorized), 403 (forbidden), 404 (not found), 422 (unprocessable entity), 429 (rate limited), and 500 (internal error).
+        sub_type:
+          type:
+          - string
+          - 'null'
+          description: More specific error classification.
+        message:
+          type: string
+          description: Human-readable error description.
+    OpalCardConnectAccountFilters:
+      type: object
+      description: Account filters for the card_connect mode.
+      properties:
+        exclude:
+          type: object
+          properties:
+            mch_ids:
+              type: array
+              items:
+                type: string
+              description: Merchant IDs to exclude.
+            unverified_account_numbers:
+              type: boolean
+              description: Whether to exclude accounts with unverified numbers.
+    SuccessEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a single payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific response payload.
+        message:
+          type:
+          - string
+          - 'null'
+      example:
+        success: true
+        data: {}
+        message: null
+    OpalSessionResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/OpalSession'
+    ErrorEnvelope:
+      type: object
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `false` for error responses.
+        data:
+          type: object
+          required:
+          - error
+          properties:
+            error:
+              $ref: '#/components/schemas/ErrorObject'
+        message:
+          type: string
+    OpalTokenResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/OpalToken'
+    OpalSession:
+      type: object
+      description: An Opal session representing a client-side workflow for identity verification, account connection, or account verification.
+      required:
+      - id
+      - config
+      - entity
+      - mode
+      - idv
+      - cxn
+      - avf
+      - txn
+      - completed_at
+      - created_at
+      - updated_at
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the session.
+          example: osess_4kR8mNpL2xQvW7jY
+        config:
+          type: object
+          description: Team-level configuration snapshot for the session.
+          properties:
+            name:
+              type: string
+              description: Team display name.
+            logo:
+              type:
+              - string
+              - 'null'
+              description: Team logo URL.
+            opal_should_prefill_entities:
+              type: boolean
+              description: Whether to prefill entity information.
+            primary_color:
+              type:
+              - string
+              - 'null'
+              description: Primary brand color.
+            event_channel:
+              type:
+              - string
+              - 'null'
+              description: Event channel identifier.
+            accounts_liability_allow_number_update:
+              type: boolean
+              description: Whether account number updates are allowed.
+            appearance:
+              type: string
+              enum:
+              - light
+              - dark
+              - system
+              description: UI appearance theme.
+        entity:
+          type: object
+          description: Minimal entity representation for the session.
+          properties:
+            id:
+              type: string
+              description: Entity identifier.
+            individual:
+              type:
+              - object
+              - 'null'
+              description: Individual entity details.
+            address:
+              type:
+              - object
+              - 'null'
+              description: Entity address.
+            status:
+              type: string
+              description: Entity status.
+            verification:
+              type: object
+              description: Entity verification state.
+              properties:
+                identity:
+                  type: object
+                  properties:
+                    matched:
+                      type: boolean
+                    verified:
+                      type: boolean
+                phone:
+                  type: object
+                  properties:
+                    verified:
+                      type: boolean
+        mode:
+          $ref: '#/components/schemas/OpalSessionMode'
+        idv:
+          type:
+          - object
+          - 'null'
+          description: Identity verification flow configuration and state.
+        cxn:
+          type:
+          - object
+          - 'null'
+          description: Account connection flow configuration and state.
+        avf:
+          type:
+          - object
+          - 'null'
+          description: Account verification flow configuration and state.
+        txn:
+          type:
+          - object
+          - 'null'
+          description: Transactions flow configuration and state.
+        completed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the session was completed, or null if still in progress.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the session was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the session was last updated.
+    OpalNullResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            type:
+            - object
+            - 'null'
+            example: null
+    OpalConnectAccountFilters:
+      type: object
+      description: Account filters for the connect mode.
+      properties:
+        include:
+          type: object
+          properties:
+            account_types:
+              type: array
+              items:
+                type: string
+              description: Account liability types to include.
+            products:
+              type: array
+              minItems: 1
+              items:
+                type: string
+              description: Required products to filter by.
+        exclude:
+          type: object
+          properties:
+            account_types:
+              type: array
+              items:
+                type: string
+              description: Account liability types to exclude.
+            mch_ids:
+              type: array
+              items:
+                type: string
+              description: Merchant IDs to exclude.
+            unverified_account_numbers:
+              type: boolean
+              description: Whether to exclude accounts with unverified numbers.
+    OpalTokenCreateRequest:
+      type: object
+      description: 'Request to create an Opal token. Supports three creation patterns: (A) existing entity via `entity_id`, (B) inline entity via `entity`, or (C) existing session via `session_id`. Exactly one of these three fields must be provided.'
+      properties:
+        entity_id:
+          type: string
+          description: 'Pattern A: ID of an existing entity to use for the session.'
+          example: ent_au22b1fbFJbp8
+        entity:
+          type: object
+          description: 'Pattern B: Inline entity creation payload.'
+          properties:
+            type:
+              type: string
+              description: Entity type.
+              enum:
+              - individual
+            individual:
+              type: object
+              description: Individual details for entity creation.
+        session_id:
+          type: string
+          description: 'Pattern C: ID of an existing session to create an additional token for.'
+          example: osess_4kR8mNpL2xQvW7jY
+        mode:
+          $ref: '#/components/schemas/OpalSessionMode'
+        appearance:
+          type: string
+          enum:
+          - light
+          - dark
+          - system
+          description: UI appearance theme for the session.
+        identity_verification:
+          type: object
+          description: Configuration for the `identity_verification` mode. Required when `mode` is `identity_verification`.
+          properties:
+            skip_pii:
+              type: array
+              items:
+                type: string
+              description: PII fields to skip during identity verification.
+        card_connect:
+          type: object
+          description: Configuration for the `card_connect` mode. Required when `mode` is `card_connect`.
+          required:
+          - selection_type
+          properties:
+            selection_type:
+              type: string
+              enum:
+              - single
+              - multiple
+              description: Whether the user can select one or multiple cards.
+            account_filters:
+              $ref: '#/components/schemas/OpalCardConnectAccountFilters'
+            skip_pii:
+              type: array
+              items:
+                type: string
+              description: PII fields to skip during identity verification.
+        connect:
+          type: object
+          description: Configuration for the `connect` mode. Required when `mode` is `connect`.
+          required:
+          - selection_type
+          properties:
+            selection_type:
+              type: string
+              enum:
+              - single
+              - multiple
+              - all
+              description: Account selection behavior.
+            account_filters:
+              $ref: '#/components/schemas/OpalConnectAccountFilters'
+            skip_pii:
+              type: array
+              items:
+                type: string
+              description: PII fields to skip during identity verification.
+        account_verification:
+          type: object
+          description: Configuration for the `account_verification` mode. Required when `mode` is `account_verification`.
+          required:
+          - account_id
+          properties:
+            account_id:
+              type: string
+              description: ID of the account to verify.
+            intent:
+              type: string
+              enum:
+              - data
+              - payments
+              - transactions
+              description: The intent for account verification.
+        transactions:
+          type: object
+          description: Configuration for the `transactions` mode. Required when `mode` is `transactions`.
+  parameters:
+    method_version:
+      name: Method-Version
+      in: header
+      required: true
+      description: 'API version to use for this request. This spec targets `2026-03-30`.
+
+        The SDK sets this header automatically.
+
+        '
+      schema:
+        type: string
+        enum:
+        - '2026-03-30'
+        default: '2026-03-30'
+  securitySchemes:
+    OpalToken:
+      type: http
+      scheme: bearer
+      description: 'Opal token authentication for Opal session endpoints. Use an Opal token (`otkn_...`)
+
+        as the Bearer token. Created via POST /opal/token using a secret key.
+
+        '
+    SecretKey:
+      type: http
+      scheme: bearer
+      description: 'Secret key authentication. Use your team''s secret key (`sk_...`) as the Bearer token.
+
+        All authenticated API endpoints require this scheme unless otherwise noted.
+
+        '

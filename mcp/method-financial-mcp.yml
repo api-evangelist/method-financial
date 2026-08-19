@@ -42,3 +42,11 @@ oauth:
   authorization_server: /.well-known/oauth-authorization-server -> 404
   protected_resource: /.well-known/oauth-protected-resource -> 404
   note: Anonymous access; no OAuth challenge on tools/list.
+deployment:
+  mode: remote
+  endpoint: https://methodfinancial.main-kill-isr.mintlify.me/mcp
+  verified: probed
+  probe: live
+  tools: 3
+  checked: '2026-08-12'
+  source: catalog MCP census

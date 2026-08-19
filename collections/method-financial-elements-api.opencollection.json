@@ -1,0 +1,165 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Method Elements API",
+    "version": "2026-03-30"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Elements",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an element token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/elements/token",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new element token for client-side use. The token is scoped to a specific entity\nand has an expiration. Use this server-side to generate tokens for your frontend.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve element session results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/elements/token/:pk_elem_id/results",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pk_elem_id",
+                "value": "",
+                "type": "path",
+                "description": "The element token identifier."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the results of a completed element session. Use this to retrieve data collected during an element flow."
+        },
+        {
+          "info": {
+            "name": "Retrieve an element session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production.methodfi.com/elements/sessions/:session_id",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the element session."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a single element session by its identifier."
+        },
+        {
+          "info": {
+            "name": "Update an element session",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://production.methodfi.com/elements/sessions/:session_id",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the element session."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an element session by its identifier."
+        },
+        {
+          "info": {
+            "name": "Exchange an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production.methodfi.com/elements/accounts/exchange",
+            "headers": [
+              {
+                "name": "Method-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Exchanges account information for use in element flows. This endpoint is called server-side."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
