@@ -21,6 +21,18 @@ modified: '2026-08-04'
 image: https://framerusercontent.com/images/8VlzHm7NUhxHyDz7Bej54eBKKAc.png
 tags:
 - Company
+- Financial-Services
+- Fintech
+- Lending
+- Payments
+- Liability Data
+- Credit
+- Debt
+- Open Banking
+- Identity Verification
+- Personal Finance
+tags_raw:
+- Company
 - Financial Services
 - Fintech
 - Lending
@@ -206,6 +218,8 @@ apis:
   humanURL: https://docs.methodfi.com/
   baseURL: https://production.methodfi.com
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -388,6 +402,8 @@ apis:
   humanURL: https://docs.methodfi.com/
   baseURL: https://production.methodfi.com
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -500,6 +516,8 @@ apis:
   humanURL: https://docs.methodfi.com/
   baseURL: https://production.methodfi.com
   tags:
+  - PublicKeys
+  tags_raw:
   - Public Keys
   properties:
   - type: OpenAPI
@@ -598,6 +616,8 @@ apis:
   humanURL: https://docs.methodfi.com/
   baseURL: https://production.methodfi.com
   tags:
+  - Team
+  tags_raw:
   - Teams
   properties:
   - type: OpenAPI
@@ -612,6 +632,8 @@ apis:
   humanURL: https://docs.methodfi.com/
   baseURL: https://production.methodfi.com
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
