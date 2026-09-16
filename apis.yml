@@ -766,6 +766,8 @@ common:
   url: errors/method-financial-decline-codes.yml
 - type: Overlay
   url: overlays/method-financial-method-api-overlay.yaml
+- type: Contact
+  url: mailto:press@methodfi.com
 x-enrichment:
   date: '2026-08-04'
   status: enriched
