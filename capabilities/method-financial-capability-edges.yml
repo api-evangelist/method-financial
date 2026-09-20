@@ -1,0 +1,76 @@
+slug: method-financial
+provider: Method Financial
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 6
+edges:
+- tag: Payments
+  spec_file: method-financial-payments-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.85
+  evidence: 'POST /payments "Create a payment"; vendor: "a single REST API for consumer liability data
+    and debt payments"'
+  reason: Operations capture, retrieve and cancel payment instructions, which is payment initiation. L1
+    payments is certain; the .10 sub-capability is the best fit since the surface is instruction capture
+    rather than clearing or card processing.
+- tag: Webhooks
+  spec_file: method-financial-webhooks-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.85
+  evidence: GET /webhooks  listWebhooks  List all webhooks; POST /webhooks  createWebhook  Create a webhook;
+    PATCH /webhooks/{webhookId}  updateWebhook  Update a webhook status
+  reason: Full CRUD lifecycle over outbound webhook subscriptions with WebhookType/WebhookEventPayload
+    schemas — exactly outbound webhook and event subscription management on a developer API platform.
+- tag: Payment Reversals
+  spec_file: method-financial-payment-reversals-api-openapi.yml
+  capability_id: BC-1340.20
+  capability_id_l1: BC-1340
+  capability_name: Payment Processing Management
+  confidence: 0.72
+  evidence: GET /payments/{paymentId}/reversals "List all reversals for a payment"; schema "PaymentReversalUpdateRequest"
+  reason: Reversals/returns of previously initiated payments are part of payment processing exception
+    handling within BC-1340. Sub-capability choice (processing vs. clearing/settlement) is somewhat uncertain,
+    hence 0.72.
+- tag: Account Payoffs
+  spec_file: method-financial-account-payoffs-api-openapi.yml
+  capability_id: BC-1320.30
+  capability_id_l1: BC-1320
+  capability_name: Loan Servicing Management
+  confidence: 0.7
+  evidence: POST /accounts/{accountId}/payoffs 'Create an account payoff'; schema AccountPayoff, PayoffResourceError
+  reason: Payoff quotes/amounts on consumer loan and card accounts are a loan servicing function (payoff
+    figures, payments); vendor is a 'debt payments' platform.
+- tag: Entities
+  spec_file: method-financial-entities-api-openapi.yml
+  capability_id: BC-1300.40
+  capability_id_l1: BC-1300
+  capability_name: Customer Information Management
+  confidence: 0.7
+  evidence: POST /entities  createEntity; schemas `Entity`, `EntityIndividual`, `EntityCorporation`, `Address`,
+    `EntityCreditScore`
+  reason: Entities are the customer master records (individuals and corporations) created and maintained
+    via the API, carrying identity, address and linked financial data — i.e. customer information / golden-record
+    management for banking customers rather than any product or transaction process.
+- tag: Entity Consent
+  spec_file: method-financial-entity-consent-api-openapi.yml
+  capability_id: BC-1300.40
+  capability_id_l1: BC-1300
+  capability_name: Customer Information Management
+  confidence: 0.7
+  evidence: POST /entities/{entityId}/consent  updateEntityConsent  Update entity consent
+  reason: The single operation records/updates the customer's consent on the entity record; BC-1300.40
+    is explicitly 'Customer data, consent, preferences, golden record', which matches directly. Privacy
+    compliance (BC-130.50) is a plausible alternative reading, hence 0.7 rather than higher.
