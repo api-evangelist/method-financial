@@ -5,7 +5,9 @@ info:
   license:
     name: Proprietary
     url: https://methodfi.com
-  description: "The Method API enables you to retrieve financial data, create payments, and manage\nentities and accounts programmatically. This specification covers the public API\nsurface for version `2026-03-30`.\n\n## Authentication\n\nMost API requests require a Bearer token in the `Authorization` header.\nUse your secret key (`sk_...`) for server-side requests and public key (`pk_...`)\nfor client-side Element requests. Public Message-Level Encryption key discovery\nendpoints are documented separately and do not require authentication.\n\n## Versioning\n\nThe API version is selected via the `Method-Version` header. This spec targets\nversion `2026-03-30`. The SDK sets this header automatically.\n\n## Response Envelope\n\nMost JSON responses are wrapped in a standard envelope:\n\n```json\n{\n  \"success\": true,\n  \"data\": { ... },\n  \"message\": null\n}\n```\n\nThe `/.well-known/jwks.json` endpoint is an exception and returns a bare JWK set.\n\n## Pagination\n\nList endpoints return pagination metadata in response headers:\n`Pagination-Page`, `Pagination-Page-Count`, `Pagination-Page-Limit`,\n`Pagination-Total-Count`, `Pagination-Page-Cursor-Prev`, `Pagination-Page-Cursor-Next`.\n\n## Expandable Fields\n\nCertain resource fields can be expanded from IDs to full objects using the\n`expand` query parameter. Maximum nesting depth is 4 levels.\n"
+  description: 'The Method API enables you to retrieve financial data, create payments, and manage
+
+    entities and accounts programmatically.'
   contact:
     name: Method Financial
     url: https://methodfi.com
@@ -252,81 +254,49 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 components:
+  responses:
+    UnprocessableEntity:
+      description: Unprocessable entity - the request was valid JSON but failed business or validation rules.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request - invalid parameters or request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found - the requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    RateLimited:
+      description: Too many requests - rate limit exceeded.
+      headers:
+        Retry-After:
+          description: Number of seconds to wait before retrying.
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    InternalError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
   schemas:
-    ListEnvelope:
-      type: object
-      description: Standard envelope for successful responses that return a list payload.
-      required:
-      - success
-      - data
-      - message
-      properties:
-        success:
-          type: boolean
-          description: Always `true` for successful responses.
-        data:
-          description: Operation-specific list payload.
-        message:
-          type:
-          - string
-          - 'null'
-      example:
-        success: true
-        data: []
-        message: null
-    TeamResponse:
-      allOf:
-      - $ref: '#/components/schemas/SuccessEnvelope'
-      - type: object
-        properties:
-          data:
-            $ref: '#/components/schemas/Team'
-    ErrorEnvelope:
-      type: object
-      required:
-      - success
-      - data
-      - message
-      properties:
-        success:
-          type: boolean
-          description: Always `false` for error responses.
-        data:
-          type: object
-          required:
-          - error
-          properties:
-            error:
-              $ref: '#/components/schemas/ErrorObject'
-        message:
-          type: string
-    TeamEncryptionKeyRequest:
-      type: object
-      description: Request body for setting the default encryption key.
-      required:
-      - key
-      properties:
-        key:
-          type: string
-          description: The encryption key value.
-    MLEPublicKeyListResponse:
-      allOf:
-      - $ref: '#/components/schemas/ListEnvelope'
-      - type: object
-        properties:
-          data:
-            type: array
-            items:
-              $ref: '#/components/schemas/MLEPublicKey'
-    TeamCreateRequest:
-      type: object
-      description: Request body for creating a child team.
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Display name for the new child team.
     SuccessEnvelope:
       type: object
       description: Standard envelope for successful responses that return a single payload.
@@ -348,96 +318,6 @@ components:
         success: true
         data: {}
         message: null
-    Team:
-      type: object
-      description: A Team represents your organization and its API configuration.
-      required:
-      - id
-      - parent_id
-      - name
-      - legal_name
-      - ein
-      - contacts
-      - address
-      - status
-      - logo
-      - created_at
-      - updated_at
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the team.
-          example: team_PmL8JBBnQNpYZ
-        parent_id:
-          type:
-          - string
-          - 'null'
-          description: Identifier of the parent team, if this is a child team.
-        name:
-          type: string
-          description: Display name of the team.
-          example: My Team
-        legal_name:
-          type: string
-          description: Legal business name of the team.
-          example: My Company Inc.
-        ein:
-          type:
-          - string
-          - 'null'
-          description: Employer Identification Number for the team.
-        contacts:
-          type: array
-          description: Contacts associated with the team.
-          items:
-            $ref: '#/components/schemas/TeamContact'
-        address:
-          type:
-          - object
-          - 'null'
-          description: The team's registered address.
-          properties:
-            line1:
-              type:
-              - string
-              - 'null'
-            city:
-              type:
-              - string
-              - 'null'
-            state:
-              type:
-              - string
-              - 'null'
-            zipcode:
-              type:
-              - string
-              - 'null'
-            country:
-              type:
-              - string
-              - 'null'
-        status:
-          type: string
-          description: Current status of the team.
-          enum:
-          - active
-          - verified
-          - disabled
-          - pending_disablement
-        logo:
-          type:
-          - string
-          - 'null'
-          description: URL of the team logo.
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp when the team was created.
-        updated_at:
-          type: string
-          format: date-time
-          description: Timestamp when the team was last updated.
     MLEPublicKeyResponse:
       allOf:
       - $ref: '#/components/schemas/SuccessEnvelope'
@@ -543,6 +423,134 @@ components:
         message:
           type: string
           description: Human-readable error description.
+    Team:
+      type: object
+      description: A Team represents your organization and its API configuration.
+      required:
+      - id
+      - parent_id
+      - name
+      - legal_name
+      - ein
+      - contacts
+      - address
+      - status
+      - logo
+      - created_at
+      - updated_at
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the team.
+          example: team_PmL8JBBnQNpYZ
+        parent_id:
+          type:
+          - string
+          - 'null'
+          description: Identifier of the parent team, if this is a child team.
+        name:
+          type: string
+          description: Display name of the team.
+          example: My Team
+        legal_name:
+          type: string
+          description: Legal business name of the team.
+          example: My Company Inc.
+        ein:
+          type:
+          - string
+          - 'null'
+          description: Employer Identification Number for the team.
+        contacts:
+          type: array
+          description: Contacts associated with the team.
+          items:
+            $ref: '#/components/schemas/TeamContact'
+        address:
+          type:
+          - object
+          - 'null'
+          description: The team's registered address.
+          properties:
+            line1:
+              type:
+              - string
+              - 'null'
+            city:
+              type:
+              - string
+              - 'null'
+            state:
+              type:
+              - string
+              - 'null'
+            zipcode:
+              type:
+              - string
+              - 'null'
+            country:
+              type:
+              - string
+              - 'null'
+        status:
+          type: string
+          description: Current status of the team.
+          enum:
+          - active
+          - verified
+          - disabled
+          - pending_disablement
+        logo:
+          type:
+          - string
+          - 'null'
+          description: URL of the team logo.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the team was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the team was last updated.
+    TeamEncryptionKeyRequest:
+      type: object
+      description: Request body for setting the default encryption key.
+      required:
+      - key
+      properties:
+        key:
+          type: string
+          description: The encryption key value.
+    TeamResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/Team'
+    TeamContact:
+      type: object
+      description: A contact associated with a team.
+      properties:
+        name:
+          type: string
+          description: Name of the contact.
+        email:
+          type: string
+          description: Email address of the contact.
+        type:
+          type: string
+          description: The contact's role/type (e.g. `Admin`).
+    TeamCreateRequest:
+      type: object
+      description: Request body for creating a child team.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Display name for the new child team.
     TeamListResponse:
       allOf:
       - $ref: '#/components/schemas/ListEnvelope'
@@ -575,61 +583,55 @@ components:
           created_at: '2026-01-15T18:30:00.000Z'
           updated_at: '2026-01-15T18:30:00.000Z'
         message: null
-    TeamContact:
+    ErrorEnvelope:
       type: object
-      description: A contact associated with a team.
+      required:
+      - success
+      - data
+      - message
       properties:
-        name:
+        success:
+          type: boolean
+          description: Always `false` for error responses.
+        data:
+          type: object
+          required:
+          - error
+          properties:
+            error:
+              $ref: '#/components/schemas/ErrorObject'
+        message:
           type: string
-          description: Name of the contact.
-        email:
-          type: string
-          description: Email address of the contact.
-        type:
-          type: string
-          description: The contact's role/type (e.g. `Admin`).
-  responses:
-    RateLimited:
-      description: Too many requests - rate limit exceeded.
-      headers:
-        Retry-After:
-          description: Number of seconds to wait before retrying.
-          schema:
-            type: integer
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    NotFound:
-      description: Not found - the requested resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    BadRequest:
-      description: Bad request - invalid parameters or request body.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    UnprocessableEntity:
-      description: Unprocessable entity - the request was valid JSON but failed business or validation rules.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    InternalError:
-      description: Internal server error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
+    ListEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a list payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific list payload.
+        message:
+          type:
+          - string
+          - 'null'
+      example:
+        success: true
+        data: []
+        message: null
+    MLEPublicKeyListResponse:
+      allOf:
+      - $ref: '#/components/schemas/ListEnvelope'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/MLEPublicKey'
   parameters:
     idempotency_key:
       name: Idempotency-Key

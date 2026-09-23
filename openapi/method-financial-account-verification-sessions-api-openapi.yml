@@ -5,7 +5,9 @@ info:
   license:
     name: Proprietary
     url: https://methodfi.com
-  description: "The Method API enables you to retrieve financial data, create payments, and manage\nentities and accounts programmatically. This specification covers the public API\nsurface for version `2026-03-30`.\n\n## Authentication\n\nMost API requests require a Bearer token in the `Authorization` header.\nUse your secret key (`sk_...`) for server-side requests and public key (`pk_...`)\nfor client-side Element requests. Public Message-Level Encryption key discovery\nendpoints are documented separately and do not require authentication.\n\n## Versioning\n\nThe API version is selected via the `Method-Version` header. This spec targets\nversion `2026-03-30`. The SDK sets this header automatically.\n\n## Response Envelope\n\nMost JSON responses are wrapped in a standard envelope:\n\n```json\n{\n  \"success\": true,\n  \"data\": { ... },\n  \"message\": null\n}\n```\n\nThe `/.well-known/jwks.json` endpoint is an exception and returns a bare JWK set.\n\n## Pagination\n\nList endpoints return pagination metadata in response headers:\n`Pagination-Page`, `Pagination-Page-Count`, `Pagination-Page-Limit`,\n`Pagination-Total-Count`, `Pagination-Page-Cursor-Prev`, `Pagination-Page-Cursor-Next`.\n\n## Expandable Fields\n\nCertain resource fields can be expanded from IDs to full objects using the\n`expand` query parameter. Maximum nesting depth is 4 levels.\n"
+  description: 'The Method API enables you to retrieve financial data, create payments, and manage
+
+    entities and accounts programmatically.'
   contact:
     name: Method Financial
     url: https://methodfi.com
@@ -207,82 +209,179 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
 components:
-  schemas:
-    ListEnvelope:
-      type: object
-      description: Standard envelope for successful responses that return a list payload.
-      required:
-      - success
-      - data
-      - message
-      properties:
-        success:
-          type: boolean
-          description: Always `true` for successful responses.
-        data:
-          description: Operation-specific list payload.
-        message:
-          type:
-          - string
-          - 'null'
-      example:
-        success: true
-        data: []
-        message: null
-    AccountVerificationSessionAmountsResponse:
-      allOf:
-      - $ref: '#/components/schemas/SuccessEnvelope'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              amounts:
-                type: array
-                description: The micro deposit amounts.
-                items:
-                  type: integer
-    ErrorEnvelope:
-      type: object
-      required:
-      - success
-      - data
-      - message
-      properties:
-        success:
-          type: boolean
-          description: Always `false` for error responses.
-        data:
-          type: object
-          required:
-          - error
-          properties:
-            error:
-              $ref: '#/components/schemas/ErrorObject'
-        message:
-          type: string
-    AccountVerificationSessionCreateRequest:
-      type: object
-      description: Request body for creating an account verification session.
-      required:
-      - type
-      properties:
+  responses:
+    UnprocessableEntity:
+      description: Unprocessable entity - the request was valid JSON but failed business or validation rules.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    BadRequest:
+      description: Bad request - invalid parameters or request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found - the requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    RateLimited:
+      description: Too many requests - rate limit exceeded.
+      headers:
+        Retry-After:
+          description: Number of seconds to wait before retrying.
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    InternalError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  headers:
+    Pagination-Page-Cursor-Prev:
+      description: Cursor for the previous page, if available.
+      schema:
         type:
-          type: string
-          description: The type of verification to perform.
-          enum:
-          - micro_deposits
-          - mx
-          - plaid
-          - teller
-          - auto_verify
-          - trusted_provisioner
-          - pre_auth
-          - standard
-          - issuer
-          - instant
-          - network
-          - three_ds
+        - string
+        - 'null'
+    Pagination-Page:
+      description: Current page number.
+      schema:
+        type: integer
+    Pagination-Page-Limit:
+      description: Number of items per page.
+      schema:
+        type: integer
+    Pagination-Page-Cursor-Next:
+      description: Cursor for the next page, if available.
+      schema:
+        type:
+        - string
+        - 'null'
+    Pagination-Page-Count:
+      description: Total number of pages.
+      schema:
+        type: integer
+    Pagination-Total-Count:
+      description: Total number of items across all pages.
+      schema:
+        type: integer
+  schemas:
+    AccountVerificationSessionUpdateRequest:
+      type: object
+      description: Request body for updating an account verification session.
+      properties:
+        micro_deposits:
+          type: object
+          description: Micro deposit verification amounts. Required for micro_deposits type.
+          properties:
+            amounts:
+              type: array
+              description: The micro deposit amounts to verify.
+              items:
+                type: integer
+        plaid:
+          type: object
+          description: Plaid verification data. Required for plaid type.
+          properties:
+            balances:
+              type: object
+              description: The raw balance data received from Plaid.
+            transactions:
+              type: array
+              description: The raw transaction data received from Plaid.
+              items:
+                type: object
+        mx:
+          type: object
+          description: MX verification data. Required for mx type.
+          properties:
+            account:
+              type: object
+              description: The raw account data received from MX.
+            transactions:
+              type: array
+              description: The raw transaction data received from MX.
+              items:
+                type: object
+        teller:
+          type: object
+          description: Teller verification data. Required for teller type.
+          properties:
+            balances:
+              type: object
+              description: The raw balance data received from Teller.
+            transactions:
+              type: array
+              description: The raw transaction data received from Teller.
+              items:
+                type: object
+        standard:
+          type: object
+          description: Standard verification data. Required for standard type.
+          properties:
+            number:
+              type: string
+              description: The full card number.
+        pre_auth:
+          type: object
+          description: Pre-auth verification data. Required for pre_auth type.
+          properties:
+            number:
+              type: string
+              description: The full card number. Required if the number on the session is null.
+            exp_month:
+              type: string
+              description: The card expiration month. Required if null or exp_check is fail.
+            exp_year:
+              type: string
+              description: The card expiration year. Required if null or exp_check is fail.
+            cvv:
+              type: string
+              description: The card CVV. Required if null or cvv_check is fail.
+        network:
+          type: object
+          description: Network verification data. Required for network type.
+          properties:
+            number:
+              type: string
+              description: The full card number. Required if the number on the session is null.
+            exp_month:
+              type: string
+              description: The card expiration month. Required if null or exp_check is fail.
+            exp_year:
+              type: string
+              description: The card expiration year. Required if null or exp_check is fail.
+            cvv:
+              type: string
+              description: The card CVV. Required if null or cvv_check is fail.
+        instant:
+          type: object
+          description: Instant verification data. Required for instant type.
+          properties:
+            number:
+              type: string
+              description: The full card number. Required if the number on the session is null.
+            exp_month:
+              type: string
+              description: The card expiration month. Required if null or exp_check is fail.
+            exp_year:
+              type: string
+              description: The card expiration year. Required if null or exp_check is fail.
     AccountVerificationSessionResponse:
       allOf:
       - $ref: '#/components/schemas/SuccessEnvelope'
@@ -351,15 +450,53 @@ components:
         code: 16001
         sub_type: VERIFICATION_TYPE_NOT_SUPPORTED
         message: The verification type provided is not supported for the merchant.
-    AccountVerificationSessionListResponse:
-      allOf:
-      - $ref: '#/components/schemas/ListEnvelope'
-      - type: object
-        properties:
-          data:
-            type: array
-            items:
-              $ref: '#/components/schemas/AccountVerificationSession'
+    ErrorObject:
+      type: object
+      required:
+      - type
+      - code
+      - message
+      properties:
+        type:
+          type: string
+          description: Error type category.
+          enum:
+          - invalid_request
+          - api_error
+          - resource_error
+        code:
+          type: integer
+          description: Numeric error code. Common codes include 400 (bad request), 401 (unauthorized), 403 (forbidden), 404 (not found), 422 (unprocessable entity), 429 (rate limited), and 500 (internal error).
+        sub_type:
+          type:
+          - string
+          - 'null'
+          description: More specific error classification.
+        message:
+          type: string
+          description: Human-readable error description.
+    AccountVerificationSessionCreateRequest:
+      type: object
+      description: Request body for creating an account verification session.
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          description: The type of verification to perform.
+          enum:
+          - micro_deposits
+          - mx
+          - plaid
+          - teller
+          - auto_verify
+          - trusted_provisioner
+          - pre_auth
+          - standard
+          - issuer
+          - instant
+          - network
+          - three_ds
     AccountVerificationSession:
       type: object
       description: A verification session for an account.
@@ -652,150 +789,86 @@ components:
           type: string
           format: date-time
           description: Timestamp when the verification session was last updated.
-    AccountVerificationSessionUpdateRequest:
-      type: object
-      description: Request body for updating an account verification session.
-      properties:
-        micro_deposits:
-          type: object
-          description: Micro deposit verification amounts. Required for micro_deposits type.
-          properties:
-            amounts:
-              type: array
-              description: The micro deposit amounts to verify.
-              items:
-                type: integer
-        plaid:
-          type: object
-          description: Plaid verification data. Required for plaid type.
-          properties:
-            balances:
-              type: object
-              description: The raw balance data received from Plaid.
-            transactions:
-              type: array
-              description: The raw transaction data received from Plaid.
-              items:
-                type: object
-        mx:
-          type: object
-          description: MX verification data. Required for mx type.
-          properties:
-            account:
-              type: object
-              description: The raw account data received from MX.
-            transactions:
-              type: array
-              description: The raw transaction data received from MX.
-              items:
-                type: object
-        teller:
-          type: object
-          description: Teller verification data. Required for teller type.
-          properties:
-            balances:
-              type: object
-              description: The raw balance data received from Teller.
-            transactions:
-              type: array
-              description: The raw transaction data received from Teller.
-              items:
-                type: object
-        standard:
-          type: object
-          description: Standard verification data. Required for standard type.
-          properties:
-            number:
-              type: string
-              description: The full card number.
-        pre_auth:
-          type: object
-          description: Pre-auth verification data. Required for pre_auth type.
-          properties:
-            number:
-              type: string
-              description: The full card number. Required if the number on the session is null.
-            exp_month:
-              type: string
-              description: The card expiration month. Required if null or exp_check is fail.
-            exp_year:
-              type: string
-              description: The card expiration year. Required if null or exp_check is fail.
-            cvv:
-              type: string
-              description: The card CVV. Required if null or cvv_check is fail.
-        network:
-          type: object
-          description: Network verification data. Required for network type.
-          properties:
-            number:
-              type: string
-              description: The full card number. Required if the number on the session is null.
-            exp_month:
-              type: string
-              description: The card expiration month. Required if null or exp_check is fail.
-            exp_year:
-              type: string
-              description: The card expiration year. Required if null or exp_check is fail.
-            cvv:
-              type: string
-              description: The card CVV. Required if null or cvv_check is fail.
-        instant:
-          type: object
-          description: Instant verification data. Required for instant type.
-          properties:
-            number:
-              type: string
-              description: The full card number. Required if the number on the session is null.
-            exp_month:
-              type: string
-              description: The card expiration month. Required if null or exp_check is fail.
-            exp_year:
-              type: string
-              description: The card expiration year. Required if null or exp_check is fail.
-    ErrorObject:
+    ErrorEnvelope:
       type: object
       required:
-      - type
-      - code
+      - success
+      - data
       - message
       properties:
-        type:
+        success:
+          type: boolean
+          description: Always `false` for error responses.
+        data:
+          type: object
+          required:
+          - error
+          properties:
+            error:
+              $ref: '#/components/schemas/ErrorObject'
+        message:
           type: string
-          description: Error type category.
-          enum:
-          - invalid_request
-          - api_error
-          - resource_error
-        code:
-          type: integer
-          description: Numeric error code. Common codes include 400 (bad request), 401 (unauthorized), 403 (forbidden), 404 (not found), 422 (unprocessable entity), 429 (rate limited), and 500 (internal error).
-        sub_type:
+    ListEnvelope:
+      type: object
+      description: Standard envelope for successful responses that return a list payload.
+      required:
+      - success
+      - data
+      - message
+      properties:
+        success:
+          type: boolean
+          description: Always `true` for successful responses.
+        data:
+          description: Operation-specific list payload.
+        message:
           type:
           - string
           - 'null'
-          description: More specific error classification.
-        message:
-          type: string
-          description: Human-readable error description.
+      example:
+        success: true
+        data: []
+        message: null
+    AccountVerificationSessionAmountsResponse:
+      allOf:
+      - $ref: '#/components/schemas/SuccessEnvelope'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              amounts:
+                type: array
+                description: The micro deposit amounts.
+                items:
+                  type: integer
+    AccountVerificationSessionListResponse:
+      allOf:
+      - $ref: '#/components/schemas/ListEnvelope'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/AccountVerificationSession'
   parameters:
-    PageLimitParam:
-      name: page_limit
+    AccountIdParam:
+      name: accountId
+      in: path
+      required: true
+      description: Unique identifier for the account.
+      schema:
+        type: string
+        pattern: ^acc_\w+$
+    PageParam:
+      name: page
       in: query
       required: false
-      description: Number of items per page.
+      description: Page number for pagination (1-indexed).
       schema:
         type: integer
         minimum: 1
-        maximum: 100
-        default: 10
-    PageCursorParam:
-      name: page_cursor
-      in: query
-      required: false
-      description: Cursor for cursor-based pagination. Use the value from `Pagination-Page-Cursor-Next` or `Pagination-Page-Cursor-Prev` response headers.
-      schema:
-        type: string
+        default: 1
     idempotency_key:
       name: Idempotency-Key
       in: header
@@ -808,6 +881,23 @@ components:
       schema:
         type: string
         format: uuid
+    PageCursorParam:
+      name: page_cursor
+      in: query
+      required: false
+      description: Cursor for cursor-based pagination. Use the value from `Pagination-Page-Cursor-Next` or `Pagination-Page-Cursor-Prev` response headers.
+      schema:
+        type: string
+    PageLimitParam:
+      name: page_limit
+      in: query
+      required: false
+      description: Number of items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 10
     method_version:
       name: Method-Version
       in: header
@@ -822,15 +912,6 @@ components:
         enum:
         - '2026-03-30'
         default: '2026-03-30'
-    PageParam:
-      name: page
-      in: query
-      required: false
-      description: Page number for pagination (1-indexed).
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
     AccountVerificationSessionIdParam:
       name: avfId
       in: path
@@ -839,85 +920,6 @@ components:
       schema:
         type: string
         pattern: ^avf_\w+$
-    AccountIdParam:
-      name: accountId
-      in: path
-      required: true
-      description: Unique identifier for the account.
-      schema:
-        type: string
-        pattern: ^acc_\w+$
-  responses:
-    RateLimited:
-      description: Too many requests - rate limit exceeded.
-      headers:
-        Retry-After:
-          description: Number of seconds to wait before retrying.
-          schema:
-            type: integer
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    NotFound:
-      description: Not found - the requested resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    BadRequest:
-      description: Bad request - invalid parameters or request body.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    UnprocessableEntity:
-      description: Unprocessable entity - the request was valid JSON but failed business or validation rules.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-    InternalError:
-      description: Internal server error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorEnvelope'
-  headers:
-    Pagination-Page:
-      description: Current page number.
-      schema:
-        type: integer
-    Pagination-Page-Cursor-Prev:
-      description: Cursor for the previous page, if available.
-      schema:
-        type:
-        - string
-        - 'null'
-    Pagination-Page-Cursor-Next:
-      description: Cursor for the next page, if available.
-      schema:
-        type:
-        - string
-        - 'null'
-    Pagination-Total-Count:
-      description: Total number of items across all pages.
-      schema:
-        type: integer
-    Pagination-Page-Limit:
-      description: Number of items per page.
-      schema:
-        type: integer
-    Pagination-Page-Count:
-      description: Total number of pages.
-      schema:
-        type: integer
   securitySchemes:
     OpalToken:
       type: http
